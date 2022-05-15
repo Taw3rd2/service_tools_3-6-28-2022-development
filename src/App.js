@@ -8,6 +8,7 @@ import { selectCurrentUser } from "./redux/user/user.selectors";
 import { createStructuredSelector } from "reselect";
 
 import Navbar from './components/navbar/Navbar'
+import Spinner from './components/spinner/Spinner';
 
 const GeneralLedger = lazy(() => import("./pages/accounting/GeneralLedger.page"))
 const HomePage = lazy(() => import("./pages/homepage/HomePage.page"))
@@ -29,7 +30,7 @@ function App({ currentUser, checkUserSession }) {
   return (
     <div>
       <Navbar />
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<Spinner />}>
       <Routes>
         <Route 
           path="/"

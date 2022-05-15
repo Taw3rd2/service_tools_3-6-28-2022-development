@@ -49,7 +49,7 @@ const NavBar = ({ currentUser, signOutStart }) => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ background: "blue" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -133,7 +133,9 @@ const NavBar = ({ currentUser, signOutStart }) => {
                   onClick={handleOpenUserMenu}
                   sx={{ p: 0, color: "white" }}
                 >
-                  {currentUser.email}
+                  {currentUser.displayName
+                    ? currentUser.displayName
+                    : currentUser.email}
                 </IconButton>
               </Tooltip>
             ) : (

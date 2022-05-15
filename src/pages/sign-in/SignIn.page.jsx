@@ -48,20 +48,22 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
               label="Email"
               type="email"
               name="email"
+              autoComplete="new-password"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
-              style={{ margin: "8px", fontSize: 18 }}
+              style={{ marginTop: "8px", fontSize: 18 }}
               required
             />
             <TextField
               label="Password"
               type="password"
               name="password"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
-              style={{ margin: "8px", fontSize: 18 }}
+              style={{ marginTop: "8px", fontSize: 18 }}
               required
             />
             <Button
@@ -71,7 +73,7 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
               type="submit"
               value="Submit Form"
               fullWidth
-              style={{ margin: "8px" }}
+              style={{ marginTop: "8px" }}
             >
               Log In With Email
             </Button>
@@ -82,7 +84,7 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
               type="button"
               onClick={googleSignInStart}
               fullWidth
-              style={{ margin: "8px" }}
+              style={{ marginTop: "8px" }}
             >
               Google Sign In
             </Button>
