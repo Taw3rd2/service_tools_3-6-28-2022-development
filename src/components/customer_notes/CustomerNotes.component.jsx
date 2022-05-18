@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+//import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import NoCustomerLoaded from "../customer_information/views/NoCustomerLoaded.view";
 

@@ -13,7 +13,8 @@ const CustomerAutocomplete = ({
     limit: 100,
   });
 
-  const groupedCustomers = customers.customers.map((customer) => {
+  const groupedCustomers = customers.map((customer) => {
+    //here
     const firstLetter = customer.lastname[0].toUpperCase();
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,

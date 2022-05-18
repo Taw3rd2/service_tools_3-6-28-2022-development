@@ -32,9 +32,7 @@ const ContactField = ({ title, name, phone }) => {
         )}
       </div>
 
-      <div style={{ display: "flex" }}>
-        <Typography variant="body1">{"  "}</Typography>
-      </div>
+      <div style={{ marginTop: "24px" }} />
     </Card>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import firebase from "firebase/compat/app";
+import { doc, getFirestore } from "firebase/firestore";
+
+import { updateDocument } from "../../../../firebase/firestore.utils";
 
 import {
   Backdrop,
@@ -30,53 +32,55 @@ const EditCustomerBilling = ({
   isEditBillingModalOpen,
   closeEditBillingModal,
 }) => {
+  const db = getFirestore();
+
   //field values
   const [billingorg, setBillingOrg] = useState(
-    customer.billingorg ? customer.billingorg : null
+    customer.billingorg ? customer.billingorg : ""
   );
   const [billingPrimaryName, setBillingPrimaryName] = useState(
-    customer.billingPrimaryName ? customer.billingPrimaryName : null
+    customer.billingPrimaryName ? customer.billingPrimaryName : ""
   );
   const [billingAlternateName, setBillingAlternateName] = useState(
-    customer.billingAlternateName ? customer.billingAlternateName : null
+    customer.billingAlternateName ? customer.billingAlternateName : ""
   );
   const [billingOtherName, setBillingOtherName] = useState(
-    customer.billingOtherName ? customer.billingOtherName : null
+    customer.billingOtherName ? customer.billingOtherName : ""
   );
   const [billingPrimaryPhone, setBillingPrimaryPhone] = useState(
-    customer.billingPrimaryPhone ? customer.billingPrimaryPhone : null
+    customer.billingPrimaryPhone ? customer.billingPrimaryPhone : ""
   );
   const [billingAlternatePhone, setBillingAlternatePhone] = useState(
-    customer.billingAlternatePhone ? customer.billingAlternatePhone : null
+    customer.billingAlternatePhone ? customer.billingAlternatePhone : ""
   );
   const [billingOtherPhone, setBillingOtherPhone] = useState(
-    customer.billingOtherPhone ? customer.billingOtherPhone : null
+    customer.billingOtherPhone ? customer.billingOtherPhone : ""
   );
   const [billingPrimaryEmail, setBillingPrimaryEmail] = useState(
-    customer.billingPrimaryEmail ? customer.billingPrimaryEmail : null
+    customer.billingPrimaryEmail ? customer.billingPrimaryEmail : ""
   );
   const [billingAlternateEmail, setBillingAlternateEmail] = useState(
-    customer.billingAlternateEmail ? customer.billingAlternateEmail : null
+    customer.billingAlternateEmail ? customer.billingAlternateEmail : ""
   );
   const [billingOtherEmail, setBillingOtherEmail] = useState(
-    customer.billingOtherEmail ? customer.billingOtherEmail : null
+    customer.billingOtherEmail ? customer.billingOtherEmail : ""
   );
   const [billingstreet, setBillingStreet] = useState(
-    customer.billingstreet ? customer.billingstreet : null
+    customer.billingstreet ? customer.billingstreet : ""
   );
   const [billingcity, setBillingCity] = useState(
-    customer.billingcity ? customer.billingcity : null
+    customer.billingcity ? customer.billingcity : ""
   );
   const [billingstate, setBillingState] = useState(
-    customer.billingstate ? customer.billingstate : null
+    customer.billingstate ? customer.billingstate : ""
   );
   const [billingzip, setBillingZip] = useState(
-    customer.billingzip ? customer.billingzip : null
+    customer.billingzip ? customer.billingzip : ""
   );
 
-  const updateBilling = (event) => {
+  const updateBilling = async (event) => {
     event.preventDefault();
-    const clientBillingToUpdate = {
+    const payload = {
       billingorg,
       billingPrimaryName,
       billingAlternateName,
@@ -92,15 +96,12 @@ const EditCustomerBilling = ({
       billingstate,
       billingzip,
     };
-    firebase
-      .firestore()
-      .collection("customers")
-      .doc(customer.id)
-      .update(clientBillingToUpdate)
-      .then(() => {
-        //editClientBillingSaveSuccessIndicator();
-        closeEditBillingModal();
-      });
+
+    const customerBillingDoc = doc(db, "customers", customer.id);
+
+    updateDocument(customerBillingDoc, payload).then(() => {
+      closeEditBillingModal();
+    });
   };
 
   return (
@@ -267,7 +268,7 @@ const EditCustomerBilling = ({
                 sx={{ marginLeft: "8px" }}
                 variant="outlined"
                 color="primary"
-                tabIndex="15"
+                tabIndex={15}
                 type="submit"
                 startIcon={<ArrowUpward />}
               >
@@ -278,7 +279,7 @@ const EditCustomerBilling = ({
                 onClick={() => closeEditBillingModal()}
                 variant="outlined"
                 color="primary"
-                tabIndex="16"
+                tabIndex={16}
                 startIcon={<Close />}
               >
                 Cancel

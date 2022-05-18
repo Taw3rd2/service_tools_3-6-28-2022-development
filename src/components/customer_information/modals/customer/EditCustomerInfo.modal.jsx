@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import firebase from "firebase/compat/app";
+import { doc, getFirestore } from "firebase/firestore";
+import { updateDocument } from "../../../../firebase/firestore.utils";
 
 import {
   Backdrop,
@@ -32,6 +33,8 @@ const EditCustomerInfo = ({
   closeEditCustomerModal,
   openDeleteCustomerModal,
 }) => {
+  const db = getFirestore();
+
   const [lastNameError, setLastNameError] = useState(false);
 
   const [billingiscommercial, setToCommercial] = useState(
@@ -68,9 +71,9 @@ const EditCustomerInfo = ({
   );
   const [email, setEmail] = useState(customer.email ? customer.email : "");
 
-  const updateCustomer = (event) => {
+  const updateCustomer = async (event) => {
     event.preventDefault();
-    const customerToUpdate = {
+    const payload = {
       billingiscommercial,
       noService,
       firstname,
@@ -91,15 +94,11 @@ const EditCustomerInfo = ({
       setLastNameError(true);
       return;
     } else {
-      firebase
-        .firestore()
-        .collection("customers")
-        .doc(customer.id)
-        .update(customerToUpdate)
-        .then(() => {
-          //editClientSaveSuccessIndicator();
-          closeEditCustomerModal();
-        });
+      const customerBillingDoc = doc(db, "customers", customer.id);
+
+      updateDocument(customerBillingDoc, payload).then(() => {
+        closeEditCustomerModal();
+      });
     }
   };
 

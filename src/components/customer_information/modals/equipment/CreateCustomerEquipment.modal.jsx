@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-import firebase from "firebase/compat/app";
+import { doc, getFirestore } from "firebase/firestore";
+import { createNamedDocument } from "../../../../firebase/firestore.utils";
 
 import {
   Backdrop,
@@ -31,6 +31,8 @@ const CreateCustomerEquipment = ({
   isCreateCustomerEquipmentModalOpen,
   closeCreateCustomerEquipmentModal,
 }) => {
+  const db = getFirestore();
+
   const equipmentWarranty = "";
   const equipmentLabor = "";
   const equipmentContract = "";
@@ -45,9 +47,9 @@ const CreateCustomerEquipment = ({
   const [equipmentSerial, setEquipmentSerial] = useState("");
   const [equipmentVoltage, setEquipmentVoltage] = useState("");
 
-  const submitNewEquipment = (e) => {
+  const submitNewEquipment = async (e) => {
     e.preventDefault();
-    const newUnit = {
+    const payload = {
       customerId: customer.id,
       equipmentWarranty,
       equipmentLabor,
@@ -62,18 +64,16 @@ const CreateCustomerEquipment = ({
       equipmentSerial,
       equipmentVoltage,
     };
-
-    firebase
-      .firestore()
-      .collection("customers")
-      .doc(`${customer.id}`)
-      .collection("Equipment")
-      .doc(`${equipmentName}`)
-      .set(newUnit)
-      .then(() => {
-        //addNewEquipmentSuccessIndicator();
-        closeCreateCustomerEquipmentModal();
-      });
+    const docReference = doc(
+      db,
+      "customers",
+      customer.id,
+      "Equipment",
+      equipmentName
+    );
+    createNamedDocument(docReference, payload).then(() => {
+      closeCreateCustomerEquipmentModal();
+    });
   };
 
   return (
@@ -183,8 +183,8 @@ const CreateCustomerEquipment = ({
               <Button
                 sx={{ marginLeft: "8px" }}
                 type="submit"
-                color="primary"
-                variant="contained"
+                variant="outlined"
+                tabIndex={9}
                 startIcon={<ArrowUpward />}
               >
                 Submit
@@ -192,9 +192,9 @@ const CreateCustomerEquipment = ({
               <Button
                 sx={{ marginLeft: "8px" }}
                 type="button"
-                color="primary"
-                variant="contained"
+                variant="outlined"
                 onClick={() => closeCreateCustomerEquipmentModal()}
+                tabIndex={10}
                 startIcon={<Close />}
               >
                 Close

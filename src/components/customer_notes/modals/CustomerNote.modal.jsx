@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 import firebase from "firebase/compat/app";
 import {
   getFormattedDate,
@@ -40,7 +40,8 @@ const CustomerNote = ({
   customer,
   note,
 }) => {
-  console.log(note);
+  const db = getFirestore();
+
   const [currentTime, setCurrentTime] = useState(
     note.currentTime ? note.currentTime : new Date()
   );
@@ -52,25 +53,13 @@ const CustomerNote = ({
 
   const [dispatchers, setDispatchers] = useState([]);
 
-  useEffect(() => {
-    let unSub = firebase
-      .firestore()
-      .collection("dispatchers")
-      .onSnapshot(
-        (snapshot) => {
-          let newDispatchers = [];
-          snapshot.forEach((doc) => {
-            let dispatcher = doc.data();
-            newDispatchers.push(dispatcher);
-          });
-          setDispatchers(newDispatchers);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    return () => unSub();
-  }, []);
+  useEffect(
+    () =>
+      onSnapshot(collection(db, "dispatchers"), (snapshot) =>
+        setDispatchers(snapshot.docs.map((doc) => doc.data()))
+      ),
+    [db]
+  );
 
   const onSubmit = (event) => {
     event.preventDefault();

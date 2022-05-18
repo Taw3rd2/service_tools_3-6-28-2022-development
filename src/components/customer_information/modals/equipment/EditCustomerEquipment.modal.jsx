@@ -1,6 +1,11 @@
 import React, { useState } from "react";
+import { doc, getFirestore } from "firebase/firestore";
+import {
+  createNamedDocument,
+  deleteDocument,
+  updateDocument,
+} from "../../../../firebase/firestore.utils";
 
-import firebase from "firebase/compat/app";
 import { getDateFromString } from "../../../../utilities/dateUtils";
 
 import {
@@ -33,6 +38,8 @@ const EditCustomerEquipment = ({
   closeEditCustomerEquipmentModal,
   openDeleteEquipmentModal,
 }) => {
+  const db = getFirestore();
+
   const [equipmentBrand, setEquipmentBrand] = useState(
     equipmentSelected.equipmentBrand ? equipmentSelected.equipmentBrand : ""
   );
@@ -63,8 +70,9 @@ const EditCustomerEquipment = ({
     equipmentSelected.equipmentVoltage ? equipmentSelected.equipmentVoltage : ""
   );
 
-  const onSubmitEquipmentUpdates = () => {
-    const newUnit = {
+  const onSubmitEquipmentUpdates = async (event) => {
+    event.preventDefault();
+    const payload = {
       customerId: equipmentSelected.customerId,
       equipmentBrand,
       equipmentBtu,
@@ -86,63 +94,62 @@ const EditCustomerEquipment = ({
       laborWarranty: equipmentSelected.laborWarranty
         ? equipmentSelected.laborWarranty
         : "",
-      warranty: {},
     };
-    if (equipmentSelected.warranty.equipment) {
-      newUnit.warranty.equipment = equipmentName;
-      newUnit.warranty.equipmentBrand = equipmentBrand;
-      newUnit.warranty.equipmentModel = equipmentModel;
-      newUnit.warranty.equipmentName = equipmentName;
-      newUnit.warranty.equipmentSerial = equipmentSerial;
-      newUnit.warranty.jobNumber = equipmentSelected.warranty.jobNumber;
-      newUnit.warranty.key = equipmentName;
-      newUnit.warranty.laborExpirationDate = getDateFromString(
+
+    if (
+      equipmentSelected.warranty &&
+      Object.keys(equipmentSelected.warranty).length > 0
+    ) {
+      payload.warranty = {};
+      payload.warranty.equipment = equipmentName;
+      payload.warranty.equipmentBrand = equipmentBrand;
+      payload.warranty.equipmentModel = equipmentModel;
+      payload.warranty.equipmentName = equipmentName;
+      payload.warranty.equipmentSerial = equipmentSerial;
+      payload.warranty.jobNumber = equipmentSelected.warranty.jobNumber;
+      payload.warranty.key = equipmentName;
+      payload.warranty.laborExpirationDate = getDateFromString(
         equipmentSelected.warranty.laborExpirationDate
       );
-      newUnit.warranty.partsExpirationDate = getDateFromString(
+      payload.warranty.partsExpirationDate = getDateFromString(
         equipmentSelected.warranty.partsExpirationDate
       );
-      newUnit.warranty.startDate = getDateFromString(
+      payload.warranty.startDate = getDateFromString(
         equipmentSelected.warranty.startDate
       );
+    } else {
+      console.log("Equipment has no Warranty associated.");
     }
 
-    if (equipmentSelected.equipmentName === newUnit.equipmentName) {
-      console.log("The equipmentName matches and will update normally");
-      firebase
-        .firestore()
-        .collection("customers")
-        .doc(`${equipmentSelected.customerId}`)
-        .collection("Equipment")
-        .doc(`${equipmentSelected.equipmentName}`)
-        .update(newUnit)
-        .then(() => {
-          //newUpdateEquipmentSuccessIndicator();
-          closeEditCustomerEquipmentModal();
-        });
+    const existingDocumentReference = doc(
+      db,
+      "customers",
+      equipmentSelected.customerId,
+      "Equipment",
+      equipmentSelected.equipmentName
+    );
+
+    const newDocumentReference = doc(
+      db,
+      "customers",
+      equipmentSelected.customerId,
+      "Equipment",
+      payload.equipmentName
+    );
+
+    if (equipmentSelected.equipmentName === payload.equipmentName) {
+      updateDocument(existingDocumentReference, payload).then(() => {
+        closeEditCustomerEquipmentModal();
+      });
     } else {
       console.log(
-        "The equipmentName has been changed, delete the old equipment, and add new"
+        "The Equipment Name had changed. We will delete the old object and add a new one."
       );
-      firebase
-        .firestore()
-        .collection("customers")
-        .doc(`${equipmentSelected.customerId}`)
-        .collection("Equipment")
-        .doc(`${equipmentSelected.equipmentName}`)
-        .delete()
-        .then(() => {
-          firebase
-            .firestore()
-            .collection("customers")
-            .doc(`${equipmentSelected.customerId}`)
-            .collection("Equipment")
-            .doc(`${equipmentName}`)
-            .set(newUnit)
-            .then(() => {
-              closeEditCustomerEquipmentModal();
-            });
+      deleteDocument(existingDocumentReference).then(() => {
+        createNamedDocument(newDocumentReference, payload).then(() => {
+          closeEditCustomerEquipmentModal();
         });
+      });
     }
   };
 
@@ -272,7 +279,6 @@ const EditCustomerEquipment = ({
               <Button
                 sx={{ marginLeft: "8px" }}
                 variant="outlined"
-                color="primary"
                 tabIndex={15}
                 type="submit"
                 startIcon={<ArrowUpward />}
@@ -284,7 +290,6 @@ const EditCustomerEquipment = ({
                 sx={{ marginLeft: "8px" }}
                 onClick={() => closeEditCustomerEquipmentModal()}
                 variant="outlined"
-                color="primary"
                 tabIndex={16}
                 startIcon={<Close />}
               >

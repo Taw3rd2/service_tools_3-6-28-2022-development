@@ -1,8 +1,5 @@
-import React, { useState } from "react";
-
-import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
-import { selectCustomerList } from "../../redux/customers/customer.selectors";
+import React, { useEffect, useState } from "react";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 import {
   Button,
@@ -18,11 +15,20 @@ import {
 
 import CustomerAutocomplete from "./CustomerAutocomplete.component";
 
-const CustomerSearch = ({
-  customers,
-  openAddCustomerModal,
-  handleCustomerSelected,
-}) => {
+const CustomerSearch = ({ openAddCustomerModal, handleCustomerSelected }) => {
+  const db = getFirestore();
+  const [customers, setCustomers] = useState([]);
+
+  useEffect(
+    () =>
+      onSnapshot(collection(db, "customers"), (snapshot) =>
+        setCustomers(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        )
+      ),
+    [db]
+  );
+
   const [selectedSearchParameter, setSelectedSearchParameter] =
     useState("lastname");
   const handleSearchParameterChange = (event) => {
@@ -33,8 +39,9 @@ const CustomerSearch = ({
     <div style={{ flexGrow: 1, margin: "16px" }}>
       <Grid container justifyContent="center" spacing={1}>
         <Typography variant="h4" sx={{ color: "teal" }}>
-          Search {customers.customers.length} Customers
-        </Typography>
+          Search {customers.length} Customers
+        </Typography>{" "}
+        {/*here*/}
       </Grid>
       <Grid container justifyContent="center" spacing={2}>
         <Grid item xs={6}>
@@ -96,8 +103,8 @@ const CustomerSearch = ({
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  customers: selectCustomerList,
-});
+// const mapStateToProps = createStructuredSelector({
+//   customers: selectCustomerList,
+// });
 
-export default connect(mapStateToProps)(CustomerSearch);
+export default CustomerSearch; //connect(mapStateToProps)(CustomerSearch);

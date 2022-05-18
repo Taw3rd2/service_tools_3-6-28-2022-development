@@ -57,29 +57,29 @@ export const convertCollectionsSnapshotToMap = (collections) => {
   return transformedCollection;
 };
 
-export const convertEventSnapshotToMap = (collections) => {
-  const transformedCollection = collections.docs.map((doc) => {
-    let event = doc.data();
-    event.id = doc.id;
-    event.start = event.start.toDate();
-    event.end = event.end.toDate();
-    event.dateCreated = event.dateCreated.toDate();
-    event.dateModified = event.dateModified.toDate();
-    event.dateScheduled = event.dateScheduled.toDate();
-    return event;
-  });
-  return transformedCollection;
-};
+// export const convertEventSnapshotToMap = (collections) => {
+//   const transformedCollection = collections.docs.map((doc) => {
+//     let event = doc.data();
+//     event.id = doc.id;
+//     event.start = event.start.toDate();
+//     event.end = event.end.toDate();
+//     event.dateCreated = event.dateCreated.toDate();
+//     event.dateModified = event.dateModified.toDate();
+//     event.dateScheduled = event.dateScheduled.toDate();
+//     return event;
+//   });
+//   return transformedCollection;
+// };
 
-export const convertLabelSnapshotToMap = (collections) => {
-  const transformedCollection = collections.docs.map((doc) => {
-    let label = doc.data();
-    label.id = doc.id;
-    label.labelDate = label.labelDate.toDate();
-    return label;
-  });
-  return transformedCollection;
-};
+// export const convertLabelSnapshotToMap = (collections) => {
+//   const transformedCollection = collections.docs.map((doc) => {
+//     let label = doc.data();
+//     label.id = doc.id;
+//     label.labelDate = label.labelDate.toDate();
+//     return label;
+//   });
+//   return transformedCollection;
+// };
 
 // export const convertInventorySnapshotToMap = (collections) => {
 //   const transformedCollection = collections.docs.map((doc) => {

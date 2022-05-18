@@ -1,6 +1,5 @@
 import React from "react";
-
-import firebase from "firebase/compat/app";
+import { deleteDocument } from "../../../../firebase/firestore.utils";
 
 import {
   Backdrop,
@@ -12,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
+import { doc, getFirestore } from "firebase/firestore";
 
 const style = {
   position: "absolute",
@@ -31,19 +31,20 @@ const DeleteEquipment = ({
   closeEditCustomerEquipmentModal,
   equipmentSelected,
 }) => {
+  const db = getFirestore();
+
   const onEquipmentDelete = () => {
-    firebase
-      .firestore()
-      .collection("customers")
-      .doc(`${equipmentSelected.customerId}`)
-      .collection("Equipment")
-      .doc(`${equipmentSelected.equipmentName}`)
-      .delete()
-      .then(() => {
-        //deleteEquipmentSuccessIndicator();
-        closeDeleteEquipmentModal();
-        closeEditCustomerEquipmentModal();
-      });
+    const documentReference = doc(
+      db,
+      "customers",
+      equipmentSelected.customerId,
+      "Equipment",
+      equipmentSelected.equipmentName
+    );
+    deleteDocument(documentReference).then(() => {
+      closeEditCustomerEquipmentModal();
+      closeDeleteEquipmentModal();
+    });
   };
 
   return (
