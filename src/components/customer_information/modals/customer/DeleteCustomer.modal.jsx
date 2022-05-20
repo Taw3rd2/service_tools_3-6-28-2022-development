@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { deleteCustomerStart } from "../../../../redux/customers/customer.actions";
 
 import {
   Backdrop,
@@ -28,13 +26,10 @@ const style = {
 const DeleteCustomer = ({
   isDeleteCustomerModalOpen,
   closeDeleteCustomerModal,
-  deleteCustomerStart,
   customer,
 }) => {
   const onCustomerDelete = () => {
-    deleteCustomerStart();
     closeDeleteCustomerModal();
-    //close the edit customer modal
     //set the current customer to {}
   };
 
@@ -95,8 +90,4 @@ const DeleteCustomer = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteCustomerStart: (customer) => dispatch(deleteCustomerStart(customer)),
-});
-
-export default connect(null, mapDispatchToProps)(DeleteCustomer);
+export default DeleteCustomer;

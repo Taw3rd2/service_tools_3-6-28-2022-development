@@ -79,7 +79,7 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
         )}
         <TableContainer
           component={Paper}
-          sx={{ overflow: "auto", maxHeight: 440 }}
+          sx={{ overflow: "auto", maxHeight: 275 }}
         >
           <Table stickyHeader size="small" aria-label="customer-notes-table">
             <TableHead>

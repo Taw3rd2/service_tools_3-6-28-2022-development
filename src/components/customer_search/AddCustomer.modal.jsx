@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 
-import { connect } from "react-redux";
-import { addCustomerStart } from "../../redux/customers/customer.actions";
-
 import {
   Backdrop,
   Box,
@@ -32,7 +29,6 @@ const AddCustomer = ({
   isAddCustomerModalOpen,
   closeAddCustomerModal,
   newCustomerSaveIndicator,
-  addCustomerStart,
 }) => {
   const cnotes = "";
   const squarefootage = "";
@@ -100,7 +96,6 @@ const AddCustomer = ({
       billingiscommercial,
     };
     console.log(customer);
-    addCustomerStart(customer);
     closeAddCustomerModal();
   };
 
@@ -443,8 +438,4 @@ const AddCustomer = ({
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addCustomerStart: (customer) => dispatch(addCustomerStart(customer)),
-});
-
-export default connect(null, mapDispatchToProps)(AddCustomer);
+export default AddCustomer;
