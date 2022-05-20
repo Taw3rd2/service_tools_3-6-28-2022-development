@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
-//import { getFirestore, collection, onSnapshot } from "firebase/firestore";
-import firebase from "firebase/compat/app";
 import NoCustomerLoaded from "../customer_information/views/NoCustomerLoaded.view";
 
 import {
@@ -25,6 +24,8 @@ import {
 import { NoteAdd } from "@mui/icons-material";
 
 const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
+  const db = getFirestore();
+
   const setDefaultCustomerInfo = () => {
     console.log("no customer activity loaded");
   };
@@ -36,34 +37,23 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
       setDefaultCustomerInfo();
     } else {
       setNotes([]);
-      let unsubscribe = firebase
-        .firestore()
-        .collection("customers")
-        .doc(customer.id)
-        .collection("Activity")
-        .onSnapshot(
-          (snapshot) => {
-            let newNotes = [];
-            snapshot.forEach((doc) => {
-              let note = doc.data();
-              note.sortingDate = getFormattedDateAndTime(
-                doc.data().currentTime
-              );
-              note.id = doc.id;
-              newNotes.push(note);
-              newNotes.sort((a, b) =>
-                b.sortingDate.localeCompare(a.sortingDate)
-              );
-            });
-            setNotes(newNotes);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+      const unsubscribe = onSnapshot(
+        collection(db, "customers", customer.id, "Activity"),
+        (snapshot) => {
+          setNotes(
+            snapshot.docs.map((doc) => ({
+              ...doc.data(),
+              sortingDate: getFormattedDateAndTime(doc.data().currentTime),
+            }))
+          );
+        },
+        (error) => {
+          console.log(error.message);
+        }
+      );
       return () => unsubscribe();
     }
-  }, [customer]);
+  }, [db, customer]);
 
   if (customer === null || customer.id === "") {
     return <NoCustomerLoaded />;
@@ -127,23 +117,25 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {notes.map((note, index) => (
-                <TableRow
-                  key={index}
-                  onClick={() => openCustomerNoteModal(note)}
-                  sx={{ cursor: "pointer" }}
-                >
-                  <TableCell align="left">{note.operator}</TableCell>
-                  <TableCell align="left">{note.type}</TableCell>
-                  <TableCell align="left">
-                    {getFormattedDate(note.currentTime)}
-                  </TableCell>
-                  <TableCell align="left">
-                    {getFormattedTime(note.currentTime)}
-                  </TableCell>
-                  <TableCell align="left">{note.details}</TableCell>
-                </TableRow>
-              ))}
+              {notes
+                .sort((a, b) => (a.sortingDate < b.sortingDate ? 1 : -1))
+                .map((note) => (
+                  <TableRow
+                    key={note.sortingDate}
+                    onClick={() => openCustomerNoteModal(note)}
+                    sx={{ cursor: "pointer" }}
+                  >
+                    <TableCell align="left">{note.operator}</TableCell>
+                    <TableCell align="left">{note.type}</TableCell>
+                    <TableCell align="left">
+                      {getFormattedDate(note.currentTime)}
+                    </TableCell>
+                    <TableCell align="left">
+                      {getFormattedTime(note.currentTime)}
+                    </TableCell>
+                    <TableCell align="left">{note.details}</TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

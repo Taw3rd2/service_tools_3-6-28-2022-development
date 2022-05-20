@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-
-import firebase from "firebase/compat/app";
-
-import { getFormattedDate } from "../../../../utilities/dateUtils";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
 import {
   Backdrop,
@@ -41,86 +38,22 @@ const EquipmentList = ({
   openEditCustomerEquipmentModal,
   openCreateCustomerEquipmentModal,
 }) => {
+  const db = getFirestore();
   const [equipment, setEquipment] = useState([]);
 
-  useEffect(() => {
-    let unsubscribe = firebase
-      .firestore()
-      .collection("customers")
-      .doc(customer.id)
-      .collection("Equipment")
-      .onSnapshot(
-        (snapshot) => {
-          let newEquipment = [];
-          snapshot.forEach((doc) => {
-            let unit = doc.data();
-            //maintenance ?
-            if (unit.maintenance) {
-              if (
-                unit.maintenance.expirationDate === "" ||
-                unit.maintenance.expirationDate === undefined
-              ) {
-                unit.maintenance.expirationDate = "n/a";
-              } else {
-                unit.maintenance.expirationDate = getFormattedDate(
-                  unit.maintenance.expirationDate
-                );
-              }
-              if (
-                unit.maintenance.saleDate === "" ||
-                unit.maintenance.saleDate === undefined
-              ) {
-                unit.maintenance.saleDate = "n/a";
-              } else {
-                unit.maintenance.saleDate = getFormattedDate(
-                  unit.maintenance.saleDate
-                );
-              }
-            }
-            //warranty ?
-            if (unit.warranty) {
-              if (
-                unit.warranty.startDate === "" ||
-                unit.warranty.startDate === undefined
-              ) {
-                unit.warranty.startDate = "n/a";
-              } else {
-                unit.warranty.startDate = getFormattedDate(
-                  unit.warranty.startDate
-                );
-              }
-              if (
-                unit.warranty.partsExpirationDate === "" ||
-                unit.warranty.partsExpirationDate === undefined
-              ) {
-                unit.warranty.partsExpirationDate = "n/a";
-              } else {
-                unit.warranty.partsExpirationDate = getFormattedDate(
-                  unit.warranty.partsExpirationDate
-                );
-              }
-              if (
-                unit.warranty.laborExpirationDate === "" ||
-                unit.warranty.laborExpirationDate === undefined ||
-                unit.warranty.laborExpirationDate === null
-              ) {
-                unit.warranty.laborExpirationDate = "n/a";
-              } else {
-                unit.warranty.laborExpirationDate = getFormattedDate(
-                  unit.warranty.laborExpirationDate
-                );
-              }
-            }
-            newEquipment.push(unit);
-          });
-          setEquipment(newEquipment);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    return () => unsubscribe();
-  }, [customer]);
+  useEffect(
+    () =>
+      onSnapshot(
+        collection(db, "customers", customer.id, "Equipment"),
+        (snapshot) =>
+          setEquipment(
+            snapshot.docs.map((doc) => ({
+              ...doc.data(),
+            }))
+          )
+      ),
+    [customer]
+  );
 
   return (
     <Modal

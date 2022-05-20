@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getFirestore, collection, onSnapshot } from "firebase/firestore";
-import firebase from "firebase/compat/app";
+import { getFirestore, collection, onSnapshot, doc } from "firebase/firestore";
+
 import {
   getFormattedDate,
   getFormattedTime,
@@ -21,6 +21,10 @@ import {
   Typography,
 } from "@mui/material";
 import { ArrowUpward, Close } from "@mui/icons-material";
+import {
+  createUnNamedDocument,
+  updateDocument,
+} from "../../../firebase/firestore.utils";
 
 const style = {
   position: "absolute",
@@ -63,6 +67,7 @@ const CustomerNote = ({
 
   const onSubmit = (event) => {
     event.preventDefault();
+    console.log("note?", note);
     const newNoteDetails = {
       currentTime,
       details,
@@ -71,26 +76,20 @@ const CustomerNote = ({
     };
 
     if (note.id) {
-      firebase
-        .firestore()
-        .collection("customers")
-        .doc(customer.id)
-        .collection("Activity")
-        .doc(note.id)
-        .update(newNoteDetails)
-        .then(() => {
-          closeCustomerNoteModal();
-        });
+      console.log("newNoteDetails", newNoteDetails);
+      updateDocument(
+        doc(db, "customers", customer.id, "Activity", note.id),
+        newNoteDetails
+      ).then(() => {
+        closeCustomerNoteModal();
+      });
     } else {
-      firebase
-        .firestore()
-        .collection("customers")
-        .doc(customer.id)
-        .collection("Activity")
-        .add(newNoteDetails)
-        .then(() => {
-          closeCustomerNoteModal();
-        });
+      createUnNamedDocument(
+        collection(db, "customers", customer.id, "Activity"),
+        newNoteDetails
+      ).then(() => {
+        closeCustomerNoteModal();
+      });
     }
   };
 
