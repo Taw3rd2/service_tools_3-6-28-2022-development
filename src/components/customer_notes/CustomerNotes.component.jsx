@@ -43,6 +43,7 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
           setNotes(
             snapshot.docs.map((doc) => ({
               ...doc.data(),
+              id: doc.id,
               sortingDate: getFormattedDateAndTime(doc.data().currentTime),
             }))
           );
@@ -121,7 +122,7 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
                 .sort((a, b) => (a.sortingDate < b.sortingDate ? 1 : -1))
                 .map((note) => (
                   <TableRow
-                    key={note.sortingDate}
+                    key={note.id}
                     onClick={() => openCustomerNoteModal(note)}
                     sx={{ cursor: "pointer" }}
                   >

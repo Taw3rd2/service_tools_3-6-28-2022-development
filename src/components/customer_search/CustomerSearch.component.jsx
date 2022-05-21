@@ -103,8 +103,4 @@ const CustomerSearch = ({ openAddCustomerModal, handleCustomerSelected }) => {
   );
 };
 
-// const mapStateToProps = createStructuredSelector({
-//   customers: selectCustomerList,
-// });
-
-export default CustomerSearch; //connect(mapStateToProps)(CustomerSearch);
+export default CustomerSearch;

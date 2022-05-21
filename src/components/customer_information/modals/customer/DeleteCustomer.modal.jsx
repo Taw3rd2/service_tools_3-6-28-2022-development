@@ -1,4 +1,5 @@
 import React from "react";
+import { doc, getFirestore } from "firebase/firestore";
 
 import {
   Backdrop,
@@ -10,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
+import { deleteDocument } from "../../../../firebase/firestore.utils";
 
 const style = {
   position: "absolute",
@@ -25,11 +27,19 @@ const style = {
 
 const DeleteCustomer = ({
   isDeleteCustomerModalOpen,
+  closeEditCustomerModal,
   closeDeleteCustomerModal,
+  setCustomer,
   customer,
 }) => {
+  const db = getFirestore();
+
   const onCustomerDelete = () => {
-    closeDeleteCustomerModal();
+    setCustomer({ id: "" });
+    deleteDocument(doc(db, "customers", customer.id))
+      .then(() => closeEditCustomerModal())
+      .then(() => closeDeleteCustomerModal());
+
     //set the current customer to {}
   };
 

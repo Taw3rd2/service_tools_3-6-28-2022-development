@@ -27,7 +27,7 @@ const CustomerInformation = ({
       const unsubscribe = onSnapshot(
         doc(db, "customers", customer.id),
         (doc) => {
-          setClient(doc.data());
+          setClient({ ...doc.data(), id: doc.id });
         },
         (error) => {
           console.log(error.message);

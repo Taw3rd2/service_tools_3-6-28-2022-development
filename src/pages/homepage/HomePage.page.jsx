@@ -221,7 +221,9 @@ const HomePage = () => {
         <Suspense fallback={<Spinner />}>
           <DeleteCustomerModal
             isDeleteCustomerModalOpen={isDeleteCustomerModalOpen}
+            closeEditCustomerModal={closeEditCustomerModal}
             closeDeleteCustomerModal={closeDeleteCustomerModal}
+            setCustomer={setCustomer}
             customer={customer}
           />
         </Suspense>

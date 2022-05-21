@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { collection, getFirestore } from "firebase/firestore";
+import { createUnNamedDocument } from "../../firebase/firestore.utils";
 
 import {
   Backdrop,
@@ -30,6 +32,8 @@ const AddCustomer = ({
   closeAddCustomerModal,
   newCustomerSaveIndicator,
 }) => {
+  const db = getFirestore();
+
   const cnotes = "";
   const squarefootage = "";
   const [firstname, setFirstName] = useState("");
@@ -95,8 +99,9 @@ const AddCustomer = ({
       billingzip,
       billingiscommercial,
     };
-    console.log(customer);
-    closeAddCustomerModal();
+    createUnNamedDocument(collection(db, "customers"), customer).then(() =>
+      closeAddCustomerModal()
+    );
   };
 
   return (
@@ -414,16 +419,14 @@ const AddCustomer = ({
             >
               <Button
                 type="submit"
-                color="primary"
-                variant="contained"
+                variant="outlined"
                 startIcon={<ArrowUpward />}
                 sx={{ marginLeft: "16px" }}
               >
                 Submit
               </Button>
               <Button
-                color="primary"
-                variant="contained"
+                variant="outlined"
                 onClick={() => closeAddCustomerModal()}
                 startIcon={<Close />}
                 sx={{ marginLeft: "16px" }}

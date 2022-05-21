@@ -1,9 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
+import { logOut } from "../../firebase/firestore.utils";
 import { useNavigate } from "react-router-dom";
-import { selectCurrentUser } from "../../redux/user/user.selectors";
-import { createStructuredSelector } from "reselect";
-import { signOutStart } from "../../redux/user/user.actions";
 
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
@@ -19,7 +16,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 const pages = [
-  { name: "Customers", link: "/", key: 0 },
+  { name: "Customers", link: "/homepage", key: 0 },
   { name: "Schedule", link: "/schedule", key: 1 },
   { name: "Inventory", link: "/parts_catalog", key: 2 },
   { name: "Accounting", link: "/accounting", key: 3 },
@@ -27,7 +24,7 @@ const pages = [
 ];
 const settings = ["Logout"];
 
-const NavBar = ({ currentUser, signOutStart }) => {
+const NavBar = ({ currentUser }) => {
   let navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -47,6 +44,17 @@ const NavBar = ({ currentUser, signOutStart }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  async function handleLogOut() {
+    try {
+      logOut().then(() => {
+        console.log("signed out");
+        navigate("/");
+      });
+    } catch {
+      alert("I had trouble loggin out! Network congestion?");
+    }
+  }
 
   return (
     <AppBar position="static" sx={{ background: "blue" }}>
@@ -140,12 +148,12 @@ const NavBar = ({ currentUser, signOutStart }) => {
               </Tooltip>
             ) : (
               <Tooltip title="Open settings">
-                {/* change this to open a login button */}
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar alt="No User" />
                 </IconButton>
               </Tooltip>
             )}
+
             <Menu
               sx={{ mt: "45px" }}
               id="menu-appbar"
@@ -163,8 +171,10 @@ const NavBar = ({ currentUser, signOutStart }) => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => signOutStart()}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting}>
+                  <Typography textAlign="center" onClick={handleLogOut}>
+                    {setting}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -173,88 +183,80 @@ const NavBar = ({ currentUser, signOutStart }) => {
       </Container>
 
       {/* {currentUser ? (
-          <Toolbar>
-            <Typography variant="h5">Service Tools</Typography>
-            <Typography>
-              <Link
-                href="/"
-                onClick={() => navigate("/")}
-                color="inherit"
-                underline="none"
-              >
-                Customers
-              </Link>
-              <Link
-                href="/schedule"
-                onClick={() => navigate("/schedule")}
-                color="inherit"
-                underline="none"
-              >
-                Schedule
-              </Link>
-              <Link
-                href="/PartsCatalog"
-                onClick={() => navigate("/PartsCatalog")}
-                color="inherit"
-                underline="none"
-              >
-                Inventory
-              </Link>
-              <Link
-                href="/accounting"
-                onClick={() => navigate("/accounting")}
-                color="inherit"
-                underline="none"
-              >
-                Accounting
-              </Link>
-              <Link
-                href="/settings"
-                onClick={() => navigate("/settings")}
-                color="inherit"
-                underline="none"
-              >
-                Settings
-              </Link>
-            </Typography>
-            <div />
-            <Typography>{currentUser.email}</Typography>
-            <Menu
-              id="simple-menu"
-              anchorEl={anchorEl}
-              keepMounted
-              open={Boolean(anchorEl)}
-              onClose={handleCloseBlankFormMenu}
+        <Toolbar>
+          <Typography variant="h5">Service Tools</Typography>
+          <Typography>
+            <Link
+              href="/"
+              onClick={() => navigate("/")}
+              color="inherit"
+              underline="none"
             >
-              <MenuItem onClick={handleCloseBlankFormMenu}>
-                Blank Proposal
-              </MenuItem>
-              <MenuItem onClick={handleCloseBlankFormMenu}>
-                Blank Material Req
-              </MenuItem>
-            </Menu>
-            <Link href="/signin" onClick={signOutStart} underline="none">
-              Log Out
+              Customers
             </Link>
-          </Toolbar>
-        ) : (
-          <Toolbar>
-            <Typography variant="h5">Service Tools</Typography>
-            <Button color="inherit" onClick={() => navigate("/signin")}>
-              Log In
-            </Button>
-          </Toolbar>
-        )} */}
+            <Link
+              href="/schedule"
+              onClick={() => navigate("/schedule")}
+              color="inherit"
+              underline="none"
+            >
+              Schedule
+            </Link>
+            <Link
+              href="/PartsCatalog"
+              onClick={() => navigate("/PartsCatalog")}
+              color="inherit"
+              underline="none"
+            >
+              Inventory
+            </Link>
+            <Link
+              href="/accounting"
+              onClick={() => navigate("/accounting")}
+              color="inherit"
+              underline="none"
+            >
+              Accounting
+            </Link>
+            <Link
+              href="/settings"
+              onClick={() => navigate("/settings")}
+              color="inherit"
+              underline="none"
+            >
+              Settings
+            </Link>
+          </Typography>
+          <div />
+          <Typography>{currentUser.email}</Typography>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleCloseBlankFormMenu}
+          >
+            <MenuItem onClick={handleCloseBlankFormMenu}>
+              Blank Proposal
+            </MenuItem>
+            <MenuItem onClick={handleCloseBlankFormMenu}>
+              Blank Material Req
+            </MenuItem>
+          </Menu>
+          <Link href="/signin" onClick={signOutStart} underline="none">
+            Log Out
+          </Link>
+        </Toolbar>
+      ) : (
+        <Toolbar>
+          <Typography variant="h5">Service Tools</Typography>
+          <Button color="inherit" onClick={() => navigate("/signin")}>
+            Log In
+          </Button>
+        </Toolbar>
+      )} */}
     </AppBar>
   );
 };
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  signOutStart: () => dispatch(signOutStart()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default NavBar;

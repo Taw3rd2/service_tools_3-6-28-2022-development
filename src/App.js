@@ -1,11 +1,8 @@
-import React, { useEffect, lazy, Suspense } from 'react'
+import React, { lazy, Suspense } from 'react'
 
-import { connect } from "react-redux";
+import { useAuth } from './firebase/firestore.utils'
+
 import { Routes, Route } from "react-router-dom";
-
-import { checkUserSession } from "./redux/user/user.actions";
-import { selectCurrentUser } from "./redux/user/user.selectors";
-import { createStructuredSelector } from "reselect";
 
 import Navbar from './components/navbar/Navbar'
 import Spinner from './components/spinner/Spinner';
@@ -21,52 +18,54 @@ const Schedule = lazy(() => import("./pages/schedule/Schedule.page"))
 const Settings = lazy(() => import("./pages/settings/Settings.page"))
 const SignIn = lazy(() => import("./pages/sign-in/SignIn.page"))
 
-function App({ currentUser, checkUserSession }) {
-
-  useEffect(() => {
-    checkUserSession()
-  }, [checkUserSession]);
-
+function App() {
+  const currentUser = useAuth()
   return (
     <div>
-      <Navbar />
+      <Navbar 
+        currentUser={currentUser}
+      />
       <Suspense fallback={<Spinner />}>
       <Routes>
         <Route 
           path="/"
-          element= { currentUser? <HomePage /> : <SignIn />}
+          element= {<SignIn />}
+        />
+        <Route 
+          path="/homepage"
+          element= {currentUser ? <HomePage /> : <SignIn />}
         />
         <Route  
           path="/schedule"
-          element = {<Schedule />}
+          element = {currentUser ? <Schedule /> : <SignIn />}
         />
         <Route  
           path="/accounting"
-          element = {<GeneralLedger />}
+          element = {currentUser ? <GeneralLedger /> : <SignIn />}
         />
         <Route  
           path="/invoice"
-          element = {<Invoice />}
+          element = {currentUser ? <Invoice /> :  <SignIn />}
         />
         <Route  
           path="/settings"
-          element = {<Settings />}
+          element = {currentUser ? <Settings /> : <SignIn />}
         />
         <Route  
           path="/parts_catalog"
-          element = {<PartsCatalog />}
+          element = {currentUser ? <PartsCatalog /> : <SignIn />}
         />
         <Route  
           path="/parts_quote"
-          element = {<PartsQuote />}
+          element = {currentUser ? <PartsQuote /> : <SignIn />}
         />
         <Route  
           path="/print_daily_slips"
-          element = {<PrintDailySlips />}
+          element = {currentUser ? <PrintDailySlips /> : <SignIn />}
         />
         <Route  
           path="/print_one_slip"
-          element = {<PrintOneSlip />}
+          element = {currentUser ? <PrintOneSlip /> : <SignIn />}
         />
         <Route 
           path='*' 
@@ -82,12 +81,4 @@ function App({ currentUser, checkUserSession }) {
   );
 }
 
-const mapStateToProps = createStructuredSelector({
-  currentUser: selectCurrentUser,
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  checkUserSession: () => dispatch(checkUserSession())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

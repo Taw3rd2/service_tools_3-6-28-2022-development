@@ -1,24 +1,36 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 
-import {
-  googleSignInStart,
-  emailSignInStart,
-} from "../../redux/user/user.actions";
+import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { logIn } from "../../firebase/firestore.utils";
+import { HourglassEmpty } from "@mui/icons-material";
 
-const SignIn = ({ googleSignInStart, emailSignInStart }) => {
+const SignIn = () => {
+  let navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    emailSignInStart(email, password);
+    setLoading(true);
+
+    try {
+      await logIn(email, password).then(() => {
+        console.log("signed in");
+        navigate("/homepage");
+      });
+    } catch {
+      alert("Your credentials are incorrect...");
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -67,38 +79,33 @@ const SignIn = ({ googleSignInStart, emailSignInStart }) => {
               required
             />
             <Button
-              variant="contained"
-              color="primary"
+              variant="outlined"
               size="large"
               type="submit"
               value="Submit Form"
               fullWidth
-              style={{ marginTop: "8px" }}
+              startIcon={loading && <HourglassEmpty />}
+              style={{ marginTop: "32px" }}
             >
               Log In With Email
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
+            {/* <Button
+              variant="outlined"
               size="large"
               type="button"
-              onClick={googleSignInStart}
               fullWidth
               style={{ marginTop: "8px" }}
             >
               Google Sign In
-            </Button>
+            </Button> */}
           </form>
+          <Typography variant="caption">
+            You must have a valid Service Tools Account to proceed.
+          </Typography>
         </CardContent>
       </Card>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  googleSignInStart: () => dispatch(googleSignInStart()),
-  emailSignInStart: (email, password) =>
-    dispatch(emailSignInStart({ email, password })),
-});
-
-export default connect(null, mapDispatchToProps)(SignIn);
+export default SignIn;

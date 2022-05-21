@@ -60,14 +60,15 @@ const CustomerNote = ({
   useEffect(
     () =>
       onSnapshot(collection(db, "dispatchers"), (snapshot) =>
-        setDispatchers(snapshot.docs.map((doc) => doc.data()))
+        setDispatchers(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        )
       ),
     [db]
   );
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log("note?", note);
     const newNoteDetails = {
       currentTime,
       details,
@@ -147,8 +148,8 @@ const CustomerNote = ({
                     >
                       {dispatchers
                         .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((dispatcher) => (
-                          <MenuItem key={dispatcher.id} value={dispatcher.name}>
+                        .map((dispatcher, index) => (
+                          <MenuItem key={index} value={dispatcher.name}>
                             {dispatcher.name}
                           </MenuItem>
                         ))}

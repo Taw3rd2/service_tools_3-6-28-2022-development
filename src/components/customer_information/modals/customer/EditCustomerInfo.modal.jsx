@@ -94,11 +94,9 @@ const EditCustomerInfo = ({
       setLastNameError(true);
       return;
     } else {
-      const customerBillingDoc = doc(db, "customers", customer.id);
-
-      updateDocument(customerBillingDoc, payload).then(() => {
-        closeEditCustomerModal();
-      });
+      updateDocument(doc(db, "customers", customer.id), payload).then(() =>
+        closeEditCustomerModal()
+      );
     }
   };
 
