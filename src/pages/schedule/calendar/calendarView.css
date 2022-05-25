@@ -1,0 +1,8 @@
+.fc-daygrid-day-top {
+  display: flex;
+  flex-direction: row;
+}
+
+.fc-daygrid-day-number {
+  width: 100%;
+}

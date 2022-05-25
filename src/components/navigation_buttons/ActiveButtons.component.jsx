@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Grid, Typography } from "@mui/material";
-import { Assignment, AddCircle, Build } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material"; //Assignment, AddCircle, Build } from "@mui/icons-material";
 
 const reportButton = {
   border: "1px solid black",
@@ -15,7 +15,7 @@ const reportButton = {
 
 const ActiveButtons = ({
   customer,
-  //openCreateDispatchModal,
+  openCreateDispatchModal,
   //openDispatchListModal,
   openPartsQuotesModal,
   openEquipmentQuotesModal,
@@ -78,7 +78,7 @@ const ActiveButtons = ({
       }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={3} onClick={() => openCreateDispatchModal()}>
           <div style={reportButton}>
             <AddCircle style={{ fontSize: 60, color: "green" }} />
             <Typography variant="subtitle1">Create New</Typography>
@@ -86,53 +86,53 @@ const ActiveButtons = ({
           </div>
         </Grid>
         <Grid item xs={3}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Dispatches</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3} onClick={() => openPartsQuotesModal()}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Parts Quotes</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3} onClick={() => openEquipmentQuotesModal()}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Equipment Quotes</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <Build style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">Maintenance</Typography>
             <Typography variant="subtitle1">Manager</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <Build style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">Warranty</Typography>
             <Typography variant="subtitle1">Manager</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3} onClick={() => routeToPartsQuoteCreator()}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <AddCircle style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">Create Blank</Typography>
             <Typography variant="subtitle1">Parts Quote</Typography>
-          </div>
+          </div> */}
         </Grid>
         <Grid item xs={3}>
-          <div style={reportButton}>
+          {/* <div style={reportButton}>
             <AddCircle style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">Create Blank</Typography>
             <Typography variant="subtitle1">Equipment Quote</Typography>
-          </div>
+          </div> */}
         </Grid>
       </Grid>
     </div>

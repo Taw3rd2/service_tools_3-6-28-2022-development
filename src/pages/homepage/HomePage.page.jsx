@@ -50,6 +50,11 @@ const DeleteCustomersEquipmentModal = lazy(() =>
 const CustomerNoteModal = lazy(() =>
   import("../../components/customer_notes/modals/CustomerNote.modal")
 );
+const CreateDispatchModal = lazy(() =>
+  import(
+    "../../components/navigation_buttons/create_new_dispatch/CreateDispatch.modal"
+  )
+);
 
 const HomePage = () => {
   //CustomerSearch
@@ -157,6 +162,16 @@ const HomePage = () => {
     setCustomerNoteModalOpen(false);
   };
 
+  //Create Disptch
+  const [isCreateDispatchModalOpen, setCreateDispatchmodalOpen] =
+    useState(false);
+  const openCreateDispatchModal = () => {
+    setCreateDispatchmodalOpen(true);
+  };
+  const closeCreateDispatchModal = () => {
+    setCreateDispatchmodalOpen(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -176,7 +191,10 @@ const HomePage = () => {
           />
         </Grid>
         <Grid item xs={4} sx={{ marginTop: "4px" }}>
-          <NavigationButtons customer={customer} />
+          <NavigationButtons
+            openCreateDispatchModal={openCreateDispatchModal}
+            customer={customer}
+          />
         </Grid>
       </Grid>
       <Grid container spacing={2}>
@@ -281,6 +299,15 @@ const HomePage = () => {
             closeCustomerNoteModal={closeCustomerNoteModal}
             customer={customer}
             note={note}
+          />
+        </Suspense>
+      )}
+      {isCreateDispatchModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <CreateDispatchModal
+            isCreateDispatchModalOpen={isCreateDispatchModalOpen}
+            closeCreateDispatchModal={closeCreateDispatchModal}
+            customer={customer}
           />
         </Suspense>
       )}

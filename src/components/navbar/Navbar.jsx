@@ -18,9 +18,9 @@ import Button from "@mui/material/Button";
 const pages = [
   { name: "Customers", link: "/homepage", key: 0 },
   { name: "Schedule", link: "/schedule", key: 1 },
-  { name: "Inventory", link: "/parts_catalog", key: 2 },
-  { name: "Accounting", link: "/accounting", key: 3 },
-  { name: "Settings", link: "/settings", key: 4 },
+  // { name: "Inventory", link: "/parts_catalog", key: 2 },
+  // { name: "Accounting", link: "/accounting", key: 3 },
+  // { name: "Settings", link: "/settings", key: 4 },
 ];
 const settings = ["Logout"];
 
