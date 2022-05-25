@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { getFirestore, collection, onSnapshot, doc } from "firebase/firestore";
 
 import {
+  createUnNamedDocument,
+  updateDocument,
+} from "../../../firebase/firestore.utils";
+
+import {
   getFormattedDate,
   getFormattedTime,
 } from "../../../utilities/dateUtils";
@@ -21,10 +26,6 @@ import {
   Typography,
 } from "@mui/material";
 import { ArrowUpward, Close } from "@mui/icons-material";
-import {
-  createUnNamedDocument,
-  updateDocument,
-} from "../../../firebase/firestore.utils";
 
 const style = {
   position: "absolute",

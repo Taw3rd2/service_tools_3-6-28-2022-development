@@ -38,10 +38,10 @@ const modalStyle = {
 const DayLabelEditor = ({
   isDayLabelEditorModalOpen,
   closeDayLabelEditor,
-  calendarDateSelected,
   openAddDayLabelModal,
   openEditDayLabelModal,
   openDeleteDayLabelModal,
+  calendarDateSelected,
 }) => {
   const db = getFirestore();
 
@@ -81,6 +81,7 @@ const DayLabelEditor = ({
                   stickyHeader
                   size="medium"
                   aria-label="set day labels table"
+                  sx={{ border: "1px solid black" }}
                 >
                   <TableHead>
                     <TableRow>
@@ -143,24 +144,22 @@ const DayLabelEditor = ({
                           isEqual(item.labelDate.toDate(), calendarDateSelected)
                         )
                         .sort((a, b) => a.tech.localeCompare(b.tech))
-                        .map((technician, index) => (
+                        .map((label, index) => (
                           <TableRow key={index}>
                             <TableCell align="left" sx={{ fontSize: 20 }}>
                               {index + 1}
                             </TableCell>
                             <TableCell align="left" sx={{ fontSize: 20 }}>
-                              {technician.tech}
+                              {label.tech}
                             </TableCell>
                             <TableCell align="left" sx={{ fontSize: 20 }}>
-                              {technician.locationName}
+                              {label.locationName}
                             </TableCell>
                             <TableCell align="left" sx={{ fontSize: 20 }}>
                               <Button
                                 variant="outlined"
                                 startIcon={<Edit />}
-                                onClick={() =>
-                                  openEditDayLabelModal(technician)
-                                }
+                                onClick={() => openEditDayLabelModal(label)}
                               >
                                 Edit
                               </Button>
@@ -169,9 +168,7 @@ const DayLabelEditor = ({
                               <Button
                                 variant="outlined"
                                 startIcon={<Clear />}
-                                onClick={() =>
-                                  openDeleteDayLabelModal(technician)
-                                }
+                                onClick={() => openDeleteDayLabelModal(label)}
                               >
                                 Delete
                               </Button>

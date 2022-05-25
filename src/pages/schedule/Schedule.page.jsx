@@ -13,6 +13,9 @@ const DailyOptionsMenuModal = lazy(() =>
   import("./modals/DailyOptionsMenu.modal")
 );
 const DayLabelEditorModal = lazy(() => import("./modals/DayLabelEditor.modal"));
+const AddDayLabelModal = lazy(() => import("./modals/AddDayLabel.modal"));
+const DeleteDayLabelModal = lazy(() => import("./modals/DeleteDayLabel.modal"));
+const EditDayLabelModal = lazy(() => import("./modals/EditDayLabel.modal"));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -98,11 +101,43 @@ const Schedule = () => {
   //Day Label Editor
   const [isDayLabelEditorModalOpen, setDayLabelEditorModalOpen] =
     useState(false);
+  const [selectedDayLabel, setSelectedDayLabel] = useState({});
   const openDayLabelEditor = () => {
     setDayLabelEditorModalOpen(true);
   };
   const closeDayLabelEditor = () => {
     setDayLabelEditorModalOpen(false);
+  };
+
+  //Add Day Label Modal
+  const [isAddDayLabelModalOpen, setAddDayLabelModalOpen] = useState(false);
+  const openAddDayLabelModal = () => {
+    setAddDayLabelModalOpen(true);
+  };
+  const closeAddDayLabelModal = () => {
+    setAddDayLabelModalOpen(false);
+  };
+
+  //Delete Day Label Modal
+  const [isDeleteDayLabelModalOpen, setDeleteDayLabelModalOpen] =
+    useState(false);
+  const openDeleteDayLabelModal = (label) => {
+    console.log("dayLabel: ", label);
+    setSelectedDayLabel(label);
+    setDeleteDayLabelModalOpen(true);
+  };
+  const closeDeleteDayLabelModal = () => {
+    setDeleteDayLabelModalOpen(false);
+  };
+
+  //Edit Day Label Modal
+  const [isEditDayLabelModalOpen, setEditDayLabelOpen] = useState(false);
+  const openEditDayLabelModal = (label) => {
+    setSelectedDayLabel(label);
+    setEditDayLabelOpen(true);
+  };
+  const closeEditDayLabelModal = () => {
+    setEditDayLabelOpen(false);
   };
 
   return (
@@ -180,7 +215,39 @@ const Schedule = () => {
           <DayLabelEditorModal
             isDayLabelEditorModalOpen={isDayLabelEditorModalOpen}
             closeDayLabelEditor={closeDayLabelEditor}
+            openAddDayLabelModal={openAddDayLabelModal}
+            openDeleteDayLabelModal={openDeleteDayLabelModal}
+            openEditDayLabelModal={openEditDayLabelModal}
             calendarDateSelected={calendarDateSelected}
+          />
+        </Suspense>
+      )}
+      {isAddDayLabelModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <AddDayLabelModal
+            isAddDayLabelModalOpen={isAddDayLabelModalOpen}
+            closeAddDayLabelModal={closeAddDayLabelModal}
+            calendarDateSelected={calendarDateSelected}
+          />
+        </Suspense>
+      )}
+      {isDeleteDayLabelModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <DeleteDayLabelModal
+            isDeleteDayLabelModalOpen={isDeleteDayLabelModalOpen}
+            closeDeleteDayLabelModal={closeDeleteDayLabelModal}
+            calendarDateSelected={calendarDateSelected}
+            selectedDayLabel={selectedDayLabel}
+          />
+        </Suspense>
+      )}
+      {isEditDayLabelModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <EditDayLabelModal
+            isEditDayLabelModalOpen={isEditDayLabelModalOpen}
+            closeEditDayLabelModal={closeEditDayLabelModal}
+            calendarDateSelected={calendarDateSelected}
+            selectedDayLabel={selectedDayLabel}
           />
         </Suspense>
       )}
