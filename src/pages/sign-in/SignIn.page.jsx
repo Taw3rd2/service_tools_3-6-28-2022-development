@@ -55,7 +55,7 @@ const SignIn = () => {
           <Typography sx={{ fontSize: 26 }} color="text.secondary" gutterBottom>
             Service Tools Log In
           </Typography>
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={handleSubmit}>
             <TextField
               label="Email"
               type="email"

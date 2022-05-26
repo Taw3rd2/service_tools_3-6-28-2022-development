@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import CustomerExport from "../export_to_excel/CustomerExport";
 
 import {
   Button,
@@ -87,15 +88,7 @@ const CustomerSearch = ({ openAddCustomerModal, handleCustomerSelected }) => {
             >
               Add New Customer
             </Button>
-            <Button
-              color="primary"
-              variant="outlined"
-              size="large"
-              disabled
-              fullWidth
-            >
-              Export to Excell
-            </Button>
+            <CustomerExport customers={customers} />
           </Stack>
         </Grid>
       </Grid>
