@@ -55,6 +55,11 @@ const CreateDispatchModal = lazy(() =>
     "../../components/navigation_buttons/create_new_dispatch/CreateDispatch.modal"
   )
 );
+const DispatchHistoryModal = lazy(() =>
+  import(
+    "../../components/navigation_buttons/dispatch_history/DispatchHistory.modal"
+  )
+);
 
 const HomePage = () => {
   //CustomerSearch
@@ -172,6 +177,16 @@ const HomePage = () => {
     setCreateDispatchmodalOpen(false);
   };
 
+  //Dispatch History
+  const [isDispatchHistoryModalOpen, setDispatchHistoryModalOpen] =
+    useState(false);
+  const openDispatchHistoryModal = () => {
+    setDispatchHistoryModalOpen(true);
+  };
+  const closeDispatchHistoryModal = () => {
+    setDispatchHistoryModalOpen(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -193,6 +208,7 @@ const HomePage = () => {
         <Grid item xs={4} sx={{ marginTop: "4px" }}>
           <NavigationButtons
             openCreateDispatchModal={openCreateDispatchModal}
+            openDispatchHistoryModal={openDispatchHistoryModal}
             customer={customer}
           />
         </Grid>
@@ -307,6 +323,15 @@ const HomePage = () => {
           <CreateDispatchModal
             isCreateDispatchModalOpen={isCreateDispatchModalOpen}
             closeCreateDispatchModal={closeCreateDispatchModal}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isDispatchHistoryModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <DispatchHistoryModal
+            isDispatchHistoryModalOpen={isDispatchHistoryModalOpen}
+            closeDispatchHistoryModal={closeDispatchHistoryModal}
             customer={customer}
           />
         </Suspense>

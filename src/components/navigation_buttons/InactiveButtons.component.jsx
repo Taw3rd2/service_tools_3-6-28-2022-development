@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Grid, Typography } from "@mui/material";
-import { AddCircle } from "@mui/icons-material";
+import { AddCircle, Assignment } from "@mui/icons-material";
 
 const reportButton = {
   border: "1px solid black",
@@ -29,14 +29,14 @@ const InactiveButtons = () => {
             <Typography variant="subtitle1">Dispatch</Typography>
           </div>
         </Grid>
-        {/* <Grid item xs={3}>
+        <Grid item xs={3}>
           <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "grey" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Dispatches</Typography>
           </div>
         </Grid>
-        <Grid item xs={3}>
+        {/*<Grid item xs={3}>
           <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "grey" }} />
             <Typography variant="subtitle1">All Customer</Typography>

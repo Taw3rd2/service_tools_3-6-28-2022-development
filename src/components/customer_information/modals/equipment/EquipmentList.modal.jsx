@@ -83,7 +83,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "170px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -93,7 +93,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "170px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -103,7 +103,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "170px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -113,7 +113,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "170px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -123,7 +123,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "100px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -133,7 +133,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "100px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -143,7 +143,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "100px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   >
@@ -153,7 +153,7 @@ const EquipmentList = ({
                     align="left"
                     sx={{
                       minWidth: "100px",
-                      background: "blue",
+                      background: "teal",
                       color: "white",
                     }}
                   ></TableCell>

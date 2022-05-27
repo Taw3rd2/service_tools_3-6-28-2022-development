@@ -57,7 +57,7 @@ const NavBar = ({ currentUser }) => {
   }
 
   return (
-    <AppBar position="static" sx={{ background: "blue" }}>
+    <AppBar position="static" sx={{ background: "teal" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

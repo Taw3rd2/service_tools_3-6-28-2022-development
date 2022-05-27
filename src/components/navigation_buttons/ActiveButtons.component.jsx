@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { Grid, Typography } from "@mui/material";
-import { AddCircle } from "@mui/icons-material"; //Assignment, AddCircle, Build } from "@mui/icons-material";
+import { AddCircle, Assignment } from "@mui/icons-material"; //Assignment, AddCircle, Build } from "@mui/icons-material";
 
 const reportButton = {
   border: "1px solid black",
@@ -16,7 +16,7 @@ const reportButton = {
 const ActiveButtons = ({
   customer,
   openCreateDispatchModal,
-  //openDispatchListModal,
+  openDispatchHistoryModal,
   openPartsQuotesModal,
   openEquipmentQuotesModal,
   //openWarrantyListModal,
@@ -85,12 +85,12 @@ const ActiveButtons = ({
             <Typography variant="subtitle1">Dispatch</Typography>
           </div>
         </Grid>
-        <Grid item xs={3}>
-          {/* <div style={reportButton}>
+        <Grid item xs={3} onClick={() => openDispatchHistoryModal()}>
+          <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "darkblue" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Dispatches</Typography>
-          </div> */}
+          </div>
         </Grid>
         <Grid item xs={3} onClick={() => openPartsQuotesModal()}>
           {/* <div style={reportButton}>

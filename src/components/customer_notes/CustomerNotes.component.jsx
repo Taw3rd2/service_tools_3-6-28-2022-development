@@ -87,31 +87,31 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
               <TableRow>
                 <TableCell
                   align="left"
-                  sx={{ minWidth: "40px", background: "blue", color: "white" }}
+                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
                 >
                   Operator
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ minWidth: "40px", background: "blue", color: "white" }}
+                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
                 >
                   Type
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ minWidth: "40px", background: "blue", color: "white" }}
+                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
                 >
                   Date
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ minWidth: "40px", background: "blue", color: "white" }}
+                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
                 >
                   Time
                 </TableCell>
                 <TableCell
                   align="left"
-                  sx={{ background: "blue", color: "white" }}
+                  sx={{ background: "teal", color: "white" }}
                 >
                   Note
                 </TableCell>
