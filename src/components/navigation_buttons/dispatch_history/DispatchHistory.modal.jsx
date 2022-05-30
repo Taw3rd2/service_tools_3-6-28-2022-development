@@ -24,6 +24,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 import { getFormattedDate } from "../../../utilities/dateUtils";
 
 const modalStyle = {
@@ -65,150 +67,156 @@ const DispatchHistory = ({
   }, [db, customer.id]);
 
   return (
-    <Modal
-      aria-labelledby="dispatch-history-modal"
-      aria-describedby="modal to view dispatch history"
-      open={isDispatchHistoryModalOpen}
-      onClose={closeDispatchHistoryModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDispatchHistoryModalOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Dispatch History
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableContainer
-                component={Paper}
-                sx={{ overflow: "auto", maxHeight: 275 }}
-              >
-                <Table
-                  stickyHeader
-                  size="small"
-                  aria-label="customer-dispatches-table"
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="dispatch-history-modal"
+        aria-describedby="modal to view dispatch history"
+        open={isDispatchHistoryModalOpen}
+        onClose={closeDispatchHistoryModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDispatchHistoryModalOpen}>
+          <Box sx={modalStyle}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Dispatch History
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TableContainer
+                  component={Paper}
+                  sx={{ overflow: "auto", maxHeight: 275 }}
                 >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "100px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Date
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "100px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Issue
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "40px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Job Number
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "110px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Tech lead
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "110px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Tech Assisting
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          minWidth: "50px",
-                          background: "teal",
-                          color: "white",
-                          fontSize: 18,
-                        }}
-                      >
-                        Notes
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {dispatches.length > 0 &&
-                      dispatches
-                        .sort((a, b) => b.scheduledDate - a.scheduledDate)
-                        .map((item) => (
-                          <TableRow
-                            key={item.id}
-                            onClick={() => openSelectedDispatchModal()}
-                          >
-                            <TableCell align="left">
-                              {getFormattedDate(item.dateScheduled)}
-                            </TableCell>
-                            <TableCell align="left">{item.issue}</TableCell>
-                            <TableCell align="left">{item.jobNumber}</TableCell>
-                            <TableCell align="left">{item.techLead}</TableCell>
-                            <TableCell align="left">
-                              {item.techHelper}
-                            </TableCell>
-                            <TableCell align="left">{item.notes}</TableCell>
-                          </TableRow>
-                        ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  <Table
+                    stickyHeader
+                    size="small"
+                    aria-label="customer-dispatches-table"
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "100px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Date
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "100px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Issue
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "40px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Job Number
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "110px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Tech lead
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "110px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Tech Assisting
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            minWidth: "50px",
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                            fontSize: 18,
+                          }}
+                        >
+                          Notes
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {dispatches.length > 0 &&
+                        dispatches
+                          .sort((a, b) => b.scheduledDate - a.scheduledDate)
+                          .map((item) => (
+                            <TableRow
+                              key={item.id}
+                              onClick={() => openSelectedDispatchModal()}
+                            >
+                              <TableCell align="left">
+                                {getFormattedDate(item.dateScheduled)}
+                              </TableCell>
+                              <TableCell align="left">{item.issue}</TableCell>
+                              <TableCell align="left">
+                                {item.jobNumber}
+                              </TableCell>
+                              <TableCell align="left">
+                                {item.techLead}
+                              </TableCell>
+                              <TableCell align="left">
+                                {item.techHelper}
+                              </TableCell>
+                              <TableCell align="left">{item.notes}</TableCell>
+                            </TableRow>
+                          ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "24px" }}
-          >
-            <Button
-              sx={{ marginLeft: "8px" }}
-              size="large"
-              color="primary"
-              variant="outlined"
-              startIcon={<Close />}
-              onClick={() => closeDispatchHistoryModal()}
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "24px" }}
             >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                sx={{ marginLeft: "8px" }}
+                size="large"
+                color="primary"
+                variant="outlined"
+                startIcon={<Close />}
+                onClick={() => closeDispatchHistoryModal()}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

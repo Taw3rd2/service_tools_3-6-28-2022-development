@@ -3,6 +3,8 @@ import ExcelJs from "exceljs";
 import { getFormattedDateAndTime } from "../../utilities/dateUtils";
 
 import { Button } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../theme/Theme";
 
 const CustomerExport = ({ customers }) => {
   const exportToExcel = (data) => {
@@ -69,15 +71,17 @@ const CustomerExport = ({ customers }) => {
   };
 
   return (
-    <Button
-      variant="outlined"
-      size="large"
-      fullWidth
-      onClick={() => exportToExcel(customers)}
-      sx={{ color: "green" }}
-    >
-      Export Customers To Excel
-    </Button>
+    <ThemeProvider theme={lightTheme}>
+      <Button
+        variant="outlined"
+        color="primary"
+        size="large"
+        fullWidth
+        onClick={() => exportToExcel(customers)}
+      >
+        Export Customers To Excel
+      </Button>
+    </ThemeProvider>
   );
 };
 

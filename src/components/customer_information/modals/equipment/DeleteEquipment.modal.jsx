@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
 import { doc, getFirestore } from "firebase/firestore";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../../theme/Theme";
 
 const style = {
   position: "absolute",
@@ -48,58 +50,62 @@ const DeleteEquipment = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="delete-customer-equipment"
-      aria-describedby="modal to delete customer equipment"
-      open={isDeleteCustomerEquipmentModalOpen}
-      onClose={closeDeleteEquipmentModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDeleteCustomerEquipmentModalOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                {`Delete ${equipmentSelected.equipmentName}?`}
-              </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="delete-customer-equipment"
+        aria-describedby="modal to delete customer equipment"
+        open={isDeleteCustomerEquipmentModalOpen}
+        onClose={closeDeleteEquipmentModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDeleteCustomerEquipmentModalOpen}>
+          <Box sx={style}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="cation" gutterBottom>
-                  {`Unrecoverable delete!`}
+                <Typography variant="h5" gutterBottom color="primary">
+                  {`Delete ${equipmentSelected.equipmentName}?`}
                 </Typography>
+                <Grid item xs={12}>
+                  <Typography variant="body1" gutterBottom>
+                    {`Unrecoverable delete!`}
+                  </Typography>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "24px" }}
-          >
-            <Button
-              sx={{ marginLeft: "8px", color: "red" }}
-              size="large"
-              variant="outlined"
-              startIcon={<Delete />}
-              onClick={() => onEquipmentDelete()}
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "24px" }}
             >
-              Delete
-            </Button>
-            <Button
-              sx={{ marginLeft: "8px" }}
-              size="large"
-              variant="outlined"
-              startIcon={<Close />}
-              onClick={() => closeDeleteEquipmentModal()}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                sx={{ marginLeft: "8px", color: "red" }}
+                size="large"
+                variant="outlined"
+                color="inherit"
+                startIcon={<Delete />}
+                onClick={() => onEquipmentDelete()}
+              >
+                Delete
+              </Button>
+              <Button
+                sx={{ marginLeft: "8px" }}
+                size="large"
+                variant="outlined"
+                color="primary"
+                startIcon={<Close />}
+                onClick={() => closeDeleteEquipmentModal()}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

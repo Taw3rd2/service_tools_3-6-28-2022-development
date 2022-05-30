@@ -14,6 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const modalStyle = {
   position: "absolute",
@@ -47,81 +49,85 @@ const DailyOptionsMenu = ({
   );
 
   return (
-    <Modal
-      aria-labelledby="daily-options-menu-modal"
-      aria-describedby="daily-options"
-      open={isDailyOptionsMenuOpen}
-      onClose={closeDailyOptionsMenu}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDailyOptionsMenuOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Daily Options Menu
-              </Typography>
-            </Grid>
-            <Grid container spacing={1}>
-              {technicians &&
-                technicians
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((tech) => (
-                    <Grid key={tech.id} item xs={12}>
-                      <Link
-                        to={{
-                          pathname: "/print_daily_slips",
-                          state: {
-                            techLead: `${tech.name}`,
-                            dat: calendarDateSelected,
-                          },
-                        }}
-                        style={{ textDecoration: "none" }}
-                      >
-                        <Button
-                          variant="outlined"
-                          fullWidth
-                          style={{
-                            backgroundColor: tech.color,
-                            color: "white",
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="daily-options-menu-modal"
+        aria-describedby="daily-options"
+        open={isDailyOptionsMenuOpen}
+        onClose={closeDailyOptionsMenu}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDailyOptionsMenuOpen}>
+          <Box sx={modalStyle}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Daily Options Menu
+                </Typography>
+              </Grid>
+              <Grid container spacing={1}>
+                {technicians &&
+                  technicians
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((tech) => (
+                      <Grid key={tech.id} item xs={12}>
+                        <Link
+                          to={{
+                            pathname: "/print_daily_slips",
+                            state: {
+                              techLead: `${tech.name}`,
+                              date: calendarDateSelected,
+                            },
                           }}
+                          style={{ textDecoration: "none" }}
                         >
-                          {`Print ${tech.name}'s Daily Slips`}
-                        </Button>
-                      </Link>
-                    </Grid>
-                  ))}
+                          <Button
+                            variant="outlined"
+                            fullWidth
+                            style={{
+                              backgroundColor: tech.color,
+                              color: "white",
+                            }}
+                          >
+                            {`Print ${tech.name}'s Daily Slips`}
+                          </Button>
+                        </Link>
+                      </Grid>
+                    ))}
+              </Grid>
+              <Button
+                variant="outlined"
+                color="primary"
+                fullWidth
+                sx={{ marginTop: "12px" }}
+                onClick={() => openDayLabelEditor()}
+              >
+                Day Label Editor
+              </Button>
             </Grid>
-            <Button
-              variant="outlined"
-              fullWidth
-              sx={{ marginTop: "12px" }}
-              onClick={() => openDayLabelEditor()}
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "16px" }}
             >
-              Day Label Editor
-            </Button>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "16px" }}
-          >
-            <Button
-              size="large"
-              variant="outlined"
-              startIcon={<Close />}
-              onClick={() => closeDailyOptionsMenu()}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                size="large"
+                variant="outlined"
+                color="primary"
+                startIcon={<Close />}
+                onClick={() => closeDailyOptionsMenu()}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

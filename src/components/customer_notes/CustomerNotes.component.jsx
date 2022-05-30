@@ -10,6 +10,7 @@ import {
 } from "../../utilities/dateUtils";
 
 import {
+  Box,
   Button,
   Grid,
   Paper,
@@ -22,6 +23,8 @@ import {
   Typography,
 } from "@mui/material";
 import { NoteAdd } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../theme/Theme";
 
 const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
   const db = getFirestore();
@@ -60,113 +63,142 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
     return <NoCustomerLoaded />;
   } else {
     return (
-      <div
-        style={{
-          flexGrow: 1,
-          border: "1px solid black",
-          backgroundColor: "#e6ebf2",
-          margin: "4px",
-          padding: "8px",
-        }}
-      >
-        {customer.firstname ? (
-          <Typography variant="h5" gutterBottom style={{ color: "teal" }}>
-            {customer.firstname} {customer.lastname} Notes
-          </Typography>
-        ) : (
-          <Typography variant="h5" gutterBottom style={{ color: "teal" }}>
-            {customer.lastname} Notes
-          </Typography>
-        )}
-        <TableContainer
-          component={Paper}
-          sx={{ overflow: "auto", maxHeight: 275 }}
+      <ThemeProvider theme={lightTheme}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            border: "1px solid black",
+            backgroundColor: "lightgray",
+            margin: "4px",
+            padding: "8px",
+          }}
         >
-          <Table stickyHeader size="small" aria-label="customer-notes-table">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align="left"
-                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
-                >
-                  Operator
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
-                >
-                  Type
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
-                >
-                  Date
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ minWidth: "40px", background: "teal", color: "white" }}
-                >
-                  Time
-                </TableCell>
-                <TableCell
-                  align="left"
-                  sx={{ background: "teal", color: "white" }}
-                >
-                  Note
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {notes
-                .sort((a, b) => (a.sortingDate < b.sortingDate ? 1 : -1))
-                .map((note) => (
-                  <TableRow
-                    key={note.id}
-                    onClick={() => openCustomerNoteModal(note)}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell align="left">{note.operator}</TableCell>
-                    <TableCell align="left">{note.type}</TableCell>
-                    <TableCell align="left">
-                      {getFormattedDate(note.currentTime)}
-                    </TableCell>
-                    <TableCell align="left">
-                      {getFormattedTime(note.currentTime)}
-                    </TableCell>
-                    <TableCell align="left">{note.details}</TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Grid
-          container
-          alignItems="flex-start"
-          justifyContent="flex-end"
-          direction="row"
-        >
-          {customer.id ? (
-            <Button
-              variant="outlined"
-              startIcon={<NoteAdd />}
-              sx={{ marginTop: "16px" }}
-              onClick={() => openCustomerNoteModal({})}
-            >
-              Add New Note
-            </Button>
+          {customer.firstname ? (
+            <Typography variant="h5" gutterBottom color="primary">
+              {customer.firstname} {customer.lastname} Notes
+            </Typography>
           ) : (
-            <Button
-              variant="outlined"
-              startIcon={<NoteAdd />}
-              sx={{ marginTop: "16px" }}
-              disabled
-            >
-              Add New Note
-            </Button>
+            <Typography variant="h5" gutterBottom color="primary">
+              {customer.lastname} Notes
+            </Typography>
           )}
-        </Grid>
-      </div>
+          <TableContainer
+            component={Paper}
+            sx={{ overflow: "auto", maxHeight: 275 }}
+          >
+            <Table stickyHeader size="small" aria-label="customer-notes-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      minWidth: "40px",
+                      background: lightTheme.palette.primary.light,
+                      color: lightTheme.palette.primary.contrastText,
+                    }}
+                  >
+                    Operator
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      minWidth: "40px",
+                      background: lightTheme.palette.primary.light,
+                      color: lightTheme.palette.primary.contrastText,
+                    }}
+                  >
+                    Type
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      minWidth: "40px",
+                      background: lightTheme.palette.primary.light,
+                      color: lightTheme.palette.primary.contrastText,
+                    }}
+                  >
+                    Date
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      minWidth: "40px",
+                      background: lightTheme.palette.primary.light,
+                      color: lightTheme.palette.primary.contrastText,
+                    }}
+                  >
+                    Time
+                  </TableCell>
+                  <TableCell
+                    align="left"
+                    sx={{
+                      background: lightTheme.palette.primary.light,
+                      color: lightTheme.palette.primary.contrastText,
+                    }}
+                  >
+                    Note
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {notes
+                  .sort((a, b) => (a.sortingDate < b.sortingDate ? 1 : -1))
+                  .map((note) => (
+                    <TableRow
+                      key={note.id}
+                      onClick={() => openCustomerNoteModal(note)}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      <TableCell align="left">{note.operator}</TableCell>
+                      <TableCell align="left">{note.type}</TableCell>
+                      <TableCell align="left">
+                        {getFormattedDate(note.currentTime)}
+                      </TableCell>
+                      <TableCell align="left">
+                        {getFormattedTime(note.currentTime)}
+                      </TableCell>
+                      <TableCell align="left">{note.details}</TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Grid
+            container
+            alignItems="flex-start"
+            justifyContent="flex-end"
+            direction="row"
+          >
+            {customer.id ? (
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<NoteAdd />}
+                sx={{
+                  marginTop: "16px",
+                  background: lightTheme.palette.primary.contrastText,
+                }}
+                onClick={() => openCustomerNoteModal({})}
+              >
+                Add New Note
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                startIcon={<NoteAdd />}
+                sx={{
+                  marginTop: "16px",
+                  background: lightTheme.palette.primary.contrastText,
+                }}
+                disabled
+              >
+                Add New Note
+              </Button>
+            )}
+          </Grid>
+        </Box>
+      </ThemeProvider>
     );
   }
 };

@@ -18,6 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import { ArrowUpward, Close } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const modalStyle = {
   position: "absolute",
@@ -66,89 +68,96 @@ const AddDayLabel = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="add-day-label-modal"
-      aria-describedby="modal for adding a day label"
-      open={isAddDayLabelModalOpen}
-      onClose={closeAddDayLabelModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isAddDayLabelModalOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Add New Day Label
-              </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="add-day-label-modal"
+        aria-describedby="modal for adding a day label"
+        open={isAddDayLabelModalOpen}
+        onClose={closeAddDayLabelModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isAddDayLabelModalOpen}>
+          <Box sx={modalStyle}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Add New Day Label
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <form onSubmit={onSubmit} autoComplete="new-password">
-            <Grid container spacing={2} sx={{ marginTop: "8px" }}>
-              <Grid item xs={6}>
-                {technicians.length > 0 && (
-                  <FormControl fullWidth>
-                    <InputLabel id="select-tech-lead">Tech Lead</InputLabel>
-                    <Select
-                      labelId="select-tech-lead"
-                      id="tech-lead"
-                      value={tech}
-                      label="Tech Lead"
-                      onChange={(event) => setTech(event.target.value)}
-                      inputProps={{ tabIndex: "1" }}
-                    >
-                      {technicians
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((technician) => (
-                          <MenuItem key={technician.id} value={technician.name}>
-                            {technician.name}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                )}
+            <form onSubmit={onSubmit} autoComplete="new-password">
+              <Grid container spacing={2} sx={{ marginTop: "8px" }}>
+                <Grid item xs={6}>
+                  {technicians.length > 0 && (
+                    <FormControl fullWidth>
+                      <InputLabel id="select-tech-lead">Tech Lead</InputLabel>
+                      <Select
+                        labelId="select-tech-lead"
+                        id="tech-lead"
+                        value={tech}
+                        label="Tech Lead"
+                        onChange={(event) => setTech(event.target.value)}
+                        inputProps={{ tabIndex: "1" }}
+                      >
+                        {technicians
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map((technician) => (
+                            <MenuItem
+                              key={technician.id}
+                              value={technician.name}
+                            >
+                              {technician.name}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Location Name"
+                    fullWidth
+                    value={locationName}
+                    onChange={(event) => setLocationName(event.target.value)}
+                    inputProps={{ tabIndex: "2" }}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Location Name"
-                  fullWidth
-                  value={locationName}
-                  onChange={(event) => setLocationName(event.target.value)}
-                  inputProps={{ tabIndex: "2" }}
-                />
+              <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="flex-end"
+                direction="row"
+                sx={{ marginTop: "24px" }}
+              >
+                <Button
+                  sx={{ marginLeft: "8px" }}
+                  type="submit"
+                  color="primary"
+                  variant="outlined"
+                  startIcon={<ArrowUpward />}
+                >
+                  Submit
+                </Button>
+                <Button
+                  sx={{ marginLeft: "8px" }}
+                  type="button"
+                  color="primary"
+                  variant="outlined"
+                  onClick={() => closeAddDayLabelModal()}
+                  startIcon={<Close />}
+                >
+                  Close
+                </Button>
               </Grid>
-            </Grid>
-            <Grid
-              container
-              alignItems="flex-start"
-              justifyContent="flex-end"
-              direction="row"
-              sx={{ marginTop: "24px" }}
-            >
-              <Button
-                sx={{ marginLeft: "8px" }}
-                type="submit"
-                variant="outlined"
-                startIcon={<ArrowUpward />}
-              >
-                Submit
-              </Button>
-              <Button
-                sx={{ marginLeft: "8px" }}
-                type="button"
-                variant="outlined"
-                onClick={() => closeAddDayLabelModal()}
-                startIcon={<Close />}
-              >
-                Close
-              </Button>
-            </Grid>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

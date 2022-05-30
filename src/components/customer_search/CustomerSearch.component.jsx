@@ -13,6 +13,8 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../theme/Theme";
 
 import CustomerAutocomplete from "./CustomerAutocomplete.component";
 
@@ -37,62 +39,70 @@ const CustomerSearch = ({ openAddCustomerModal, handleCustomerSelected }) => {
   };
 
   return (
-    <div style={{ flexGrow: 1, margin: "16px" }}>
-      <Grid container justifyContent="center" spacing={1}>
-        <Typography variant="h4" sx={{ color: "teal" }}>
-          Search {customers.length} Customers
-        </Typography>{" "}
-        {/*here*/}
-      </Grid>
-      <Grid container justifyContent="center" spacing={2}>
-        <Grid item xs={6}>
-          <FormControl sx={{ marginLeft: "8px" }}>
-            <FormLabel id="customer_search_parameters_radio_group">
-              Refine customer search
-            </FormLabel>
-            <RadioGroup
-              row
-              defaultValue="lastname"
-              aria-labelledby="customer_search_parameters_radio_group"
-              name="customer_search_radio_buttons_group"
-              onChange={handleSearchParameterChange}
-            >
-              <FormControlLabel
-                value="lastname"
-                control={<Radio />}
-                label="Last Name"
-              />
-              <FormControlLabel
-                value="street"
-                control={<Radio />}
-                label="Street"
-              />
-              <FormControlLabel value="city" control={<Radio />} label="City" />
-            </RadioGroup>
-          </FormControl>
-          <CustomerAutocomplete
-            customers={customers}
-            selectedSearchParameter={selectedSearchParameter}
-            handleCustomerSelected={handleCustomerSelected}
-          />
+    <ThemeProvider theme={lightTheme}>
+      <div style={{ flexGrow: 1, margin: "16px" }}>
+        <Grid container justifyContent="center" spacing={1}>
+          <Typography variant="h4" color="primary">
+            Search {customers.length} Customers
+          </Typography>{" "}
         </Grid>
-        <Grid item xs={6}>
-          <Stack spacing={2} direction="column">
-            <Button
-              sx={{ marginTop: "73px" }}
-              color="primary"
-              variant="outlined"
-              size="large"
-              fullWidth
-              onClick={() => openAddCustomerModal()}
-            >
-              Add New Customer
-            </Button>
-            <CustomerExport customers={customers} />
-          </Stack>
+        <Grid container justifyContent="center" spacing={2}>
+          <Grid item xs={6}>
+            <FormControl sx={{ marginLeft: "8px" }}>
+              <FormLabel id="customer_search_parameters_radio_group">
+                Refine customer search
+              </FormLabel>
+              <RadioGroup
+                row
+                defaultValue="lastname"
+                aria-labelledby="customer_search_parameters_radio_group"
+                name="customer_search_radio_buttons_group"
+                onChange={handleSearchParameterChange}
+                color="primary"
+              >
+                <FormControlLabel
+                  value="lastname"
+                  control={<Radio color="primary" />}
+                  label="Last Name"
+                />
+                <FormControlLabel
+                  value="street"
+                  control={<Radio color="primary" />}
+                  label="Street"
+                />
+                <FormControlLabel
+                  value="city"
+                  control={<Radio color="primary" />}
+                  label="City"
+                />
+              </RadioGroup>
+            </FormControl>
+            <CustomerAutocomplete
+              customers={customers}
+              selectedSearchParameter={selectedSearchParameter}
+              handleCustomerSelected={handleCustomerSelected}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Stack spacing={2} direction="column">
+              <Button
+                sx={{
+                  marginTop: "73px",
+                }}
+                color="primary"
+                variant="outlined"
+                size="large"
+                fullWidth
+                onClick={() => openAddCustomerModal()}
+              >
+                Add New Customer
+              </Button>
+              <CustomerExport customers={customers} />
+            </Stack>
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </ThemeProvider>
   );
 };
 

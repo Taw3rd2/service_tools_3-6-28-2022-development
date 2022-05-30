@@ -11,6 +11,9 @@ import {
   getFormattedTime,
 } from "../../../utilities/dateUtils";
 
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
+
 import {
   Backdrop,
   Box,
@@ -96,127 +99,148 @@ const CustomerNote = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="customer-note"
-      aria-describedby="modal for customer notes"
-      open={isCustomerNoteModalOpen}
-      onClose={closeCustomerNoteModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isCustomerNoteModalOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Customer Notes
-              </Typography>
-            </Grid>
-          </Grid>
-
-          <form onSubmit={onSubmit} autoComplete="new-password">
-            <Grid container spacing={2} sx={{ marginTop: "8px" }}>
-              <Grid item xs={6}>
-                <FormControl fullWidth>
-                  <InputLabel id="select-note-type">Note Type</InputLabel>
-                  <Select
-                    labelId="select-note-type"
-                    id="note_type"
-                    value={type}
-                    label="Note Type"
-                    onChange={(event) => setType(event.target.value)}
-                  >
-                    <MenuItem key={0} value={"Phone"}>
-                      Phone
-                    </MenuItem>
-                    <MenuItem key={1} value={"Note"}>
-                      Note
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="customer-note"
+        aria-describedby="modal for customer notes"
+        open={isCustomerNoteModalOpen}
+        onClose={closeCustomerNoteModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isCustomerNoteModalOpen}>
+          <Box sx={style}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" color="primary">
+                  Customer Notes
+                </Typography>
               </Grid>
-              <Grid item xs={6}>
-                {dispatchers.length > 0 && (
+            </Grid>
+
+            <form onSubmit={onSubmit} autoComplete="new-password">
+              <Grid container spacing={2} sx={{ marginTop: "8px" }}>
+                <Grid item xs={6}>
                   <FormControl fullWidth>
-                    <InputLabel id="select-operator">Operator</InputLabel>
-                    <Select
-                      labelId="select-operator"
-                      id="operator"
-                      value={operator}
-                      label="Operator"
-                      onChange={(event) => setOperator(event.target.value)}
+                    <InputLabel
+                      id="select-note-type"
+                      sx={{ color: lightTheme.palette.primary.light }}
                     >
-                      {dispatchers
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((dispatcher, index) => (
-                          <MenuItem key={index} value={dispatcher.name}>
-                            {dispatcher.name}
-                          </MenuItem>
-                        ))}
+                      Note Type
+                    </InputLabel>
+                    <Select
+                      labelId="select-note-type"
+                      id="note_type"
+                      value={type}
+                      label="Note Type"
+                      onChange={(event) => setType(event.target.value)}
+                    >
+                      <MenuItem key={0} value={"Phone"}>
+                        Phone
+                      </MenuItem>
+                      <MenuItem key={1} value={"Note"}>
+                        Note
+                      </MenuItem>
                     </Select>
                   </FormControl>
-                )}
+                </Grid>
+                <Grid item xs={6}>
+                  {dispatchers.length > 0 && (
+                    <FormControl fullWidth>
+                      <InputLabel
+                        id="select-operator"
+                        sx={{ color: lightTheme.palette.primary.light }}
+                      >
+                        Operator
+                      </InputLabel>
+                      <Select
+                        labelId="select-operator"
+                        id="operator"
+                        value={operator}
+                        label="Operator"
+                        color="primary"
+                        onChange={(event) => setOperator(event.target.value)}
+                      >
+                        {dispatchers
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map((dispatcher, index) => (
+                            <MenuItem key={index} value={dispatcher.name}>
+                              {dispatcher.name}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Time"
+                    value={getFormattedTime(currentTime)}
+                    fullWidth
+                    onChange={(event) => setCurrentTime(event.target.value)}
+                    disabled
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Date"
+                    value={getFormattedDate(currentTime)}
+                    fullWidth
+                    color="primary"
+                    onChange={(event) => setCurrentTime(event.target.value)}
+                    disabled
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Details"
+                    variant="outlined"
+                    value={details}
+                    fullWidth
+                    sx={{ input: { color: "teal" } }}
+                    onChange={(event) => setDetails(event.target.value)}
+                    multiline={true}
+                    rows="5"
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Time"
-                  value={getFormattedTime(currentTime)}
-                  fullWidth
-                  onChange={(event) => setCurrentTime(event.target.value)}
-                  disabled
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Date"
-                  value={getFormattedDate(currentTime)}
-                  fullWidth
-                  onChange={(event) => setCurrentTime(event.target.value)}
-                  disabled
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  label="Details"
+              <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="flex-end"
+                direction="row"
+                sx={{ marginTop: "24px" }}
+              >
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  color="primary"
+                  type="submit"
                   variant="outlined"
-                  value={details}
-                  fullWidth
-                  onChange={(event) => setDetails(event.target.value)}
-                  multiline={true}
-                  rows="5"
-                />
+                  startIcon={<ArrowUpward />}
+                >
+                  Submit
+                </Button>
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  color="primary"
+                  type="button"
+                  variant="outlined"
+                  onClick={() => closeCustomerNoteModal()}
+                  startIcon={<Close />}
+                >
+                  Close
+                </Button>
               </Grid>
-            </Grid>
-            <Grid
-              container
-              alignItems="flex-start"
-              justifyContent="flex-end"
-              direction="row"
-              sx={{ marginTop: "24px" }}
-            >
-              <Button
-                sx={{ marginLeft: "8px" }}
-                type="submit"
-                variant="outlined"
-                startIcon={<ArrowUpward />}
-              >
-                Submit
-              </Button>
-              <Button
-                sx={{ marginLeft: "8px" }}
-                type="button"
-                variant="outlined"
-                onClick={() => closeCustomerNoteModal()}
-                startIcon={<Close />}
-              >
-                Close
-              </Button>
-            </Grid>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

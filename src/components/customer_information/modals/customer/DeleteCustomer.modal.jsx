@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
 import { deleteDocument } from "../../../../firebase/firestore.utils";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../../theme/Theme";
 
 const style = {
   position: "absolute",
@@ -44,59 +46,67 @@ const DeleteCustomer = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="delete-customer"
-      aria-describedby="modal to delete customer"
-      open={isDeleteCustomerModalOpen}
-      onClose={closeDeleteCustomerModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDeleteCustomerModalOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                {`Delete ${customer.lastname}?`}
-              </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="delete-customer"
+        aria-describedby="modal to delete customer"
+        open={isDeleteCustomerModalOpen}
+        onClose={closeDeleteCustomerModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDeleteCustomerModalOpen}>
+          <Box sx={style}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  {`Delete ${customer.lastname}?`}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" gutterBottom>
+                  {`Unrecoverable delete!`}
+                </Typography>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Typography variant="cation" gutterBottom>
-                {`Unrecoverable delete!`}
-              </Typography>
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "24px" }}
+            >
+              <Button
+                sx={{
+                  marginLeft: "8px",
+                  color: "red",
+                }}
+                size="large"
+                color="inherit"
+                variant="outlined"
+                startIcon={<Delete />}
+                onClick={() => onCustomerDelete()}
+              >
+                Delete
+              </Button>
+              <Button
+                sx={{
+                  marginLeft: "8px",
+                }}
+                size="large"
+                color="primary"
+                variant="outlined"
+                startIcon={<Close />}
+                onClick={() => closeDeleteCustomerModal()}
+              >
+                Close
+              </Button>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "24px" }}
-          >
-            <Button
-              sx={{ marginLeft: "8px", color: "red" }}
-              size="large"
-              variant="outlined"
-              startIcon={<Delete />}
-              onClick={() => onCustomerDelete()}
-            >
-              Delete
-            </Button>
-            <Button
-              sx={{ marginLeft: "8px" }}
-              size="large"
-              color="primary"
-              variant="outlined"
-              startIcon={<Close />}
-              onClick={() => closeDeleteCustomerModal()}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

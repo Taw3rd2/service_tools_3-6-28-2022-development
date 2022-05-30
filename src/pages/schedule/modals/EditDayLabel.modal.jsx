@@ -18,6 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import { ArrowUpward, Close } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const modalStyle = {
   position: "absolute",
@@ -71,89 +73,96 @@ const EditDayLabel = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="edit-day-label-modal"
-      aria-describedby="edit-day-label"
-      open={isEditDayLabelModalOpen}
-      onClose={closeEditDayLabelModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isEditDayLabelModalOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Edit Day Label
-              </Typography>
-            </Grid>
-          </Grid>
-          <form onSubmit={onSubmit} autoComplete="new-password">
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="edit-day-label-modal"
+        aria-describedby="edit-day-label"
+        open={isEditDayLabelModalOpen}
+        onClose={closeEditDayLabelModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isEditDayLabelModalOpen}>
+          <Box sx={modalStyle}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                {technicians.length > 0 && (
-                  <FormControl fullWidth>
-                    <InputLabel id="select-tech-lead">Tech Lead</InputLabel>
-                    <Select
-                      labelId="select-tech-lead"
-                      id="tech-lead"
-                      value={tech}
-                      label="Tech Lead"
-                      onChange={(event) => setTech(event.target.value)}
-                      inputProps={{ tabIndex: "1" }}
-                    >
-                      {technicians
-                        .sort((a, b) => a.name.localeCompare(b.name))
-                        .map((technician) => (
-                          <MenuItem key={technician.id} value={technician.name}>
-                            {technician.name}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                )}
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  label="Location Name"
-                  fullWidth
-                  value={locationName}
-                  onChange={(event) => setLocationName(event.target.value)}
-                  inputProps={{ tabIndex: "2" }}
-                />
-              </Grid>
-
-              <Grid
-                container
-                alignItems="flex-start"
-                justifyContent="flex-end"
-                direction="row"
-                sx={{ marginTop: "24px" }}
-              >
-                <Button
-                  sx={{ marginLeft: "8px" }}
-                  type="submit"
-                  variant="outlined"
-                  startIcon={<ArrowUpward />}
-                >
-                  Submit
-                </Button>
-                <Button
-                  sx={{ marginLeft: "8px" }}
-                  type="button"
-                  variant="outlined"
-                  onClick={() => closeEditDayLabelModal()}
-                  startIcon={<Close />}
-                >
-                  Close
-                </Button>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Edit Day Label
+                </Typography>
               </Grid>
             </Grid>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+            <form onSubmit={onSubmit} autoComplete="new-password">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  {technicians.length > 0 && (
+                    <FormControl fullWidth>
+                      <InputLabel id="select-tech-lead">Tech Lead</InputLabel>
+                      <Select
+                        labelId="select-tech-lead"
+                        id="tech-lead"
+                        value={tech}
+                        label="Tech Lead"
+                        onChange={(event) => setTech(event.target.value)}
+                        inputProps={{ tabIndex: "1" }}
+                      >
+                        {technicians
+                          .sort((a, b) => a.name.localeCompare(b.name))
+                          .map((technician) => (
+                            <MenuItem
+                              key={technician.id}
+                              value={technician.name}
+                            >
+                              {technician.name}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                  )}
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    label="Location Name"
+                    fullWidth
+                    value={locationName}
+                    onChange={(event) => setLocationName(event.target.value)}
+                    inputProps={{ tabIndex: "2" }}
+                  />
+                </Grid>
+
+                <Grid
+                  container
+                  alignItems="flex-start"
+                  justifyContent="flex-end"
+                  direction="row"
+                  sx={{ marginTop: "24px" }}
+                >
+                  <Button
+                    sx={{ marginLeft: "8px" }}
+                    type="submit"
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<ArrowUpward />}
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    sx={{ marginLeft: "8px" }}
+                    type="button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => closeEditDayLabelModal()}
+                    startIcon={<Close />}
+                  >
+                    Close
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

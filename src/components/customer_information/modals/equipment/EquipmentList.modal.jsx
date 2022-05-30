@@ -18,6 +18,8 @@ import {
   Typography,
 } from "@mui/material";
 import { AddCircle, Close } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../../theme/Theme";
 
 const style = {
   position: "absolute",
@@ -56,159 +58,177 @@ const EquipmentList = ({
   );
 
   return (
-    <Modal
-      aria-labelledby="equipment-list-modal"
-      aria-describedby="opens a customer equipment list"
-      open={isEquipmentListModalOpen}
-      onClose={closeEquipmentListModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isEquipmentListModalOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Equipment List
-              </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="equipment-list-modal"
+        aria-describedby="opens a customer equipment list"
+        open={isEquipmentListModalOpen}
+        onClose={closeEquipmentListModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isEquipmentListModalOpen}>
+          <Box sx={style}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Equipment List
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-            <Table stickyHeader size="small" aria-label="equipment list table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "170px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Equipment Name
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "170px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Brand
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "170px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Model
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "170px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Serial
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "100px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Maintenance Expiration
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "100px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Parts Expiration
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "100px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  >
-                    Labor Expiration
-                  </TableCell>
-                  <TableCell
-                    align="left"
-                    sx={{
-                      minWidth: "100px",
-                      background: "teal",
-                      color: "white",
-                    }}
-                  ></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {equipment.map((unit, index) => (
-                  <TableRow
-                    key={index}
-                    onClick={() => openEditCustomerEquipmentModal(unit)}
-                    sx={{ cursor: "pointer" }}
-                  >
-                    <TableCell align="left">{unit.equipmentName}</TableCell>
-                    <TableCell align="left">{unit.equipmentBrand}</TableCell>
-                    <TableCell align="left">{unit.equipmentModel}</TableCell>
-                    <TableCell align="left">{unit.equipmentSerial}</TableCell>
-                    <TableCell align="left">{unit.equipmentContract}</TableCell>
-                    <TableCell align="left">{unit.equipmentWarranty}</TableCell>
-                    <TableCell align="left">{unit.laborWarranty}</TableCell>
-                    <TableCell align="left">
-                      <Button variant="outlined">Details</Button>
+            <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+              <Table
+                stickyHeader
+                size="small"
+                aria-label="equipment list table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "170px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Equipment Name
                     </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "170px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Brand
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "170px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Model
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "170px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Serial
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "100px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Maintenance Expiration
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "100px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Parts Expiration
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "100px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Labor Expiration
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        minWidth: "100px",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    ></TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-          >
-            <Button
-              onClick={() => openCreateCustomerEquipmentModal()}
-              variant="outlined"
-              color="primary"
-              sx={{ marginTop: "16px", marginLeft: "8px" }}
-              startIcon={<AddCircle />}
+                </TableHead>
+                <TableBody>
+                  {equipment.map((unit, index) => (
+                    <TableRow
+                      key={index}
+                      onClick={() => openEditCustomerEquipmentModal(unit)}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      <TableCell align="left">{unit.equipmentName}</TableCell>
+                      <TableCell align="left">{unit.equipmentBrand}</TableCell>
+                      <TableCell align="left">{unit.equipmentModel}</TableCell>
+                      <TableCell align="left">{unit.equipmentSerial}</TableCell>
+                      <TableCell align="left">
+                        {unit.equipmentContract}
+                      </TableCell>
+                      <TableCell align="left">
+                        {unit.equipmentWarranty}
+                      </TableCell>
+                      <TableCell align="left">{unit.laborWarranty}</TableCell>
+                      <TableCell align="left">
+                        <Button variant="outlined" color="primary">
+                          Details
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
             >
-              Add New Equipment
-            </Button>
-            <Button
-              onClick={() => closeEquipmentListModal()}
-              variant="outlined"
-              color="primary"
-              sx={{ marginTop: "16px", marginLeft: "8px" }}
-              startIcon={<Close />}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                onClick={() => openCreateCustomerEquipmentModal()}
+                variant="outlined"
+                color="primary"
+                sx={{
+                  marginTop: "16px",
+                  marginLeft: "8px",
+                }}
+                startIcon={<AddCircle />}
+              >
+                Add New Equipment
+              </Button>
+              <Button
+                onClick={() => closeEquipmentListModal()}
+                variant="outlined"
+                color="primary"
+                sx={{
+                  marginTop: "16px",
+                  marginLeft: "8px",
+                }}
+                startIcon={<Close />}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

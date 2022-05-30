@@ -22,6 +22,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Add, Clear, Close, Edit } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const modalStyle = {
   position: "absolute",
@@ -55,160 +57,168 @@ const DayLabelEditor = ({
   );
 
   return (
-    <Modal
-      aria-labelledby="day-label-editor-modal"
-      aria-describedby="day-label-editor"
-      open={isDayLabelEditorModalOpen}
-      onClose={closeDayLabelEditor}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDayLabelEditorModalOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Day Label Editor for {getFormattedDate(calendarDateSelected)}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TableContainer
-                component={Paper}
-                sx={{ overflow: "auto", maxHeight: 400 }}
-              >
-                <Table
-                  stickyHeader
-                  size="medium"
-                  aria-label="set day labels table"
-                  sx={{ border: "1px solid black" }}
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="day-label-editor-modal"
+        aria-describedby="day-label-editor"
+        open={isDayLabelEditorModalOpen}
+        onClose={closeDayLabelEditor}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDayLabelEditorModalOpen}>
+          <Box sx={modalStyle}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  Day Label Editor for {getFormattedDate(calendarDateSelected)}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <TableContainer
+                  component={Paper}
+                  sx={{ overflow: "auto", maxHeight: 400 }}
                 >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 20,
-                          backgroundColor: "white",
-                          color: "teal",
-                        }}
-                      >
-                        #
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 20,
-                          backgroundColor: "white",
-                          color: "teal",
-                        }}
-                      >
-                        Technician
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 20,
-                          backgroundColor: "white",
-                          color: "teal",
-                        }}
-                      >
-                        Label
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: 20,
-                          backgroundColor: "white",
-                          color: "teal",
-                        }}
-                      >
-                        Edit
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: 20,
-                          backgroundColor: "white",
-                          color: "teal",
-                        }}
-                      >
-                        Delete
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {labels.length > 0 &&
-                      labels
-                        .filter((item) =>
-                          isEqual(item.labelDate.toDate(), calendarDateSelected)
-                        )
-                        .sort((a, b) => a.tech.localeCompare(b.tech))
-                        .map((label, index) => (
-                          <TableRow key={index}>
-                            <TableCell align="left" sx={{ fontSize: 20 }}>
-                              {index + 1}
-                            </TableCell>
-                            <TableCell align="left" sx={{ fontSize: 20 }}>
-                              {label.tech}
-                            </TableCell>
-                            <TableCell align="left" sx={{ fontSize: 20 }}>
-                              {label.locationName}
-                            </TableCell>
-                            <TableCell align="left" sx={{ fontSize: 20 }}>
-                              <Button
-                                variant="outlined"
-                                startIcon={<Edit />}
-                                onClick={() => openEditDayLabelModal(label)}
-                              >
-                                Edit
-                              </Button>
-                            </TableCell>
-                            <TableCell align="left" sx={{ fontSize: 20 }}>
-                              <Button
-                                variant="outlined"
-                                startIcon={<Clear />}
-                                onClick={() => openDeleteDayLabelModal(label)}
-                              >
-                                Delete
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+                  <Table
+                    stickyHeader
+                    size="medium"
+                    aria-label="set day labels table"
+                    sx={{ border: "1px solid black" }}
+                  >
+                    <TableHead>
+                      <TableRow>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            fontSize: 20,
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                          }}
+                        >
+                          #
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            fontSize: 20,
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                          }}
+                        >
+                          Technician
+                        </TableCell>
+                        <TableCell
+                          align="left"
+                          sx={{
+                            fontSize: 20,
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                          }}
+                        >
+                          Label
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            fontSize: 20,
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                          }}
+                        >
+                          Edit
+                        </TableCell>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            fontSize: 20,
+                            background: lightTheme.palette.primary.light,
+                            color: lightTheme.palette.primary.contrastText,
+                          }}
+                        >
+                          Delete
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {labels.length > 0 &&
+                        labels
+                          .filter((item) =>
+                            isEqual(
+                              item.labelDate.toDate(),
+                              calendarDateSelected
+                            )
+                          )
+                          .sort((a, b) => a.tech.localeCompare(b.tech))
+                          .map((label, index) => (
+                            <TableRow key={index}>
+                              <TableCell align="left" sx={{ fontSize: 20 }}>
+                                {index + 1}
+                              </TableCell>
+                              <TableCell align="left" sx={{ fontSize: 20 }}>
+                                {label.tech}
+                              </TableCell>
+                              <TableCell align="left" sx={{ fontSize: 20 }}>
+                                {label.locationName}
+                              </TableCell>
+                              <TableCell align="left" sx={{ fontSize: 20 }}>
+                                <Button
+                                  variant="outlined"
+                                  startIcon={<Edit />}
+                                  onClick={() => openEditDayLabelModal(label)}
+                                >
+                                  Edit
+                                </Button>
+                              </TableCell>
+                              <TableCell align="left" sx={{ fontSize: 20 }}>
+                                <Button
+                                  variant="outlined"
+                                  color="primary"
+                                  startIcon={<Clear />}
+                                  onClick={() => openDeleteDayLabelModal(label)}
+                                >
+                                  Delete
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "16px" }}
-          >
-            <Button
-              size="large"
-              variant="outlined"
-              startIcon={<Add />}
-              sx={{ marginLeft: "8px" }}
-              onClick={() => openAddDayLabelModal()}
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "16px" }}
             >
-              Add
-            </Button>
-            <Button
-              size="large"
-              variant="outlined"
-              startIcon={<Close />}
-              sx={{ marginLeft: "8px" }}
-              onClick={() => closeDayLabelEditor()}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                size="large"
+                variant="outlined"
+                color="primary"
+                startIcon={<Add />}
+                sx={{ marginLeft: "8px" }}
+                onClick={() => openAddDayLabelModal()}
+              >
+                Add
+              </Button>
+              <Button
+                size="large"
+                variant="outlined"
+                color="primary"
+                startIcon={<Close />}
+                sx={{ marginLeft: "8px" }}
+                onClick={() => closeDayLabelEditor()}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

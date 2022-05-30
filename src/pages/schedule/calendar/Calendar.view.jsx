@@ -10,10 +10,12 @@ import interactionPlugin from "@fullcalendar/interaction";
 import "./calendarView.css";
 import { SettingsOutlined } from "@mui/icons-material";
 import { Button, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const settingsButton = {
-  color: "blue",
-  backgroundColor: "white",
+  color: lightTheme.palette.primary.light,
+  backgroundColor: lightTheme.palette.primary.contrastText,
   borderRadius: "5px",
   marginTop: "4px",
   marginLeft: "4px",
@@ -30,8 +32,8 @@ const settingsButton = {
 };
 const regButton = {
   textAlign: "center",
-  color: "blue",
-  backgroundColor: "white",
+  color: lightTheme.palette.primary.light,
+  backgroundColor: lightTheme.palette.primary.contrastText,
   marginTop: "4px",
   minWidth: 33,
   maxWidth: 33,
@@ -176,13 +178,19 @@ const Calendar = ({
               wordBreak: "break-word",
               textAlign: "center",
             }}
+            color="primary"
             variant="body1"
             gutterBottom
           >
             {cityLabels.join(" ")}
           </Typography>
 
-          <Button variant="outlined" size="small" sx={regButton}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            sx={regButton}
+          >
             <strong>{dayNumberText}</strong>
           </Button>
         </div>
@@ -211,7 +219,7 @@ const Calendar = ({
   };
 
   return (
-    <div>
+    <ThemeProvider theme={lightTheme}>
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
@@ -229,7 +237,7 @@ const Calendar = ({
         eventDidMount={eventBorderColorSetter}
         height={980}
       />
-    </div>
+    </ThemeProvider>
   );
 };
 

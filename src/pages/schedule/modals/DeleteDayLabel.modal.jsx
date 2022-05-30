@@ -13,6 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../theme/Theme";
 
 const modalStyle = {
   position: "absolute",
@@ -41,52 +43,56 @@ const DeleteDayLabel = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="delete-day-label-modal"
-      aria-describedby="modal for deleting a day label"
-      open={isDeleteDayLabelModalOpen}
-      onClose={closeDeleteDayLabelModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isDeleteDayLabelModalOpen}>
-        <Box sx={modalStyle}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                {`Delete ${selectedDayLabel.locationName}?`}
-              </Typography>
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="delete-day-label-modal"
+        aria-describedby="modal for deleting a day label"
+        open={isDeleteDayLabelModalOpen}
+        onClose={closeDeleteDayLabelModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isDeleteDayLabelModalOpen}>
+          <Box sx={modalStyle}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Typography variant="h5" gutterBottom color="primary">
+                  {`Delete ${selectedDayLabel.locationName}?`}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid
-            container
-            alignItems="flex-start"
-            justifyContent="flex-end"
-            direction="row"
-            sx={{ marginTop: "24px" }}
-          >
-            <Button
-              sx={{ marginLeft: "8px", color: "red" }}
-              variant="outlined"
-              startIcon={<Delete />}
-              onClick={() => removeDayLabel()}
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="flex-end"
+              direction="row"
+              sx={{ marginTop: "24px" }}
             >
-              Delete
-            </Button>
-            <Button
-              sx={{ marginLeft: "8px" }}
-              type="button"
-              variant="outlined"
-              onClick={() => closeDeleteDayLabelModal()}
-              startIcon={<Close />}
-            >
-              Close
-            </Button>
-          </Grid>
-        </Box>
-      </Fade>
-    </Modal>
+              <Button
+                sx={{ marginLeft: "8px", color: "red" }}
+                variant="outlined"
+                color="inherit"
+                startIcon={<Delete />}
+                onClick={() => removeDayLabel()}
+              >
+                Delete
+              </Button>
+              <Button
+                sx={{ marginLeft: "8px" }}
+                type="button"
+                variant="outlined"
+                color="primary"
+                onClick={() => closeDeleteDayLabelModal()}
+                startIcon={<Close />}
+              >
+                Close
+              </Button>
+            </Grid>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

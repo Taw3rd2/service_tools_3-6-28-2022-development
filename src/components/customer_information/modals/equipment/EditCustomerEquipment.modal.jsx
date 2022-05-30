@@ -19,6 +19,8 @@ import {
   Typography,
 } from "@mui/material";
 import { ArrowUpward, Close, Delete } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../../theme/Theme";
 
 const style = {
   position: "absolute",
@@ -154,152 +156,167 @@ const EditCustomerEquipment = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="edit-customer-equipment"
-      aria-describedby="modal to edit customer equipment"
-      open={isEditCustomerEquipmentOpen}
-      onClose={closeEditCustomerEquipmentModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isEditCustomerEquipmentOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Customer Equipment
-              </Typography>
-            </Grid>
-          </Grid>
-
-          <form onSubmit={onSubmitEquipmentUpdates} autoComplete="new-password">
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="edit-customer-equipment"
+        aria-describedby="modal to edit customer equipment"
+        open={isEditCustomerEquipmentOpen}
+        onClose={closeEditCustomerEquipmentModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isEditCustomerEquipmentOpen}>
+          <Box sx={style}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  value={equipmentName}
-                  label="Name"
-                  fullWidth
-                  onChange={(e) => setEquipmentName(e.target.value)}
-                  inputProps={{ tabIndex: "1" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentBrand}
-                  label="Brand"
-                  fullWidth
-                  onChange={(e) => setEquipmentBrand(e.target.value)}
-                  inputProps={{ tabIndex: "2" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentModel}
-                  label="Equipment Model Number"
-                  fullWidth
-                  onChange={(e) => setEquipmentModel(e.target.value)}
-                  inputProps={{ tabIndex: "3" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentSerial}
-                  label="Equipment Serial Number"
-                  fullWidth
-                  onChange={(e) => setEquipmentSerial(e.target.value)}
-                  inputProps={{ tabIndex: "4" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentEff}
-                  label="Equipment Efficiency"
-                  fullWidth
-                  onChange={(e) => setEquipmentEff(e.target.value)}
-                  inputProps={{ tabIndex: "5" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentVoltage}
-                  label="Equipment Voltage"
-                  fullWidth
-                  onChange={(e) => setEquipmentVoltage(e.target.value)}
-                  inputProps={{ tabIndex: "6" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentFuel}
-                  label="Equipment Fuel/Freon"
-                  fullWidth
-                  onChange={(e) => setEquipmentFuel(e.target.value)}
-                  inputProps={{ tabIndex: "7" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={equipmentBtu}
-                  label="Equipment Size"
-                  fullWidth
-                  onChange={(e) => setEquipmentBtu(e.target.value)}
-                  inputProps={{ tabIndex: "8" }}
-                />
-              </Grid>
-              <Grid item xs={12} style={{ marginTop: "16px" }}>
-                <TextField
-                  value={equipmentNotes}
-                  label="Equipment Notes"
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  onChange={(e) => setEquipmentNotes(e.target.value)}
-                  inputProps={{ tabIndex: "9" }}
-                />
+                <Typography variant="h5" gutterBottom color="primary">
+                  Customer Equipment
+                </Typography>
               </Grid>
             </Grid>
 
-            <Grid
-              container
-              alignItems="flex-start"
-              justifyContent="flex-end"
-              direction="row"
-              sx={{ marginTop: "24px" }}
+            <form
+              onSubmit={onSubmitEquipmentUpdates}
+              autoComplete="new-password"
             >
-              <Button
-                sx={{ marginLeft: "8px", color: "red" }}
-                onClick={() => openDeleteEquipmentModal()}
-                variant="outlined"
-                tabIndex={14}
-                startIcon={<Delete />}
-              >
-                Delete Equipment
-              </Button>
-              <Button
-                sx={{ marginLeft: "8px" }}
-                variant="outlined"
-                tabIndex={15}
-                type="submit"
-                startIcon={<ArrowUpward />}
-              >
-                Save Changes
-              </Button>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentName}
+                    label="Name"
+                    fullWidth
+                    onChange={(e) => setEquipmentName(e.target.value)}
+                    inputProps={{ tabIndex: "1" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentBrand}
+                    label="Brand"
+                    fullWidth
+                    onChange={(e) => setEquipmentBrand(e.target.value)}
+                    inputProps={{ tabIndex: "2" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentModel}
+                    label="Equipment Model Number"
+                    fullWidth
+                    onChange={(e) => setEquipmentModel(e.target.value)}
+                    inputProps={{ tabIndex: "3" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentSerial}
+                    label="Equipment Serial Number"
+                    fullWidth
+                    onChange={(e) => setEquipmentSerial(e.target.value)}
+                    inputProps={{ tabIndex: "4" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentEff}
+                    label="Equipment Efficiency"
+                    fullWidth
+                    onChange={(e) => setEquipmentEff(e.target.value)}
+                    inputProps={{ tabIndex: "5" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentVoltage}
+                    label="Equipment Voltage"
+                    fullWidth
+                    onChange={(e) => setEquipmentVoltage(e.target.value)}
+                    inputProps={{ tabIndex: "6" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentFuel}
+                    label="Equipment Fuel/Freon"
+                    fullWidth
+                    onChange={(e) => setEquipmentFuel(e.target.value)}
+                    inputProps={{ tabIndex: "7" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={equipmentBtu}
+                    label="Equipment Size"
+                    fullWidth
+                    onChange={(e) => setEquipmentBtu(e.target.value)}
+                    inputProps={{ tabIndex: "8" }}
+                  />
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "16px" }}>
+                  <TextField
+                    value={equipmentNotes}
+                    label="Equipment Notes"
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    onChange={(e) => setEquipmentNotes(e.target.value)}
+                    inputProps={{ tabIndex: "9" }}
+                  />
+                </Grid>
+              </Grid>
 
-              <Button
-                sx={{ marginLeft: "8px" }}
-                onClick={() => closeEditCustomerEquipmentModal()}
-                variant="outlined"
-                tabIndex={16}
-                startIcon={<Close />}
+              <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="flex-end"
+                direction="row"
+                sx={{ marginTop: "24px" }}
               >
-                Cancel
-              </Button>
-            </Grid>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                    color: "red",
+                  }}
+                  color="inherit"
+                  onClick={() => openDeleteEquipmentModal()}
+                  variant="outlined"
+                  tabIndex={14}
+                  startIcon={<Delete />}
+                >
+                  Delete Equipment
+                </Button>
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  color="primary"
+                  variant="outlined"
+                  tabIndex={15}
+                  type="submit"
+                  startIcon={<ArrowUpward />}
+                >
+                  Save Changes
+                </Button>
+
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  onClick={() => closeEditCustomerEquipmentModal()}
+                  color="primary"
+                  variant="outlined"
+                  tabIndex={16}
+                  startIcon={<Close />}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

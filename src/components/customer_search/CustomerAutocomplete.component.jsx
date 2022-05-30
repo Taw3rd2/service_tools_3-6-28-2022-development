@@ -2,6 +2,8 @@ import React from "react";
 
 import { Autocomplete, Grid, TextField, Typography } from "@mui/material";
 import { createFilterOptions } from "@mui/material/Autocomplete";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../theme/Theme";
 
 const CustomerAutocomplete = ({
   customers,
@@ -23,7 +25,7 @@ const CustomerAutocomplete = ({
   });
 
   return (
-    <div>
+    <ThemeProvider theme={lightTheme}>
       {selectedSearchParameter === "lastname" && (
         <Autocomplete
           id="search-box"
@@ -150,7 +152,7 @@ const CustomerAutocomplete = ({
           )}
         />
       )}
-    </div>
+    </ThemeProvider>
   );
 };
 

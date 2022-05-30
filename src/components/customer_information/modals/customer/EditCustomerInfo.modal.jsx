@@ -14,6 +14,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Close, Delete, ArrowUpward } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../../../theme/Theme";
 
 const style = {
   position: "absolute",
@@ -101,222 +103,232 @@ const EditCustomerInfo = ({
   };
 
   return (
-    <Modal
-      aria-labelledby="edit-customer-modal"
-      aria-describedby="modal to edit a customer"
-      open={isEditCustomerModalOpen}
-      onClose={closeEditCustomerModal}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 500 }}
-    >
-      <Fade in={isEditCustomerModalOpen}>
-        <Box sx={style}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" gutterBottom sx={{ color: "teal" }}>
-                Edit Customer
-              </Typography>
-            </Grid>
-          </Grid>
-
-          <form onSubmit={updateCustomer} autoComplete="new-password">
+    <ThemeProvider theme={lightTheme}>
+      <Modal
+        aria-labelledby="edit-customer-modal"
+        aria-describedby="modal to edit a customer"
+        open={isEditCustomerModalOpen}
+        onClose={closeEditCustomerModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 500 }}
+      >
+        <Fade in={isEditCustomerModalOpen}>
+          <Box sx={style}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <h3>
-                  Commercial:
-                  <Checkbox
-                    name="billingiscommercial"
-                    color="primary"
-                    checked={billingiscommercial}
-                    onChange={(e) => setToCommercial(e.target.checked)}
-                  />
-                </h3>
-              </Grid>
-              <Grid item xs={6}>
-                <h3>
-                  No Service:
-                  <Checkbox
-                    name="noService"
-                    color="primary"
-                    checked={noService}
-                    onChange={(e) => setNoService(e.target.checked)}
-                  />
-                </h3>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  value={firstname}
-                  label="First Name"
-                  fullWidth
-                  onChange={(e) => setFirstName(e.target.value)}
-                  inputProps={{ tabIndex: "1" }}
-                />
-              </Grid>
-              {lastNameError ? (
-                <Grid item xs={6}>
-                  <TextField
-                    error
-                    value={lastname}
-                    label="Last Name"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                    inputProps={{ tabIndex: "2" }}
-                  />
-                </Grid>
-              ) : (
-                <Grid item xs={6}>
-                  <TextField
-                    value={lastname}
-                    label="Last Name"
-                    fullWidth
-                    onChange={(e) => setLastName(e.target.value)}
-                    inputProps={{ tabIndex: "2" }}
-                  />
-                </Grid>
-              )}
               <Grid item xs={12}>
-                <TextField
-                  value={street}
-                  label="Street Address"
-                  fullWidth
-                  onChange={(e) => setStreet(e.target.value)}
-                  inputProps={{ tabIndex: "3" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={city}
-                  label="City"
-                  fullWidth
-                  onChange={(e) => setCity(e.target.value)}
-                  inputProps={{ tabIndex: "4" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={state}
-                  label="State"
-                  fullWidth
-                  onChange={(e) => setState(e.target.value)}
-                  inputProps={{ tabIndex: "5" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={zip}
-                  label="Zip"
-                  fullWidth
-                  onChange={(e) => setZip(e.target.value)}
-                  inputProps={{ tabIndex: "6" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={phoneName}
-                  label="Primary Contact Name"
-                  fullWidth
-                  onChange={(e) => setPhoneName(e.target.value)}
-                  inputProps={{ tabIndex: "7" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={altPhoneName}
-                  label="Secondary Contact Name"
-                  fullWidth
-                  onChange={(e) => setAltPhoneName(e.target.value)}
-                  inputProps={{ tabIndex: "9" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={otherPhoneName}
-                  label="Other Contact Name"
-                  fullWidth
-                  onChange={(e) => setOtherPhoneName(e.target.value)}
-                  inputProps={{ tabIndex: "11" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={phone}
-                  label="Primary Phone Number"
-                  fullWidth
-                  onChange={(e) => setPhone(e.target.value)}
-                  inputProps={{ tabIndex: "8" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={altphone}
-                  label="Secondary Phone Number"
-                  fullWidth
-                  onChange={(e) => setAltPhone(e.target.value)}
-                  inputProps={{ tabIndex: "10" }}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  value={otherPhone}
-                  label="Other Phone Number"
-                  fullWidth
-                  onChange={(e) => setOtherPhone(e.target.value)}
-                  inputProps={{ tabIndex: "12" }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  value={email}
-                  label="Email Address"
-                  fullWidth
-                  onChange={(e) => setEmail(e.target.value)}
-                  inputProps={{ tabIndex: "13" }}
-                />
+                <Typography variant="h5" gutterBottom color="primary">
+                  Edit Customer
+                </Typography>
               </Grid>
             </Grid>
-            <Grid
-              container
-              alignItems="flex-start"
-              justifyContent="flex-end"
-              direction="row"
-              sx={{ marginTop: "24px" }}
-            >
-              <Button
-                sx={{ marginLeft: "8px", color: "red" }}
-                onClick={() => openDeleteCustomerModal()}
-                variant="outlined"
-                tabIndex={14}
-                startIcon={<Delete />}
-              >
-                Delete Customer
-              </Button>
-              <Button
-                sx={{ marginLeft: "8px" }}
-                variant="outlined"
-                color="primary"
-                tabIndex={15}
-                type="submit"
-                startIcon={<ArrowUpward />}
-              >
-                Save Changes
-              </Button>
 
-              <Button
-                sx={{ marginLeft: "8px" }}
-                onClick={() => closeEditCustomerModal()}
-                variant="outlined"
-                color="primary"
-                tabIndex={16}
-                startIcon={<Close />}
+            <form onSubmit={updateCustomer} autoComplete="new-password">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <h3>
+                    Commercial:
+                    <Checkbox
+                      name="billingiscommercial"
+                      color="primary"
+                      checked={billingiscommercial}
+                      onChange={(e) => setToCommercial(e.target.checked)}
+                    />
+                  </h3>
+                </Grid>
+                <Grid item xs={6}>
+                  <h3>
+                    No Service:
+                    <Checkbox
+                      name="noService"
+                      color="primary"
+                      checked={noService}
+                      onChange={(e) => setNoService(e.target.checked)}
+                    />
+                  </h3>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    value={firstname}
+                    label="First Name"
+                    fullWidth
+                    onChange={(e) => setFirstName(e.target.value)}
+                    inputProps={{ tabIndex: "1" }}
+                  />
+                </Grid>
+                {lastNameError ? (
+                  <Grid item xs={6}>
+                    <TextField
+                      error
+                      value={lastname}
+                      label="Last Name"
+                      fullWidth
+                      onChange={(e) => setLastName(e.target.value)}
+                      inputProps={{ tabIndex: "2" }}
+                    />
+                  </Grid>
+                ) : (
+                  <Grid item xs={6}>
+                    <TextField
+                      value={lastname}
+                      label="Last Name"
+                      fullWidth
+                      onChange={(e) => setLastName(e.target.value)}
+                      inputProps={{ tabIndex: "2" }}
+                    />
+                  </Grid>
+                )}
+                <Grid item xs={12}>
+                  <TextField
+                    value={street}
+                    label="Street Address"
+                    fullWidth
+                    onChange={(e) => setStreet(e.target.value)}
+                    inputProps={{ tabIndex: "3" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={city}
+                    label="City"
+                    fullWidth
+                    onChange={(e) => setCity(e.target.value)}
+                    inputProps={{ tabIndex: "4" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={state}
+                    label="State"
+                    fullWidth
+                    onChange={(e) => setState(e.target.value)}
+                    inputProps={{ tabIndex: "5" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={zip}
+                    label="Zip"
+                    fullWidth
+                    onChange={(e) => setZip(e.target.value)}
+                    inputProps={{ tabIndex: "6" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={phoneName}
+                    label="Primary Contact Name"
+                    fullWidth
+                    onChange={(e) => setPhoneName(e.target.value)}
+                    inputProps={{ tabIndex: "7" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={altPhoneName}
+                    label="Secondary Contact Name"
+                    fullWidth
+                    onChange={(e) => setAltPhoneName(e.target.value)}
+                    inputProps={{ tabIndex: "9" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={otherPhoneName}
+                    label="Other Contact Name"
+                    fullWidth
+                    onChange={(e) => setOtherPhoneName(e.target.value)}
+                    inputProps={{ tabIndex: "11" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={phone}
+                    label="Primary Phone Number"
+                    fullWidth
+                    onChange={(e) => setPhone(e.target.value)}
+                    inputProps={{ tabIndex: "8" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={altphone}
+                    label="Secondary Phone Number"
+                    fullWidth
+                    onChange={(e) => setAltPhone(e.target.value)}
+                    inputProps={{ tabIndex: "10" }}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField
+                    value={otherPhone}
+                    label="Other Phone Number"
+                    fullWidth
+                    onChange={(e) => setOtherPhone(e.target.value)}
+                    inputProps={{ tabIndex: "12" }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    value={email}
+                    label="Email Address"
+                    fullWidth
+                    onChange={(e) => setEmail(e.target.value)}
+                    inputProps={{ tabIndex: "13" }}
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                alignItems="flex-start"
+                justifyContent="flex-end"
+                direction="row"
+                sx={{ marginTop: "24px" }}
               >
-                Cancel
-              </Button>
-            </Grid>
-          </form>
-        </Box>
-      </Fade>
-    </Modal>
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                    color: "red",
+                  }}
+                  onClick={() => openDeleteCustomerModal()}
+                  variant="outlined"
+                  color="inherit"
+                  tabIndex={14}
+                  startIcon={<Delete />}
+                >
+                  Delete Customer
+                </Button>
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  variant="outlined"
+                  color="primary"
+                  tabIndex={15}
+                  type="submit"
+                  startIcon={<ArrowUpward />}
+                >
+                  Save Changes
+                </Button>
+
+                <Button
+                  sx={{
+                    marginLeft: "8px",
+                  }}
+                  onClick={() => closeEditCustomerModal()}
+                  variant="outlined"
+                  color="primary"
+                  tabIndex={16}
+                  startIcon={<Close />}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </ThemeProvider>
   );
 };
 

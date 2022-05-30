@@ -1,7 +1,9 @@
 import React from "react";
 
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { AddCircle, Assignment } from "@mui/icons-material";
+import { ThemeProvider } from "@mui/material";
+import { lightTheme } from "../../theme/Theme";
 
 const reportButton = {
   border: "1px solid black",
@@ -12,31 +14,32 @@ const reportButton = {
 
 const InactiveButtons = () => {
   return (
-    <div
-      style={{
-        flexGrow: 1,
-        border: "2px solid black",
-        backgroundColor: "#e6ebf2",
-        marginRight: "4px",
-        padding: "4px",
-      }}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={3}>
-          <div style={reportButton}>
-            <AddCircle style={{ fontSize: 60, color: "grey" }} />
-            <Typography variant="subtitle1">Create New</Typography>
-            <Typography variant="subtitle1">Dispatch</Typography>
-          </div>
-        </Grid>
-        <Grid item xs={3}>
-          <div style={reportButton}>
-            <Assignment style={{ fontSize: 60, color: "grey" }} />
-            <Typography variant="subtitle1">All Customer</Typography>
-            <Typography variant="subtitle1">Dispatches</Typography>
-          </div>
-        </Grid>
-        {/*<Grid item xs={3}>
+    <ThemeProvider theme={lightTheme}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          border: "2px solid black",
+          backgroundColor: "lightgray",
+          marginRight: "4px",
+          padding: "4px",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={3}>
+            <div style={reportButton}>
+              <AddCircle style={{ fontSize: 60, color: "grey" }} />
+              <Typography variant="subtitle1">Create New</Typography>
+              <Typography variant="subtitle1">Dispatch</Typography>
+            </div>
+          </Grid>
+          <Grid item xs={3}>
+            <div style={reportButton}>
+              <Assignment style={{ fontSize: 60, color: "grey" }} />
+              <Typography variant="subtitle1">All Customer</Typography>
+              <Typography variant="subtitle1">Dispatches</Typography>
+            </div>
+          </Grid>
+          {/*<Grid item xs={3}>
           <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "grey" }} />
             <Typography variant="subtitle1">All Customer</Typography>
@@ -78,8 +81,9 @@ const InactiveButtons = () => {
             <Typography variant="subtitle1">Equipment Quote</Typography>
           </div>
         </Grid> */}
-      </Grid>
-    </div>
+        </Grid>
+      </Box>
+    </ThemeProvider>
   );
 };
 
