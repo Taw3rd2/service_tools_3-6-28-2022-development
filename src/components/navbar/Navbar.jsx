@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { ThemeProvider } from "@mui/material";
+import { ThemeProvider, useMediaQuery } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
 
 const pages = [
@@ -28,6 +28,7 @@ const settings = ["Logout"];
 
 const NavBar = ({ currentUser }) => {
   let navigate = useNavigate();
+  const matchesPrint = useMediaQuery("print");
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -59,133 +60,138 @@ const NavBar = ({ currentUser }) => {
   }
 
   return (
-    <ThemeProvider theme={lightTheme}>
-      <AppBar position="static" color="primary">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h4"
-              noWrap
-              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-            >
-              Service Tools
-            </Typography>
+    <>
+      {matchesPrint ? null : (
+        <ThemeProvider theme={lightTheme}>
+          <AppBar position="static" color="primary">
+            <Container maxWidth="xl">
+              <Toolbar disableGutters>
+                <Typography
+                  variant="h4"
+                  noWrap
+                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                >
+                  Service Tools
+                </Typography>
 
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{
-                  display: { xs: "block", md: "none" },
-                }}
-              >
-                {pages.map((page) => (
-                  <MenuItem key={page.key} onClick={() => navigate(page.link)}>
-                    <Typography textAlign="center">{page.name}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-            >
-              ST
-            </Typography>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {currentUser
-                ? pages.map((page) => (
-                    <Button
-                      key={page.key}
-                      onClick={() => navigate(page.link)}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      {page.name}
-                    </Button>
-                  ))
-                : pages.map((page) => (
-                    <Button
-                      disabled
-                      key={page.key}
-                      onClick={() => navigate(page.link)}
-                      sx={{ my: 2, color: "white", display: "block" }}
-                    >
-                      {page.name}
-                    </Button>
-                  ))}
-            </Box>
-            <Box sx={{ flexGrow: 0 }}>
-              {currentUser ? (
-                <Tooltip title="Open settings">
+                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
                   <IconButton
-                    onClick={handleOpenUserMenu}
-                    sx={{ p: 0, color: "white" }}
+                    size="large"
+                    aria-label="account of current user"
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    onClick={handleOpenNavMenu}
+                    color="inherit"
                   >
-                    {currentUser.displayName
-                      ? currentUser.displayName
-                      : currentUser.email}
+                    <MenuIcon />
                   </IconButton>
-                </Tooltip>
-              ) : (
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="No User" />
-                  </IconButton>
-                </Tooltip>
-              )}
+                  <Menu
+                    id="menu-appbar"
+                    anchorEl={anchorElNav}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "left",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    open={Boolean(anchorElNav)}
+                    onClose={handleCloseNavMenu}
+                    sx={{
+                      display: { xs: "block", md: "none" },
+                    }}
+                  >
+                    {pages.map((page) => (
+                      <MenuItem
+                        key={page.key}
+                        onClick={() => navigate(page.link)}
+                      >
+                        <Typography textAlign="center">{page.name}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+                <Typography
+                  variant="h6"
+                  noWrap
+                  component="div"
+                  sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                >
+                  ST
+                </Typography>
+                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                  {currentUser
+                    ? pages.map((page) => (
+                        <Button
+                          key={page.key}
+                          onClick={() => navigate(page.link)}
+                          sx={{ my: 2, color: "white", display: "block" }}
+                        >
+                          {page.name}
+                        </Button>
+                      ))
+                    : pages.map((page) => (
+                        <Button
+                          disabled
+                          key={page.key}
+                          onClick={() => navigate(page.link)}
+                          sx={{ my: 2, color: "white", display: "block" }}
+                        >
+                          {page.name}
+                        </Button>
+                      ))}
+                </Box>
+                <Box sx={{ flexGrow: 0 }}>
+                  {currentUser ? (
+                    <Tooltip title="Open settings">
+                      <IconButton
+                        onClick={handleOpenUserMenu}
+                        sx={{ p: 0, color: "white" }}
+                      >
+                        {currentUser.displayName
+                          ? currentUser.displayName
+                          : currentUser.email}
+                      </IconButton>
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Open settings">
+                      <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                        <Avatar alt="No User" />
+                      </IconButton>
+                    </Tooltip>
+                  )}
 
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem key={setting}>
-                    <Typography textAlign="center" onClick={handleLogOut}>
-                      {setting}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          </Toolbar>
-        </Container>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting}>
+                        <Typography textAlign="center" onClick={handleLogOut}>
+                          {setting}
+                        </Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </Toolbar>
+            </Container>
 
-        {/* {currentUser ? (
+            {/* {currentUser ? (
         <Toolbar>
           <Typography variant="h5">Service Tools</Typography>
           <Typography>
@@ -258,8 +264,10 @@ const NavBar = ({ currentUser }) => {
           </Button>
         </Toolbar>
       )} */}
-      </AppBar>
-    </ThemeProvider>
+          </AppBar>
+        </ThemeProvider>
+      )}
+    </>
   );
 };
 

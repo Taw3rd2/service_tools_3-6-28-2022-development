@@ -75,11 +75,11 @@ const DailyOptionsMenu = ({
                       <Grid key={tech.id} item xs={12}>
                         <Link
                           to={{
-                            pathname: "/print_daily_slips",
-                            state: {
-                              techLead: `${tech.name}`,
-                              date: calendarDateSelected,
-                            },
+                            pathname: `/print_daily_slips/${tech.id}`,
+                          }}
+                          state={{
+                            techLead: `${tech.name}`,
+                            date: calendarDateSelected,
                           }}
                           style={{ textDecoration: "none" }}
                         >
