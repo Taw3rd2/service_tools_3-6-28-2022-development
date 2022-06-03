@@ -7,6 +7,8 @@ import {
   updateDocument,
 } from "../../../firebase/firestore.utils";
 
+import { useNavigate } from "react-router-dom";
+
 import { setDateToZeroHours } from "../../../utilities/dateUtils";
 import {
   compareEvents,
@@ -57,6 +59,7 @@ const DispatchEditor = ({
   openJobCompletedModal,
 }) => {
   const db = getFirestore();
+  const navigate = useNavigate();
 
   const [dispatchers, setDispatchers] = useState([]);
   useEffect(
@@ -438,6 +441,44 @@ const DispatchEditor = ({
     }
   };
 
+  const routeToPrintOneDispatch = () => {
+    const dispatchToPush = {
+      altphone,
+      altPhoneName,
+      city,
+      customerId,
+      dateCreated,
+      dateModified,
+      dateScheduled,
+      end,
+      firstname,
+      id,
+      issue,
+      jobNumber,
+      lastname,
+      leadSource,
+      notes,
+      payment,
+      phone,
+      phoneName,
+      scheduledDate,
+      shorthand,
+      start,
+      status,
+      street,
+      takenBy,
+      techHelper,
+      techHelperId,
+      techLead,
+      timeAlotted,
+      timeOfDay,
+      title,
+    };
+    navigate(`/print_one_slip/${id}`, {
+      state: dispatchToPush,
+    });
+  };
+
   const handleIssueChange = (event) => {
     const { value } = event.target;
     setIssue(value);
@@ -470,7 +511,11 @@ const DispatchEditor = ({
                   }}
                 >
                   Dispatch Editor
-                  <IconButton sx={{ marginLeft: "auto" }} color="primary">
+                  <IconButton
+                    sx={{ marginLeft: "auto" }}
+                    color="primary"
+                    onClick={() => routeToPrintOneDispatch()}
+                  >
                     <Print fontSize="large" />
                   </IconButton>
                 </Typography>

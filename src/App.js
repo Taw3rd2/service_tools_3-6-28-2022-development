@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from './components/navbar/Navbar'
 import Spinner from './components/spinner/Spinner';
 import PrintDailySlips from './pages/print_daily_slips/PrintDailySlips.page';
+import PrintOneSlip from './pages/print_daily_slips/PrintOneSlip';
 
 const GeneralLedger = lazy(() => import("./pages/accounting/GeneralLedger.page"))
 const HomePage = lazy(() => import("./pages/homepage/HomePage.page"))
@@ -14,7 +15,7 @@ const Invoice = lazy(() => import("./pages/invoice/Invoice.page"))
 const PartsCatalog = lazy(() => import("./pages/parts_catalog/PartsCatalog.page"))
 const PartsQuote = lazy(() => import("./pages/parts_quote/PartsQuote.page"))
 //const PrintDailySlips = lazy(() => import("./pages/print_daily_slips/PrintDailySlips.page"))
-const PrintOneSlip = lazy(() => import("./pages/print_one_slip/PrintOneSlip.page"))
+//const PrintOneSlip = lazy(() => import("./pages/print_one_slip/PrintOneSlip.page"))
 const Schedule = lazy(() => import("./pages/schedule/Schedule.page"))
 const Settings = lazy(() => import("./pages/settings/Settings.page"))
 const SignIn = lazy(() => import("./pages/sign-in/SignIn.page"))
@@ -65,7 +66,7 @@ function App() {
           element = {currentUser ? <PrintDailySlips /> : <SignIn />}
         />
         <Route  
-          path="/print_one_slip"
+          path="/print_one_slip/:state"
           element = {currentUser ? <PrintOneSlip /> : <SignIn />}
         />
         <Route 
