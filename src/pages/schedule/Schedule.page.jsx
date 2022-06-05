@@ -7,15 +7,16 @@ import Spinner from "../../components/spinner/Spinner";
 
 import { Box, Tab, Tabs } from "@mui/material";
 
-const DispatchEditorModal = lazy(() => import("./modals/DispatchEditor.modal"));
-const JobCompletedModal = lazy(() => import("./modals/JobComplete.modal"));
+const AddDayLabelModal = lazy(() => import("./modals/AddDayLabel.modal"));
 const DailyOptionsMenuModal = lazy(() =>
   import("./modals/DailyOptionsMenu.modal")
 );
 const DayLabelEditorModal = lazy(() => import("./modals/DayLabelEditor.modal"));
-const AddDayLabelModal = lazy(() => import("./modals/AddDayLabel.modal"));
 const DeleteDayLabelModal = lazy(() => import("./modals/DeleteDayLabel.modal"));
+const DeleteDispatchModal = lazy(() => import("./modals/DeleteDispatch.modal"));
+const DispatchEditorModal = lazy(() => import("./modals/DispatchEditor.modal"));
 const EditDayLabelModal = lazy(() => import("./modals/EditDayLabel.modal"));
+const JobCompletedModal = lazy(() => import("./modals/JobComplete.modal"));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -140,6 +141,16 @@ const Schedule = () => {
     setEditDayLabelOpen(false);
   };
 
+  //Delete Dispatch Modal
+  const [isDeleteDispatchModalOpen, setDeleteDispatchModalOpen] =
+    useState(false);
+  const openDeleteDispatchModal = () => {
+    setDeleteDispatchModalOpen(true);
+  };
+  const closeDeleteDispatchModal = () => {
+    setDeleteDispatchModalOpen(false);
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Box sx={{ borderBottom: 2, borderColor: "divider" }}>
@@ -189,6 +200,7 @@ const Schedule = () => {
             closeDispatchEditorModal={closeDispatchEditorModal}
             selectedDispatch={selectedDispatch}
             openJobCompletedModal={openJobCompletedModal}
+            openDeleteDispatchModal={openDeleteDispatchModal}
           />
         </Suspense>
       )}
@@ -248,6 +260,16 @@ const Schedule = () => {
             closeEditDayLabelModal={closeEditDayLabelModal}
             calendarDateSelected={calendarDateSelected}
             selectedDayLabel={selectedDayLabel}
+          />
+        </Suspense>
+      )}
+      {isDeleteDispatchModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <DeleteDispatchModal
+            isDeleteDispatchModalOpen={isDeleteDispatchModalOpen}
+            closeDeleteDispatchModal={closeDeleteDispatchModal}
+            closeDispatchEditorModal={closeDispatchEditorModal}
+            selectedDispatch={selectedDispatch}
           />
         </Suspense>
       )}

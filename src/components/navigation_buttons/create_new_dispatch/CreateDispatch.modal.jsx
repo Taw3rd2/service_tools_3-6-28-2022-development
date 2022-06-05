@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { collection, doc, getFirestore, onSnapshot } from "firebase/firestore";
-import { createUnNamedDocument } from "../../../firebase/firestore.utils";
+import { createNamedDocument } from "../../../firebase/firestore.utils";
 
 import { addHours, getUnixTime } from "date-fns";
 import { setDateToZeroHours } from "../../../utilities/dateUtils";
@@ -167,9 +167,10 @@ const CreateDispatch = ({
         customerId: customer.id,
         invoiceId: localInvoiceId,
       };
-      createUnNamedDocument(collection(db, "events"), newDispatch).then(() =>
-        closeCreateDispatchModal()
-      );
+      createNamedDocument(
+        doc(db, "events", techLeadGeneratedId),
+        newDispatch
+      ).then(() => closeCreateDispatchModal());
     } else {
       const docForhelperId = doc(collection(db, "events"));
       const techHelperGeneratedId = docForhelperId.id;
@@ -242,9 +243,15 @@ const CreateDispatch = ({
         invoiceId: localInvoiceId,
       };
 
-      createUnNamedDocument(collection(db, "events"), newLeadDispatch)
+      createNamedDocument(
+        doc(db, "events", techLeadGeneratedId),
+        newLeadDispatch
+      )
         .then(() =>
-          createUnNamedDocument(collection(db, "events"), newHelperDispatch)
+          createNamedDocument(
+            doc(db, "events", techHelperGeneratedId),
+            newHelperDispatch
+          )
         )
         .then(() => closeCreateDispatchModal());
     }

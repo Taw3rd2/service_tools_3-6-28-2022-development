@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { collection, doc, getFirestore, onSnapshot } from "firebase/firestore";
 import {
-  createUnNamedDocument,
+  createNamedDocument,
   deleteDocument,
   updateDocument,
 } from "../../../firebase/firestore.utils";
@@ -32,7 +32,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { ArrowUpward, Close, Print } from "@mui/icons-material";
+import { ArrowUpward, Close, Delete, Print } from "@mui/icons-material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -57,6 +57,7 @@ const DispatchEditor = ({
   closeDispatchEditorModal,
   selectedDispatch,
   openJobCompletedModal,
+  openDeleteDispatchModal,
 }) => {
   const db = getFirestore();
   const navigate = useNavigate();
@@ -225,6 +226,7 @@ const DispatchEditor = ({
 
   const onSubmit = (event) => {
     event.preventDefault();
+    console.log("status: ", status);
     if (status === "done" || status === "parts") {
       console.log("status: ", status);
       openJobCompletedModal();
@@ -365,9 +367,13 @@ const DispatchEditor = ({
               newEvent.id = generatedId;
               newEvent.techHelperId = selectedDispatch.id;
               const eventToUpdate = finalUpdate(newEvent);
-              createUnNamedDocument(
-                collection(db, "events", eventToUpdate)
+
+              //this should be named doc, and named the name we supply it
+              createNamedDocument(
+                doc(db, "events", newEvent.id),
+                eventToUpdate
               ).then(() => console.log("added event"));
+
               const originalEvent = { ...updatedDispatch };
               originalEvent.techHelperId = generatedId;
               const originalEventToUpdate = finalUpdate(originalEvent);
@@ -386,7 +392,9 @@ const DispatchEditor = ({
                 doc(db, "events", firstEventToUpdate.id),
                 firstEventToUpdate
               ).then(() => console.log("updated first event"));
+
               let newEvent = { ...updatedDispatch };
+              console.log("newEvent: ", newEvent);
               newEvent.id = updatedDispatch.techHelperId;
               newEvent.techLead = updatedDispatch.techHelper;
               newEvent.techHelper = updatedDispatch.techLead;
@@ -813,6 +821,16 @@ const DispatchEditor = ({
                 direction="row"
                 style={{ marginTop: "16px" }}
               >
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  tabIndex={20}
+                  onClick={() => openDeleteDispatchModal()}
+                  sx={{ color: "red", marginLeft: "8px" }}
+                  startIcon={<Delete />}
+                >
+                  Delete
+                </Button>
                 <Button
                   variant="outlined"
                   color="primary"

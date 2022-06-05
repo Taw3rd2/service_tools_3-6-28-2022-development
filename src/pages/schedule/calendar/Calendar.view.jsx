@@ -58,12 +58,12 @@ const Calendar = ({
         setEvents(
           snapshot.docs.map((doc) => ({
             ...doc.data(),
+            id: doc.id,
             start: doc.data().start.toDate(),
             end: doc.data().end.toDate(),
             dateCreated: doc.data().dateCreated.toDate(),
             dateModified: doc.data().dateModified.toDate(),
             dateScheduled: doc.data().dateScheduled.toDate(),
-            id: doc.id,
           }))
         )
       ),
