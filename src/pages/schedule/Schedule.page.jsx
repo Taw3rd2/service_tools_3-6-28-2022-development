@@ -5,7 +5,7 @@ import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 import Calendar from "./calendar/Calendar.view";
 import Spinner from "../../components/spinner/Spinner";
 
-import { Box, Tab, Tabs } from "@mui/material";
+import { Tab, Tabs } from "@mui/material";
 
 const AddDayLabelModal = lazy(() => import("./modals/AddDayLabel.modal"));
 const DailyOptionsMenuModal = lazy(() =>
@@ -30,9 +30,9 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 1 }}>
-          <Box>{children}</Box>
-        </Box>
+        <div style={{ padding: "8px" }}>
+          <div>{children}</div>
+        </div>
       )}
     </div>
   );
@@ -152,8 +152,8 @@ const Schedule = () => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 2, borderColor: "divider" }}>
+    <div style={{ width: "100%" }}>
+      <div style={{ borderBottom: 2, borderColor: "divider" }}>
         <Tabs
           value={tabValue}
           onChange={handleChangeTab}
@@ -173,7 +173,7 @@ const Schedule = () => {
               />
             ))}
         </Tabs>
-      </Box>
+      </div>
       <TabPanel value={tabValue} index={0}>
         <Calendar
           technician={"ALL"}
@@ -273,7 +273,7 @@ const Schedule = () => {
           />
         </Suspense>
       )}
-    </Box>
+    </div>
   );
 };
 

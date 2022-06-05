@@ -10,7 +10,6 @@ import { getDateFromString } from "../../../../utilities/dateUtils";
 
 import {
   Backdrop,
-  Box,
   Button,
   Fade,
   Grid,
@@ -28,10 +27,10 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 550,
-  bgcolor: "background.paper",
+  backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  padding: "16px",
 };
 
 const EditCustomerEquipment = ({
@@ -167,7 +166,7 @@ const EditCustomerEquipment = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isEditCustomerEquipmentOpen}>
-          <Box sx={style}>
+          <div style={style}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
@@ -313,7 +312,7 @@ const EditCustomerEquipment = ({
                 </Button>
               </Grid>
             </form>
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </ThemeProvider>

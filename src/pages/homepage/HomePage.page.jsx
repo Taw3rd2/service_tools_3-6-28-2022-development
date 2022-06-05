@@ -1,6 +1,6 @@
 import React, { useState, lazy, Suspense } from "react";
 
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import CustomerInformation from "../../components/customer_information/CustomerInformation.component";
 import CustomerNotes from "../../components/customer_notes/CustomerNotes.component";
@@ -188,7 +188,7 @@ const HomePage = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <div style={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
         <Grid item xs={4} sx={{ marginTop: "4px" }}>
           <CustomerSearch
@@ -336,7 +336,7 @@ const HomePage = () => {
           />
         </Suspense>
       )}
-    </Box>
+    </div>
   );
 };
 

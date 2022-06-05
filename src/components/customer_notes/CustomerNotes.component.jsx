@@ -10,7 +10,6 @@ import {
 } from "../../utilities/dateUtils";
 
 import {
-  Box,
   Button,
   Grid,
   Paper,
@@ -64,8 +63,8 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
   } else {
     return (
       <ThemeProvider theme={lightTheme}>
-        <Box
-          sx={{
+        <div
+          style={{
             flexGrow: 1,
             border: "1px solid black",
             backgroundColor: "lightgray",
@@ -197,7 +196,7 @@ const CustomerNotes = ({ customer, openCustomerNoteModal }) => {
               </Button>
             )}
           </Grid>
-        </Box>
+        </div>
       </ThemeProvider>
     );
   }

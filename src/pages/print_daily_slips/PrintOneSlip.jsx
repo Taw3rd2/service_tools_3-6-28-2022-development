@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 import ViewDailySlip from "./ViewDailySlip";
 
-import { Box, Grid, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import PrintDailySlip from "./PrintDailySlip";
 
 const PrintOneSlip = () => {
@@ -16,21 +16,21 @@ const PrintOneSlip = () => {
   return (
     <>
       {matchesPrint ? (
-        <Box sx={{ marginTop: "16px" }}>
+        <div style={{ marginTop: "16px" }}>
           <Grid container spacing={3}>
             {dispatches.map((dispatch) => (
               <PrintDailySlip key={dispatch.id}> {dispatch} </PrintDailySlip>
             ))}
           </Grid>
-        </Box>
+        </div>
       ) : (
-        <Box sx={{ marginTop: "16px" }}>
+        <div style={{ marginTop: "16px" }}>
           <Grid container>
             {dispatches.map((dispatch) => (
               <ViewDailySlip key={dispatch.id}> {dispatch} </ViewDailySlip>
             ))}
           </Grid>
-        </Box>
+        </div>
       )}
     </>
   );

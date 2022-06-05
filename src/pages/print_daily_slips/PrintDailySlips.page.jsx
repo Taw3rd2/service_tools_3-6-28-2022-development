@@ -11,7 +11,7 @@ import { useLocation } from "react-router-dom";
 
 import ViewDailySlip from "./ViewDailySlip";
 
-import { Box, Grid, useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 
 const PrintDailySlips = () => {
   const db = getFirestore();
@@ -38,21 +38,21 @@ const PrintDailySlips = () => {
   return (
     <>
       {matchesPrint ? (
-        <Box sx={{ marginTop: "16px", pageBreakAfter: "always" }}>
+        <div style={{ marginTop: "16px", pageBreakAfter: "always" }}>
           <Grid container spacing={3}>
             {events.map((event, index) => (
               <PrintDailySlip key={index}> {event} </PrintDailySlip>
             ))}
           </Grid>
-        </Box>
+        </div>
       ) : (
-        <Box sx={{ marginTop: "16px", flexGrow: 1 }}>
+        <div style={{ marginTop: "16px", flexGrow: 1 }}>
           <Grid container>
             {events.map((event, index) => (
               <ViewDailySlip key={index}> {event} </ViewDailySlip>
             ))}
           </Grid>
-        </Box>
+        </div>
       )}
     </>
   );

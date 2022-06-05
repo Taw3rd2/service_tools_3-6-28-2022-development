@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, Grid, List, Typography } from "@mui/material";
+import { Button, Grid, List, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../../theme/Theme";
 
@@ -33,8 +33,8 @@ const ServiceCustomer = ({
   } else {
     return (
       <ThemeProvider theme={lightTheme}>
-        <Box
-          sx={{
+        <div
+          style={{
             flexGrow: 1,
             border: "1px solid black",
             backgroundColor: "lightgray",
@@ -213,7 +213,7 @@ const ServiceCustomer = ({
               </div>
             </Grid>
           </Grid>
-        </Box>
+        </div>
       </ThemeProvider>
     );
   }

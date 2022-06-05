@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { AddCircle, Assignment } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
@@ -15,8 +15,8 @@ const reportButton = {
 const InactiveButtons = () => {
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box
-        sx={{
+      <div
+        style={{
           flexGrow: 1,
           border: "2px solid black",
           backgroundColor: "lightgray",
@@ -82,7 +82,7 @@ const InactiveButtons = () => {
           </div>
         </Grid> */}
         </Grid>
-      </Box>
+      </div>
     </ThemeProvider>
   );
 };

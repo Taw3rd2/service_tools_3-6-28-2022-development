@@ -4,15 +4,7 @@ import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 import { Link } from "react-router-dom";
 //import { getFormattedDate } from "../../../utilities/dateUtils";
 
-import {
-  Backdrop,
-  Box,
-  Button,
-  Fade,
-  Grid,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Backdrop, Button, Fade, Grid, Modal, Typography } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../../theme/Theme";
@@ -23,10 +15,10 @@ const modalStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: "background.paper",
+  backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  padding: "16px",
 };
 
 const DailyOptionsMenu = ({
@@ -60,7 +52,7 @@ const DailyOptionsMenu = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isDailyOptionsMenuOpen}>
-          <Box sx={modalStyle}>
+          <div style={modalStyle}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
@@ -124,7 +116,7 @@ const DailyOptionsMenu = ({
                 Close
               </Button>
             </Grid>
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </ThemeProvider>

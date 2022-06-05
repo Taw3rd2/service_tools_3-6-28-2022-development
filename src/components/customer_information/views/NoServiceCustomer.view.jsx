@@ -6,7 +6,7 @@ import EmailField from "../fields/EmailField";
 import MainField from "../fields/MainField";
 import Spinner from "../../spinner/Spinner";
 
-import { Box, Button, Grid, List, Typography } from "@mui/material";
+import { Button, Grid, List, Typography } from "@mui/material";
 import { Flag, Edit } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../../theme/Theme";
@@ -33,8 +33,8 @@ const NoServiceCustomer = ({
   } else {
     return (
       <ThemeProvider theme={lightTheme}>
-        <Box
-          sx={{
+        <div
+          style={{
             flexGrow: 1,
             border: "1px solid black",
             background: "lightgray",
@@ -248,7 +248,7 @@ const NoServiceCustomer = ({
               </div>
             </Grid>
           </Grid>
-        </Box>
+        </div>
       </ThemeProvider>
     );
   }

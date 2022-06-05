@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { AddTask } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
@@ -8,8 +8,8 @@ import { lightTheme } from "../../theme/Theme";
 const DailyTasks = () => {
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box
-        sx={{
+      <div
+        style={{
           flexGrow: 1,
           border: "1px solid black",
           backgroundColor: "lightgray",
@@ -36,7 +36,7 @@ const DailyTasks = () => {
             Task Manager
           </Button>
         </Grid>
-      </Box>
+      </div>
     </ThemeProvider>
   );
 };

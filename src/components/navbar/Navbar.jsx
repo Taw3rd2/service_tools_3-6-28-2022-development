@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -74,7 +73,7 @@ const NavBar = ({ currentUser }) => {
                   Service Tools
                 </Typography>
 
-                <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <div style={{ flexGrow: 1, display: "flex" }}>
                   <IconButton
                     size="large"
                     aria-label="account of current user"
@@ -112,7 +111,7 @@ const NavBar = ({ currentUser }) => {
                       </MenuItem>
                     ))}
                   </Menu>
-                </Box>
+                </div>
                 <Typography
                   variant="h6"
                   noWrap
@@ -121,7 +120,7 @@ const NavBar = ({ currentUser }) => {
                 >
                   ST
                 </Typography>
-                <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <div style={{ flexGrow: 1, display: "flex" }}>
                   {currentUser
                     ? pages.map((page) => (
                         <Button
@@ -142,8 +141,8 @@ const NavBar = ({ currentUser }) => {
                           {page.name}
                         </Button>
                       ))}
-                </Box>
-                <Box sx={{ flexGrow: 0 }}>
+                </div>
+                <div style={{ flexGrow: 0 }}>
                   {currentUser ? (
                     <Tooltip title="Open settings">
                       <IconButton
@@ -187,7 +186,7 @@ const NavBar = ({ currentUser }) => {
                       </MenuItem>
                     ))}
                   </Menu>
-                </Box>
+                </div>
               </Toolbar>
             </Container>
 

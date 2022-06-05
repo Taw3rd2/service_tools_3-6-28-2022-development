@@ -1,15 +1,7 @@
 import React from "react";
 import { deleteDocument } from "../../../../firebase/firestore.utils";
 
-import {
-  Backdrop,
-  Box,
-  Button,
-  Fade,
-  Grid,
-  Modal,
-  Typography,
-} from "@mui/material";
+import { Backdrop, Button, Fade, Grid, Modal, Typography } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
 import { doc, getFirestore } from "firebase/firestore";
 import { ThemeProvider } from "@mui/material";
@@ -21,10 +13,10 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 350,
-  bgcolor: "background.paper",
+  backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  padding: "16px",
 };
 
 const DeleteEquipment = ({
@@ -61,7 +53,7 @@ const DeleteEquipment = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isDeleteCustomerEquipmentModalOpen}>
-          <Box sx={style}>
+          <div style={style}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
@@ -102,7 +94,7 @@ const DeleteEquipment = ({
                 Close
               </Button>
             </Grid>
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </ThemeProvider>

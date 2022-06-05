@@ -2,7 +2,7 @@ import React from "react";
 
 import { useNavigate } from "react-router-dom";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { AddCircle, Assignment } from "@mui/icons-material"; //Assignment, AddCircle, Build } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
@@ -71,8 +71,8 @@ const ActiveButtons = ({
 
   return (
     <ThemeProvider theme={lightTheme}>
-      <Box
-        sx={{
+      <div
+        style={{
           flexGrow: 1,
           border: "2px solid black",
           backgroundColor: "lightgray",
@@ -150,7 +150,7 @@ const ActiveButtons = ({
           </div> */}
           </Grid>
         </Grid>
-      </Box>
+      </div>
     </ThemeProvider>
   );
 };

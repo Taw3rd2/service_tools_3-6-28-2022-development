@@ -16,7 +16,6 @@ import { lightTheme } from "../../../theme/Theme";
 
 import {
   Backdrop,
-  Box,
   Button,
   Fade,
   FormControl,
@@ -36,10 +35,10 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 550,
-  bgcolor: "background.paper",
+  backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
-  p: 4,
+  padding: "16px",
 };
 
 const CustomerNote = ({
@@ -110,7 +109,7 @@ const CustomerNote = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isCustomerNoteModalOpen}>
-          <Box sx={style}>
+          <div style={style}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="primary">
@@ -237,7 +236,7 @@ const CustomerNote = ({
                 </Button>
               </Grid>
             </form>
-          </Box>
+          </div>
         </Fade>
       </Modal>
     </ThemeProvider>
