@@ -7,7 +7,7 @@ import Avatar from "@mui/material/Avatar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
+//import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Container from "@mui/material/Container";
 import Tooltip from "@mui/material/Tooltip";
@@ -32,9 +32,9 @@ const NavBar = ({ currentUser }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -74,7 +74,7 @@ const NavBar = ({ currentUser }) => {
                 </Typography>
 
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  <IconButton
+                  {/* <IconButton
                     size="large"
                     aria-label="account of current user"
                     aria-controls="menu-appbar"
@@ -83,7 +83,7 @@ const NavBar = ({ currentUser }) => {
                     color="inherit"
                   >
                     <MenuIcon />
-                  </IconButton>
+                  </IconButton> */}
                   <Menu
                     id="menu-appbar"
                     anchorEl={anchorElNav}

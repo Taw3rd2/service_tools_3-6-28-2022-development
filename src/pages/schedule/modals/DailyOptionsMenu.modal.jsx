@@ -18,7 +18,7 @@ const modalStyle = {
   backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
-  padding: "16px",
+  padding: "32px",
 };
 
 const DailyOptionsMenu = ({
@@ -53,7 +53,7 @@ const DailyOptionsMenu = ({
       >
         <Fade in={isDailyOptionsMenuOpen}>
           <div style={modalStyle}>
-            <Grid container spacing={2}>
+            <Grid container>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
                   Daily Options Menu
