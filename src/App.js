@@ -31,7 +31,7 @@ function App() {
       <Routes>
         <Route 
           path="/"
-          element= {<SignIn />}
+          element= {currentUser ? <HomePage /> : <SignIn />}
         />
         <Route 
           path="/homepage"

@@ -18,11 +18,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const auth = getAuth()
 
+export const googleAuth = getAuth(app)
+
 //Authorization
 export default app
 
-export const logOut = () => {
-    return signOut(auth)
+export const logOut = async () => {
+    try {
+        await signOut(auth);
+        console.log("Signed Out");
+    } catch (error) {
+        console.log("sign out error: ", error);
+    }
 }
 
 export const logIn = (email, password) => {

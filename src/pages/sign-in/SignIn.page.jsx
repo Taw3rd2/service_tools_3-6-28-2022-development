@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+import { googleAuth } from "../../firebase/firestore.utils";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
 import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
@@ -33,6 +36,17 @@ const SignIn = () => {
     }
 
     setLoading(false);
+  };
+
+  const authWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(googleAuth, provider)
+      .then((res) => {
+        navigate("/homepage");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -93,15 +107,16 @@ const SignIn = () => {
               >
                 Log In With Email
               </Button>
-              {/* <Button
-              variant="outlined"
-              size="large"
-              type="button"
-              fullWidth
-              style={{ marginTop: "8px" }}
-            >
-              Google Sign In
-            </Button> */}
+              <Button
+                variant="outlined"
+                size="large"
+                type="button"
+                fullWidth
+                style={{ marginTop: "8px" }}
+                onClick={authWithGoogle}
+              >
+                Google Sign In
+              </Button>
             </form>
             <Typography variant="caption">
               You must have a valid Service Tools Account to proceed.

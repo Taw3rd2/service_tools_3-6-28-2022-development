@@ -21,7 +21,7 @@ const pages = [
   { name: "Schedule", link: "/schedule", key: 1 },
   // { name: "Inventory", link: "/parts_catalog", key: 2 },
   // { name: "Accounting", link: "/accounting", key: 3 },
-  // { name: "Settings", link: "/settings", key: 4 },
+  { name: "Settings", link: "/settings", key: 4 },
 ];
 const settings = ["Logout"];
 
@@ -120,28 +120,20 @@ const NavBar = ({ currentUser }) => {
                 >
                   ST
                 </Typography>
+
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  {currentUser
-                    ? pages.map((page) => (
-                        <Button
-                          key={page.key}
-                          onClick={() => navigate(page.link)}
-                          sx={{ my: 2, color: "white", display: "block" }}
-                        >
-                          {page.name}
-                        </Button>
-                      ))
-                    : pages.map((page) => (
-                        <Button
-                          disabled
-                          key={page.key}
-                          onClick={() => navigate(page.link)}
-                          sx={{ my: 2, color: "white", display: "block" }}
-                        >
-                          {page.name}
-                        </Button>
-                      ))}
+                  {currentUser &&
+                    pages.map((page) => (
+                      <Button
+                        key={page.key}
+                        onClick={() => navigate(page.link)}
+                        sx={{ my: 2, color: "white", display: "block" }}
+                      >
+                        {page.name}
+                      </Button>
+                    ))}
                 </div>
+
                 <div style={{ flexGrow: 0 }}>
                   {currentUser ? (
                     <Tooltip title="Open settings">
