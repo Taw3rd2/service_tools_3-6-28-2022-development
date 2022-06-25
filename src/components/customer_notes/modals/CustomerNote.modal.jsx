@@ -197,7 +197,7 @@ const CustomerNote = ({
                     variant="outlined"
                     value={details}
                     fullWidth
-                    sx={{ input: { color: "teal" } }}
+                    sx={{ input: { color: "primary" } }}
                     onChange={(event) => setDetails(event.target.value)}
                     multiline={true}
                     rows="5"

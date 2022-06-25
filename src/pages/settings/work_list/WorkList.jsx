@@ -17,7 +17,7 @@ import {
 import { lightTheme } from "../../../theme/Theme";
 import { Add } from "@mui/icons-material";
 
-const WorkList = () => {
+const WorkList = ({ openDeleteItemModal, openWorkModal }) => {
   const db = getFirestore();
 
   const [workList, setWorkList] = useState([]);
@@ -112,12 +112,20 @@ const WorkList = () => {
                       {option.shorthand}
                     </TableCell>
                     <TableCell align="center">
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openWorkModal(option)}
+                      >
                         Edit
                       </Button>
                     </TableCell>
                     <TableCell align="center" sx={{ width: 100 }}>
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openDeleteItemModal(option, "workList")}
+                      >
                         Delete
                       </Button>
                     </TableCell>
@@ -140,6 +148,7 @@ const WorkList = () => {
               marginTop: "16px",
               background: lightTheme.palette.primary.contrastText,
             }}
+            onClick={() => openWorkModal()}
           >
             Add New Work Item
           </Button>

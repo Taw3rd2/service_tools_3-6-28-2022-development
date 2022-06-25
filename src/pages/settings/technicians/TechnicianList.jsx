@@ -17,7 +17,7 @@ import {
 import { lightTheme } from "../../../theme/Theme";
 import { Add } from "@mui/icons-material";
 
-const TechnicianList = () => {
+const TechnicianList = ({ openDeleteItemModal, openTechnicianModal }) => {
   const db = getFirestore();
 
   const [technicians, setTechnicians] = useState([]);
@@ -128,12 +128,22 @@ const TechnicianList = () => {
                       {technician.color}
                     </TableCell>
                     <TableCell align="center">
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openTechnicianModal(technician)}
+                      >
                         Edit
                       </Button>
                     </TableCell>
                     <TableCell align="center" sx={{ width: 100 }}>
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() =>
+                          openDeleteItemModal(technician, "technicians")
+                        }
+                      >
                         Delete
                       </Button>
                     </TableCell>
@@ -156,6 +166,7 @@ const TechnicianList = () => {
               marginTop: "16px",
               background: lightTheme.palette.primary.contrastText,
             }}
+            onClick={() => openTechnicianModal()}
           >
             Add New Technician
           </Button>

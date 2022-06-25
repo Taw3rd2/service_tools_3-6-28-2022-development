@@ -17,7 +17,7 @@ import {
 import { lightTheme } from "../../../theme/Theme";
 import { Add } from "@mui/icons-material";
 
-const DispatcherList = () => {
+const DispatcherList = ({ openDispatcherModal, openDeleteItemModal }) => {
   const db = getFirestore();
 
   const [dispatchers, setDispatchers] = useState([]);
@@ -103,12 +103,22 @@ const DispatcherList = () => {
                       {dispatcher.name}
                     </TableCell>
                     <TableCell align="center">
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openDispatcherModal(dispatcher)}
+                      >
                         Edit
                       </Button>
                     </TableCell>
                     <TableCell align="center" sx={{ width: 100 }}>
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() =>
+                          openDeleteItemModal(dispatcher, "dispatchers")
+                        }
+                      >
                         Delete
                       </Button>
                     </TableCell>
@@ -131,6 +141,7 @@ const DispatcherList = () => {
               marginTop: "16px",
               background: lightTheme.palette.primary.contrastText,
             }}
+            onClick={() => openDispatcherModal()}
           >
             Add New Dispatcher
           </Button>

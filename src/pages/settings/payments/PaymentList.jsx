@@ -17,7 +17,7 @@ import {
 import { lightTheme } from "../../../theme/Theme";
 import { Add } from "@mui/icons-material";
 
-const PaymentList = () => {
+const PaymentList = ({ openDeleteItemModal, openPaymentModal }) => {
   const db = getFirestore();
 
   const [payments, setPayments] = useState([]);
@@ -99,12 +99,20 @@ const PaymentList = () => {
                       {payment.item}
                     </TableCell>
                     <TableCell align="center">
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openPaymentModal(payment)}
+                      >
                         Edit
                       </Button>
                     </TableCell>
                     <TableCell align="center" sx={{ width: 100 }}>
-                      <Button color="primary" variant="outlined">
+                      <Button
+                        color="primary"
+                        variant="outlined"
+                        onClick={() => openDeleteItemModal(payment, "payments")}
+                      >
                         Delete
                       </Button>
                     </TableCell>
@@ -127,6 +135,7 @@ const PaymentList = () => {
               marginTop: "16px",
               background: lightTheme.palette.primary.contrastText,
             }}
+            onClick={() => openPaymentModal()}
           >
             Add New Payment
           </Button>
