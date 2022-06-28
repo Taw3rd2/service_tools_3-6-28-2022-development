@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Grid, Typography } from "@mui/material";
-import { AddCircle, Assignment } from "@mui/icons-material";
+import { AddCircle, Assignment, BuildCircle } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
 
@@ -39,6 +39,20 @@ const InactiveButtons = () => {
               <Typography variant="subtitle1">Dispatches</Typography>
             </div>
           </Grid>
+          <Grid item xs={3}>
+            <div style={reportButton}>
+              <BuildCircle style={{ fontSize: 60, color: "grey" }} />
+              <Typography variant="subtitle1">Maintenance</Typography>
+              <Typography variant="subtitle1">Manager</Typography>
+            </div>
+          </Grid>
+          <Grid item xs={3}>
+            <div style={reportButton}>
+              <BuildCircle style={{ fontSize: 60, color: "grey" }} />
+              <Typography variant="subtitle1">Warranty</Typography>
+              <Typography variant="subtitle1">Manager</Typography>
+            </div>
+          </Grid>
           {/*<Grid item xs={3}>
           <div style={reportButton}>
             <Assignment style={{ fontSize: 60, color: "grey" }} />
@@ -51,20 +65,6 @@ const InactiveButtons = () => {
             <Assignment style={{ fontSize: 60, color: "grey" }} />
             <Typography variant="subtitle1">All Customer</Typography>
             <Typography variant="subtitle1">Equipment Quotes</Typography>
-          </div>
-        </Grid>
-        <Grid item xs={3}>
-          <div style={reportButton}>
-            <Build style={{ fontSize: 60, color: "grey" }} />
-            <Typography variant="subtitle1">Maintenance</Typography>
-            <Typography variant="subtitle1">Manager</Typography>
-          </div>
-        </Grid>
-        <Grid item xs={3}>
-          <div style={reportButton}>
-            <Build style={{ fontSize: 60, color: "grey" }} />
-            <Typography variant="subtitle1">Warranty</Typography>
-            <Typography variant="subtitle1">Manager</Typography>
           </div>
         </Grid>
         <Grid item xs={3}>

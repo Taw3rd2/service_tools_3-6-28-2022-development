@@ -8,6 +8,10 @@ import CustomerSearch from "../../components/customer_search/CustomerSearch.comp
 import DailyTasks from "../../components/daily_tasks/DailyTasks.component";
 import NavigationButtons from "../../components/navigation_buttons/NavigationButtons.component";
 import Spinner from "../../components/spinner/Spinner";
+import WarrantyList from "../../components/warranty_manager/WarrantyList.modal";
+import Warranty from "../../components/warranty_manager/Warranty.modal";
+import CreateWarranty from "../../components/warranty_manager/CreateWarranty.modal";
+import DeleteWarranty from "../../components/warranty_manager/DeleteWarranty.modal";
 
 const AddCustomerModal = lazy(() =>
   import("../../components/customer_search/AddCustomer.modal")
@@ -187,6 +191,43 @@ const HomePage = () => {
     setDispatchHistoryModalOpen(false);
   };
 
+  //Warranty Manager
+  const [isWarrantyListModalOpen, setWarrantyListModalOpen] = useState(false);
+  const openWarrantyListModal = () => {
+    setWarrantyListModalOpen(true);
+  };
+  const closeWarrantyListModal = () => {
+    setWarrantyListModalOpen(false);
+  };
+
+  const [isWarrantyModalOpen, setWarrantyModalOpen] = useState(false);
+  const [warrantySelected, setWarrantySelected] = useState({});
+  const openWarrantyModal = (warr) => {
+    setWarrantySelected(warr);
+    setWarrantyModalOpen(true);
+  };
+  const closeWarrantyModal = () => {
+    setWarrantyModalOpen(false);
+  };
+
+  const [isCreateWarrantyModalOpen, setCreateWarrantyModalOpen] =
+    useState(false);
+  const openCreateWarrantyModal = () => {
+    setCreateWarrantyModalOpen(true);
+  };
+  const closeCreateWarrantyModal = () => {
+    setCreateWarrantyModalOpen(false);
+  };
+
+  const [isDeleteWarrantyModalOpen, setDeleteWarrantyModalOpen] =
+    useState(false);
+  const openDeleteWarrantyModal = () => {
+    setDeleteWarrantyModalOpen(true);
+  };
+  const closeDeleteWarrantyModal = () => {
+    setDeleteWarrantyModalOpen(false);
+  };
+
   return (
     <div style={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -209,6 +250,7 @@ const HomePage = () => {
           <NavigationButtons
             openCreateDispatchModal={openCreateDispatchModal}
             openDispatchHistoryModal={openDispatchHistoryModal}
+            openWarrantyListModal={openWarrantyListModal}
             customer={customer}
           />
         </Grid>
@@ -333,6 +375,48 @@ const HomePage = () => {
             isDispatchHistoryModalOpen={isDispatchHistoryModalOpen}
             closeDispatchHistoryModal={closeDispatchHistoryModal}
             customer={customer}
+          />
+        </Suspense>
+      )}
+      {isWarrantyListModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <WarrantyList
+            isWarrantyListModalOpen={isWarrantyListModalOpen}
+            closeWarrantyListModal={closeWarrantyListModal}
+            openWarrantyModal={openWarrantyModal}
+            openCreateWarrantyModal={openCreateWarrantyModal}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isWarrantyModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <Warranty
+            isWarrantyModalOpen={isWarrantyModalOpen}
+            closeWarrantyModal={closeWarrantyModal}
+            openDeleteWarrantyModal={openDeleteWarrantyModal}
+            customer={customer}
+            warrantySelected={warrantySelected}
+          />
+        </Suspense>
+      )}
+      {isCreateWarrantyModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <CreateWarranty
+            isCreateWarrantyModalOpen={isCreateWarrantyModalOpen}
+            closeCreateWarrantyModal={closeCreateWarrantyModal}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isDeleteWarrantyModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <DeleteWarranty
+            isDeleteWarrantyModalOpen={isDeleteWarrantyModalOpen}
+            closeDeleteWarrantyModal={closeDeleteWarrantyModal}
+            closeWarrantyModal={closeWarrantyModal}
+            customer={customer}
+            warrantySelected={warrantySelected}
           />
         </Suspense>
       )}

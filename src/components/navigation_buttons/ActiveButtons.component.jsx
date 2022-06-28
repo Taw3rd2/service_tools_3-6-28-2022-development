@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 import { Grid, Typography } from "@mui/material";
-import { AddCircle, Assignment } from "@mui/icons-material"; //Assignment, AddCircle, Build } from "@mui/icons-material";
+import { AddCircle, Assignment, BuildCircle } from "@mui/icons-material"; //Assignment, AddCircle } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
 
@@ -19,55 +19,44 @@ const ActiveButtons = ({
   customer,
   openCreateDispatchModal,
   openDispatchHistoryModal,
-  openPartsQuotesModal,
-  openEquipmentQuotesModal,
-  //openWarrantyListModal,
-  //openMaintenanceListModal,
+  openWarrantyListModal,
+  openMaintenanceListModal,
 }) => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
-  const routeToPartsQuoteCreator = () => {
-    const selectedEquipment = {
-      equipmentName: "",
-      equipmentBrand: "",
-      equipmentModel: "",
-      equipmentSerial: "",
-    };
-    const quoteData = {
-      id: "",
-      jobNumber: "",
-      quoteDate: new Date(),
-      parts: [],
-      laborHours: 1,
-      laborRate: 79,
-      maintenance: false,
-      rediagnostic: false,
-      regularShippingTime: "5-7 days",
-      quickShippingTime: "1-3 days",
-      regularShippingRate: 25,
-      quickShippingRate: 75,
-      shippingNotes: "",
-      selectedShipping: "none",
-      selectedDiscount: "none",
-      disclaimerRed: false,
-    };
-    navigate("/parts_quote", {
-      state: {
-        customer: customer,
-        selectedEquipment: selectedEquipment,
-        quoteData: quoteData,
-      },
-    });
-
-    // history.push({
-    //   pathname: "PartsQuote",
-    //   state: {
-    //     client: client,
-    //     selectedEquipment: selectedEquipment,
-    //     quoteData: quoteData,
-    //   },
-    // });
-  };
+  // const routeToPartsQuoteCreator = () => {
+  //   const selectedEquipment = {
+  //     equipmentName: "",
+  //     equipmentBrand: "",
+  //     equipmentModel: "",
+  //     equipmentSerial: "",
+  //   };
+  //   const quoteData = {
+  //     id: "",
+  //     jobNumber: "",
+  //     quoteDate: new Date(),
+  //     parts: [],
+  //     laborHours: 1,
+  //     laborRate: 79,
+  //     maintenance: false,
+  //     rediagnostic: false,
+  //     regularShippingTime: "5-7 days",
+  //     quickShippingTime: "1-3 days",
+  //     regularShippingRate: 25,
+  //     quickShippingRate: 75,
+  //     shippingNotes: "",
+  //     selectedShipping: "none",
+  //     selectedDiscount: "none",
+  //     disclaimerRed: false,
+  //   };
+  //   navigate("/parts_quote", {
+  //     state: {
+  //       customer: customer,
+  //       selectedEquipment: selectedEquipment,
+  //       quoteData: quoteData,
+  //     },
+  //   });
+  // };
 
   return (
     <ThemeProvider theme={lightTheme}>
@@ -107,47 +96,31 @@ const ActiveButtons = ({
               <Typography variant="subtitle1">Dispatches</Typography>
             </div>
           </Grid>
-          <Grid item xs={3} onClick={() => openPartsQuotesModal()}>
-            {/* <div style={reportButton}>
-            <Assignment style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">All Customer</Typography>
-            <Typography variant="subtitle1">Parts Quotes</Typography>
-          </div> */}
+          <Grid item xs={3} onClick={() => openMaintenanceListModal()}>
+            <div style={reportButton}>
+              <BuildCircle
+                sx={{
+                  background: lightTheme.palette.primary.contrastText,
+                  color: lightTheme.palette.primary.light,
+                  fontSize: 60,
+                }}
+              />
+              <Typography variant="subtitle1">Maintenance</Typography>
+              <Typography variant="subtitle1">Manager</Typography>
+            </div>
           </Grid>
-          <Grid item xs={3} onClick={() => openEquipmentQuotesModal()}>
-            {/* <div style={reportButton}>
-            <Assignment style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">All Customer</Typography>
-            <Typography variant="subtitle1">Equipment Quotes</Typography>
-          </div> */}
-          </Grid>
-          <Grid item xs={3}>
-            {/* <div style={reportButton}>
-            <Build style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">Maintenance</Typography>
-            <Typography variant="subtitle1">Manager</Typography>
-          </div> */}
-          </Grid>
-          <Grid item xs={3}>
-            {/* <div style={reportButton}>
-            <Build style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">Warranty</Typography>
-            <Typography variant="subtitle1">Manager</Typography>
-          </div> */}
-          </Grid>
-          <Grid item xs={3} onClick={() => routeToPartsQuoteCreator()}>
-            {/* <div style={reportButton}>
-            <AddCircle style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">Create Blank</Typography>
-            <Typography variant="subtitle1">Parts Quote</Typography>
-          </div> */}
-          </Grid>
-          <Grid item xs={3}>
-            {/* <div style={reportButton}>
-            <AddCircle style={{ fontSize: 60, color: "darkblue" }} />
-            <Typography variant="subtitle1">Create Blank</Typography>
-            <Typography variant="subtitle1">Equipment Quote</Typography>
-          </div> */}
+          <Grid item xs={3} onClick={() => openWarrantyListModal()}>
+            <div style={reportButton}>
+              <BuildCircle
+                sx={{
+                  background: lightTheme.palette.primary.contrastText,
+                  color: lightTheme.palette.primary.light,
+                  fontSize: 60,
+                }}
+              />
+              <Typography variant="subtitle1">Warranty</Typography>
+              <Typography variant="subtitle1">Manager</Typography>
+            </div>
           </Grid>
         </Grid>
       </div>

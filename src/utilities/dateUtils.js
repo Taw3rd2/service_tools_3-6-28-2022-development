@@ -40,7 +40,7 @@ import {
       const newTime = format(newDate, "MMM, dd, yyyy");
       return newTime;
     }
-  } else return "Not done yet"
+  } else return "Not on record"
   };
   
   //called in ClientActivity

@@ -10,8 +10,11 @@ const NavigationButtons = ({
   openPartsQuotesModal,
   openEquipmentQuotesModal,
   openWarrantyListModal,
-  openMaintenanceListModal,
 }) => {
+  const openMaintenanceListModal = () => {
+    alert("Soon...");
+  };
+
   if (customer === null || customer.id === "") {
     return <InactiveButtons />;
   } else {

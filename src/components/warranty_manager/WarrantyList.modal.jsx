@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
-import {
-  getDateFromString,
-  getUnixFromDate,
-} from "../../../../utilities/dateUtils";
+import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
 import {
   Backdrop,
@@ -19,47 +15,84 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  ThemeProvider,
   Typography,
 } from "@mui/material";
-import { AddCircle, Close } from "@mui/icons-material";
-import { ThemeProvider } from "@mui/material";
-import { lightTheme } from "../../../../theme/Theme";
+import { lightTheme } from "../../theme/Theme";
+import {
+  getFormattedDate,
+  getDateFromString,
+  getUnixFromDate,
+} from "../../utilities/dateUtils";
+import { AddCircleOutline, Close } from "@mui/icons-material";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "70%",
+  width: "53%",
   backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
   padding: "16px",
 };
 
-const EquipmentList = ({
+const WarrantyList = ({
+  isWarrantyListModalOpen,
+  closeWarrantyListModal,
+  openWarrantyModal,
+  openCreateWarrantyModal,
   customer,
-  isEquipmentListModalOpen,
-  closeEquipmentListModal,
-  openEditCustomerEquipmentModal,
-  openCreateCustomerEquipmentModal,
 }) => {
   const db = getFirestore();
-  const [equipment, setEquipment] = useState([]);
 
-  useEffect(
-    () =>
-      onSnapshot(
-        collection(db, "customers", customer.id, "Equipment"),
-        (snapshot) =>
-          setEquipment(
-            snapshot.docs.map((doc) => ({
-              ...doc.data(),
-            }))
-          )
-      ),
-    [db, customer]
-  );
+  const [warranties, setWarranties] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      collection(db, "customers", customer.id, "Equipment"),
+      (snapshot) => {
+        let newWarranties = [];
+
+        snapshot.docs.forEach((doc) => {
+          let warr = {
+            key: "",
+            equipment: "",
+            equipmentName: "",
+            equipmentBrand: "",
+            equipmentModel: "",
+            equipmentSerial: "",
+            jobNumber: "",
+            startDate: "",
+            partsExpirationDate: "",
+            laborExpirationDate: "",
+          };
+          let equipment = doc.data();
+          equipment.id = doc.id;
+          if (typeof equipment.warranty != "undefined") {
+            warr.id = equipment.id;
+            warr.key = equipment.warranty.key;
+            warr.equipment = equipment.warranty.equipment;
+            warr.equipmentBrand = equipment.warranty.equipmentBrand;
+            warr.equipmentModel = equipment.warranty.equipmentModel;
+            warr.equipmentSerial = equipment.warranty.equipmentSerial;
+            warr.equipmentName = equipment.warranty.equipmentName;
+            warr.jobNumber = equipment.warranty.jobNumber;
+            warr.startDate = equipment.warranty.startDate;
+            warr.partsExpirationDate = equipment.warranty.partsExpirationDate;
+            warr.laborExpirationDate = equipment.warranty.laborExpirationDate;
+            newWarranties.push(warr);
+          }
+        });
+        setWarranties(newWarranties);
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
+    return () => unsubscribe();
+  }, [db, customer]);
 
   const getStyledTableCell = (stringValue) => {
     const dateValue = getDateFromString(stringValue);
@@ -99,112 +132,83 @@ const EquipmentList = ({
   return (
     <ThemeProvider theme={lightTheme}>
       <Modal
-        aria-labelledby="equipment-list-modal"
-        aria-describedby="opens a customer equipment list"
-        open={isEquipmentListModalOpen}
-        onClose={closeEquipmentListModal}
+        aria-labelledby="warranty-list"
+        aria-describedby="modal for warranty list"
+        open={isWarrantyListModalOpen}
+        onClose={closeWarrantyListModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{ timeout: 500 }}
       >
-        <Fade in={isEquipmentListModalOpen}>
+        <Fade in={isWarrantyListModalOpen}>
           <div style={style}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h5" gutterBottom color="primary">
-                  Equipment List
+                <Typography variant="h5" color="primary">
+                  Warranty
                 </Typography>
               </Grid>
             </Grid>
 
-            <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
-              <Table
-                stickyHeader
-                size="small"
-                aria-label="equipment list table"
-              >
+            <TableContainer
+              component={Paper}
+              sx={{ overflow: "auto", maxHeight: 440, marginTop: "8px" }}
+            >
+              <Table stickyHeader size="small" aria-label="warranty-list-table">
                 <TableHead>
                   <TableRow>
                     <TableCell
-                      align="left"
+                      align="center"
                       sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
+                        minWidth: 150,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Equipment Name
+                      Job Number
                     </TableCell>
                     <TableCell
                       align="left"
                       sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
+                        minWidth: 350,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                      }}
-                    >
-                      Brand
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
                         background: lightTheme.palette.primary.light,
                         color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
                       }}
                     >
-                      Model
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      Serial
+                      Equipment
                     </TableCell>
                     <TableCell
                       align="center"
                       sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
+                        minWidth: 150,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Maintenance Expiration
+                      Start Date
                     </TableCell>
                     <TableCell
                       align="center"
                       sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
+                        minWidth: 150,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
                       }}
                     >
                       Parts Expiration
@@ -212,13 +216,13 @@ const EquipmentList = ({
                     <TableCell
                       align="center"
                       sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
+                        minWidth: 150,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
                       }}
                     >
                       Labor Expiration
@@ -227,25 +231,27 @@ const EquipmentList = ({
                       align="center"
                       sx={{
                         minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
                         fontSize: 18,
                         overflow: "hidden",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
                       }}
-                    ></TableCell>
+                    >
+                      Details
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {equipment.map((unit, index) => (
+                  {warranties.map((warranty) => (
                     <TableRow
-                      key={index}
-                      onClick={() => openEditCustomerEquipmentModal(unit)}
+                      key={warranty.id}
                       sx={{ cursor: "pointer" }}
+                      onClick={() => openWarrantyModal(warranty)}
                     >
                       <TableCell
-                        align="left"
+                        align="center"
                         sx={{
                           fontSize: 18,
                           overflow: "hidden",
@@ -253,7 +259,7 @@ const EquipmentList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {unit.equipmentName}
+                        {warranty.jobNumber}
                       </TableCell>
                       <TableCell
                         align="left"
@@ -264,10 +270,10 @@ const EquipmentList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {unit.equipmentBrand}
+                        {warranty.equipmentName}
                       </TableCell>
                       <TableCell
-                        align="left"
+                        align="center"
                         sx={{
                           fontSize: 18,
                           overflow: "hidden",
@@ -275,26 +281,16 @@ const EquipmentList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {unit.equipmentModel}
+                        {getFormattedDate(warranty.startDate)}
                       </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
-                        {unit.equipmentSerial}
-                      </TableCell>
-                      {getStyledTableCell(unit.equipmentContract)}
-                      {getStyledTableCell(unit.equipmentWarranty)}
-                      {getStyledTableCell(unit.laborWarranty)}
+                      {getStyledTableCell(
+                        getFormattedDate(warranty.partsExpirationDate)
+                      )}
+                      {getStyledTableCell(
+                        getFormattedDate(warranty.laborExpirationDate)
+                      )}
                       <TableCell align="center">
-                        <Button variant="outlined" color="primary">
-                          Details
-                        </Button>
+                        <Button variant="outlined">Details</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -308,26 +304,28 @@ const EquipmentList = ({
               direction="row"
             >
               <Button
-                onClick={() => openCreateCustomerEquipmentModal()}
                 variant="outlined"
                 color="primary"
+                startIcon={<AddCircleOutline />}
                 sx={{
                   marginTop: "16px",
                   marginLeft: "8px",
+                  background: lightTheme.palette.primary.contrastText,
                 }}
-                startIcon={<AddCircle />}
+                onClick={() => openCreateWarrantyModal()}
               >
-                Add New Equipment
+                Add New Warranty
               </Button>
               <Button
-                onClick={() => closeEquipmentListModal()}
                 variant="outlined"
                 color="primary"
+                startIcon={<Close />}
                 sx={{
                   marginTop: "16px",
                   marginLeft: "8px",
+                  background: lightTheme.palette.primary.contrastText,
                 }}
-                startIcon={<Close />}
+                onClick={() => closeWarrantyListModal()}
               >
                 Close
               </Button>
@@ -339,4 +337,4 @@ const EquipmentList = ({
   );
 };
 
-export default EquipmentList;
+export default WarrantyList;
