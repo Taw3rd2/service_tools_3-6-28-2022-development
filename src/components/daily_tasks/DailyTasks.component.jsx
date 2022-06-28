@@ -32,6 +32,7 @@ const DailyTasks = () => {
             color="primary"
             startIcon={<AddTask />}
             sx={{ background: lightTheme.palette.primary.contrastText }}
+            onClick={() => alert("Soon...")}
           >
             Task Manager
           </Button>

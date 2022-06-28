@@ -8,10 +8,11 @@ import CustomerSearch from "../../components/customer_search/CustomerSearch.comp
 import DailyTasks from "../../components/daily_tasks/DailyTasks.component";
 import NavigationButtons from "../../components/navigation_buttons/NavigationButtons.component";
 import Spinner from "../../components/spinner/Spinner";
-import WarrantyList from "../../components/warranty_manager/WarrantyList.modal";
-import Warranty from "../../components/warranty_manager/Warranty.modal";
-import CreateWarranty from "../../components/warranty_manager/CreateWarranty.modal";
-import DeleteWarranty from "../../components/warranty_manager/DeleteWarranty.modal";
+
+//import WarrantyList from "../../components/warranty_manager/WarrantyList.modal";
+//import Warranty from "../../components/warranty_manager/Warranty.modal";
+//import CreateWarranty from "../../components/warranty_manager/CreateWarranty.modal";
+//import DeleteWarranty from "../../components/warranty_manager/DeleteWarranty.modal";
 
 const AddCustomerModal = lazy(() =>
   import("../../components/customer_search/AddCustomer.modal")
@@ -63,6 +64,18 @@ const DispatchHistoryModal = lazy(() =>
   import(
     "../../components/navigation_buttons/dispatch_history/DispatchHistory.modal"
   )
+);
+const WarrantyListModal = lazy(() =>
+  import("../../components/warranty_manager/WarrantyList.modal")
+);
+const WarrantyModal = lazy(() =>
+  import("../../components/warranty_manager/Warranty.modal")
+);
+const CreateWarrantyModal = lazy(() =>
+  import("../../components/warranty_manager/CreateWarranty.modal")
+);
+const DeleteWarrantyModal = lazy(() =>
+  import("../../components/warranty_manager/DeleteWarranty.modal")
 );
 
 const HomePage = () => {
@@ -380,7 +393,7 @@ const HomePage = () => {
       )}
       {isWarrantyListModalOpen && (
         <Suspense fallback={<Spinner />}>
-          <WarrantyList
+          <WarrantyListModal
             isWarrantyListModalOpen={isWarrantyListModalOpen}
             closeWarrantyListModal={closeWarrantyListModal}
             openWarrantyModal={openWarrantyModal}
@@ -391,7 +404,7 @@ const HomePage = () => {
       )}
       {isWarrantyModalOpen && (
         <Suspense fallback={<Spinner />}>
-          <Warranty
+          <WarrantyModal
             isWarrantyModalOpen={isWarrantyModalOpen}
             closeWarrantyModal={closeWarrantyModal}
             openDeleteWarrantyModal={openDeleteWarrantyModal}
@@ -402,7 +415,7 @@ const HomePage = () => {
       )}
       {isCreateWarrantyModalOpen && (
         <Suspense fallback={<Spinner />}>
-          <CreateWarranty
+          <CreateWarrantyModal
             isCreateWarrantyModalOpen={isCreateWarrantyModalOpen}
             closeCreateWarrantyModal={closeCreateWarrantyModal}
             customer={customer}
@@ -411,7 +424,7 @@ const HomePage = () => {
       )}
       {isDeleteWarrantyModalOpen && (
         <Suspense fallback={<Spinner />}>
-          <DeleteWarranty
+          <DeleteWarrantyModal
             isDeleteWarrantyModalOpen={isDeleteWarrantyModalOpen}
             closeDeleteWarrantyModal={closeDeleteWarrantyModal}
             closeWarrantyModal={closeWarrantyModal}
