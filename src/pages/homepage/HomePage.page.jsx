@@ -8,6 +8,7 @@ import CustomerSearch from "../../components/customer_search/CustomerSearch.comp
 import DailyTasks from "../../components/daily_tasks/DailyTasks.component";
 import NavigationButtons from "../../components/navigation_buttons/NavigationButtons.component";
 import Spinner from "../../components/spinner/Spinner";
+import MaintenanceList from "../../components/maintenance_manager/MaintenanceList.modal";
 
 //import WarrantyList from "../../components/warranty_manager/WarrantyList.modal";
 //import Warranty from "../../components/warranty_manager/Warranty.modal";
@@ -241,6 +242,16 @@ const HomePage = () => {
     setDeleteWarrantyModalOpen(false);
   };
 
+  //Maintenance Manager
+  const [isMaintenanceListModalOpen, setMaintenanceListModalOpen] =
+    useState(false);
+  const openMaintenanceListModal = () => {
+    setMaintenanceListModalOpen(true);
+  };
+  const closeMaintenanceListModal = () => {
+    setMaintenanceListModalOpen(false);
+  };
+
   return (
     <div style={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
@@ -263,6 +274,7 @@ const HomePage = () => {
           <NavigationButtons
             openCreateDispatchModal={openCreateDispatchModal}
             openDispatchHistoryModal={openDispatchHistoryModal}
+            openMaintenanceListModal={openMaintenanceListModal}
             openWarrantyListModal={openWarrantyListModal}
             customer={customer}
           />
@@ -430,6 +442,15 @@ const HomePage = () => {
             closeWarrantyModal={closeWarrantyModal}
             customer={customer}
             warrantySelected={warrantySelected}
+          />
+        </Suspense>
+      )}
+      {isMaintenanceListModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <MaintenanceList
+            isMaintenanceListModalOpen={isMaintenanceListModalOpen}
+            closeMaintenanceListModal={closeMaintenanceListModal}
+            customer={customer}
           />
         </Suspense>
       )}

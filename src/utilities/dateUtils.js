@@ -40,7 +40,21 @@ import {
       const newTime = format(newDate, "MMM, dd, yyyy");
       return newTime;
     }
-  } else return "Not on record"
+  } else return "Not done yet"
+  };
+
+  //called in warranty list
+  export const getWarrantyFormattedDate = (date) => {
+    if (date !== null) {
+      if (Object.prototype.toString.call(date) === "[object Date]") {
+        const newDateTime = format(date, "MMM, dd, yyyy");
+        return newDateTime;
+      } else {
+        const newDate = date.toDate();
+        const newTime = format(newDate, "MMM, dd, yyyy");
+        return newTime;
+      }
+    } else return "None On Record";
   };
   
   //called in ClientActivity

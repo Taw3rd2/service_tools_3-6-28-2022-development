@@ -3,6 +3,12 @@ import React, { useEffect, useState } from "react";
 import { collection, getFirestore, onSnapshot } from "firebase/firestore";
 
 import {
+  getFormattedDate,
+  getDateFromString,
+  getUnixFromDate,
+} from "../../utilities/dateUtils";
+
+import {
   Backdrop,
   Button,
   Fade,
@@ -19,73 +25,41 @@ import {
   Typography,
 } from "@mui/material";
 import { lightTheme } from "../../theme/Theme";
-import {
-  getWarrantyFormattedDate,
-  getDateFromString,
-  getUnixFromDate,
-} from "../../utilities/dateUtils";
 import { AddCircleOutline, Close } from "@mui/icons-material";
 
-const style = {
+const modalStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "55%",
+  width: "70%",
   backgroundColor: lightTheme.palette.background.paper,
   border: "2px solid #000",
   boxShadow: 24,
   padding: "16px",
 };
 
-const WarrantyList = ({
-  isWarrantyListModalOpen,
-  closeWarrantyListModal,
-  openWarrantyModal,
-  openCreateWarrantyModal,
+const MaintenanceList = ({
+  isMaintenanceListModalOpen,
+  closeMaintenanceListModal,
+  openCreateMaintenanceModal,
+  openMaintenanceDetailsModal,
   customer,
 }) => {
   const db = getFirestore();
 
-  const [warranties, setWarranties] = useState([]);
+  const [maintenance, setMaintenance] = useState([]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(db, "customers", customer.id, "Equipment"),
+      collection(db, "customers", customer.id, "Maintenance"),
       (snapshot) => {
-        let newWarranties = [];
-
-        snapshot.docs.forEach((doc) => {
-          let warr = {
-            key: "",
-            equipment: "",
-            equipmentName: "",
-            equipmentBrand: "",
-            equipmentModel: "",
-            equipmentSerial: "",
-            jobNumber: "",
-            startDate: "",
-            partsExpirationDate: "",
-            laborExpirationDate: "",
-          };
-          let equipment = doc.data();
-          equipment.id = doc.id;
-          if (typeof equipment.warranty != "undefined") {
-            warr.id = equipment.id;
-            warr.key = equipment.warranty.key;
-            warr.equipment = equipment.warranty.equipment;
-            warr.equipmentBrand = equipment.warranty.equipmentBrand;
-            warr.equipmentModel = equipment.warranty.equipmentModel;
-            warr.equipmentSerial = equipment.warranty.equipmentSerial;
-            warr.equipmentName = equipment.warranty.equipmentName;
-            warr.jobNumber = equipment.warranty.jobNumber;
-            warr.startDate = equipment.warranty.startDate;
-            warr.partsExpirationDate = equipment.warranty.partsExpirationDate;
-            warr.laborExpirationDate = equipment.warranty.laborExpirationDate;
-            newWarranties.push(warr);
-          }
-        });
-        setWarranties(newWarranties);
+        setMaintenance(
+          snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }))
+        );
       },
       (error) => {
         console.log(error.message);
@@ -129,27 +103,60 @@ const WarrantyList = ({
     }
   };
 
+  const getCompletedTableCell = (stringValue) => {
+    if (stringValue === "Not done yet") {
+      return (
+        <TableCell
+          align="center"
+          sx={{
+            fontSize: 18,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            color: "red",
+          }}
+        >
+          <strong>{stringValue}</strong>
+        </TableCell>
+      );
+    } else {
+      return (
+        <TableCell
+          align="center"
+          sx={{
+            fontSize: 18,
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+            color: "green",
+          }}
+        >
+          <strong>{stringValue}</strong>
+        </TableCell>
+      );
+    }
+  };
+
   return (
     <ThemeProvider theme={lightTheme}>
       <Modal
-        aria-labelledby="warranty-list"
-        aria-describedby="modal for warranty list"
-        open={isWarrantyListModalOpen}
-        onClose={closeWarrantyListModal}
+        aria-labelledby="maintenance-list"
+        aria-describedby="modal for maintenance list"
+        open={isMaintenanceListModalOpen}
+        onClose={closeMaintenanceListModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{ timeout: 500 }}
       >
-        <Fade in={isWarrantyListModalOpen}>
-          <div style={style}>
+        <Fade in={isMaintenanceListModalOpen}>
+          <div style={modalStyle}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="primary">
-                  Warranty
+                  Maintenance Contracts
                 </Typography>
               </Grid>
             </Grid>
-
             <TableContainer
               component={Paper}
               sx={{ overflow: "auto", maxHeight: 440, marginTop: "8px" }}
@@ -169,7 +176,7 @@ const WarrantyList = ({
                         color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Job Number
+                      Contract Number
                     </TableCell>
                     <TableCell
                       align="left"
@@ -183,7 +190,7 @@ const WarrantyList = ({
                         color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Equipment
+                      Equipment Name
                     </TableCell>
                     <TableCell
                       align="center"
@@ -211,7 +218,7 @@ const WarrantyList = ({
                         color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Parts Expiration
+                      Sale Price
                     </TableCell>
                     <TableCell
                       align="center"
@@ -225,7 +232,21 @@ const WarrantyList = ({
                         color: lightTheme.palette.primary.contrastText,
                       }}
                     >
-                      Labor Expiration
+                      Expiration Date
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        minWidth: 150,
+                        fontSize: 18,
+                        overflow: "hidden",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        background: lightTheme.palette.primary.light,
+                        color: lightTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Maintenance Completed
                     </TableCell>
                     <TableCell
                       align="center"
@@ -244,11 +265,11 @@ const WarrantyList = ({
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {warranties.map((warranty) => (
+                  {maintenance.map((maint, index) => (
                     <TableRow
-                      key={warranty.id}
+                      key={maint.id}
                       sx={{ cursor: "pointer" }}
-                      onClick={() => openWarrantyModal(warranty)}
+                      onClick={() => openMaintenanceDetailsModal()}
                     >
                       <TableCell
                         align="center"
@@ -259,7 +280,7 @@ const WarrantyList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {warranty.jobNumber}
+                        {maint.mNumber}
                       </TableCell>
                       <TableCell
                         align="left"
@@ -270,7 +291,7 @@ const WarrantyList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {warranty.equipmentName}
+                        {maint.equipmentName}
                       </TableCell>
                       <TableCell
                         align="center"
@@ -281,13 +302,24 @@ const WarrantyList = ({
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {getWarrantyFormattedDate(warranty.startDate)}
+                        {getFormattedDate(maint.saleDate)}
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          fontSize: 18,
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {maint.salePrice}
                       </TableCell>
                       {getStyledTableCell(
-                        getWarrantyFormattedDate(warranty.partsExpirationDate)
+                        getFormattedDate(maint.expirationDate)
                       )}
-                      {getStyledTableCell(
-                        getWarrantyFormattedDate(warranty.laborExpirationDate)
+                      {getCompletedTableCell(
+                        getFormattedDate(maint.completedDate)
                       )}
                       <TableCell align="center">
                         <Button variant="outlined">Details</Button>
@@ -312,7 +344,7 @@ const WarrantyList = ({
                   marginLeft: "8px",
                   background: lightTheme.palette.primary.contrastText,
                 }}
-                onClick={() => openCreateWarrantyModal()}
+                onClick={() => openCreateMaintenanceModal()}
               >
                 Add New Warranty
               </Button>
@@ -325,7 +357,7 @@ const WarrantyList = ({
                   marginLeft: "8px",
                   background: lightTheme.palette.primary.contrastText,
                 }}
-                onClick={() => closeWarrantyListModal()}
+                onClick={() => closeMaintenanceListModal()}
               >
                 Close
               </Button>
@@ -337,4 +369,4 @@ const WarrantyList = ({
   );
 };
 
-export default WarrantyList;
+export default MaintenanceList;

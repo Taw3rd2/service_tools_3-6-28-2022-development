@@ -9,12 +9,9 @@ const NavigationButtons = ({
   openDispatchHistoryModal,
   openPartsQuotesModal,
   openEquipmentQuotesModal,
+  openMaintenanceListModal,
   openWarrantyListModal,
 }) => {
-  const openMaintenanceListModal = () => {
-    alert("Soon...");
-  };
-
   if (customer === null || customer.id === "") {
     return <InactiveButtons />;
   } else {

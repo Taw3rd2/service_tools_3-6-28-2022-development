@@ -35,3 +35,10 @@ export const lightTheme = createTheme({
   //   },
   // },
 });
+
+export const defaultBodyTableCell = {
+  fontSize: 18,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+};
