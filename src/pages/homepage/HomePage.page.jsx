@@ -8,12 +8,6 @@ import CustomerSearch from "../../components/customer_search/CustomerSearch.comp
 import DailyTasks from "../../components/daily_tasks/DailyTasks.component";
 import NavigationButtons from "../../components/navigation_buttons/NavigationButtons.component";
 import Spinner from "../../components/spinner/Spinner";
-import MaintenanceList from "../../components/maintenance_manager/MaintenanceList.modal";
-
-//import WarrantyList from "../../components/warranty_manager/WarrantyList.modal";
-//import Warranty from "../../components/warranty_manager/Warranty.modal";
-//import CreateWarranty from "../../components/warranty_manager/CreateWarranty.modal";
-//import DeleteWarranty from "../../components/warranty_manager/DeleteWarranty.modal";
 
 const AddCustomerModal = lazy(() =>
   import("../../components/customer_search/AddCustomer.modal")
@@ -77,6 +71,18 @@ const CreateWarrantyModal = lazy(() =>
 );
 const DeleteWarrantyModal = lazy(() =>
   import("../../components/warranty_manager/DeleteWarranty.modal")
+);
+const MaintenanceListModal = lazy(() =>
+  import("../../components/maintenance_manager/MaintenanceList.modal")
+);
+const CreateMaintenanceModal = lazy(() =>
+  import("../../components/maintenance_manager/CreateMaintnenance.modal")
+);
+const MaintenanceDetailsModal = lazy(() =>
+  import("../../components/maintenance_manager/MaintenanceDetails.modal")
+);
+const DeleteMaintenanceModal = lazy(() =>
+  import("../../components/maintenance_manager/DeleteMaintenance.modal")
 );
 
 const HomePage = () => {
@@ -250,6 +256,32 @@ const HomePage = () => {
   };
   const closeMaintenanceListModal = () => {
     setMaintenanceListModalOpen(false);
+  };
+  const [isMaintenanceDetailsModalOpen, setMaintenanceDetailsModalOpen] =
+    useState(false);
+  const [selectedMaintenance, setSelectedMaintenance] = useState({});
+  const openMaintenanceDetailsModal = (maint) => {
+    setSelectedMaintenance(maint);
+    setMaintenanceDetailsModalOpen(true);
+  };
+  const closeMaintenanceDetailsModal = () => {
+    setMaintenanceDetailsModalOpen(false);
+  };
+  const [isCreateMaintenanceModalOpen, setCreateMaintenanceModalOpen] =
+    useState(false);
+  const openCreateMaintenanceModal = () => {
+    setCreateMaintenanceModalOpen(true);
+  };
+  const closeCreateMaintenanceModal = () => {
+    setCreateMaintenanceModalOpen(false);
+  };
+  const [isDeleteMaintenanceModalOpen, setDeleteMaintenanceModalOpen] =
+    useState(false);
+  const openDeleteMaintenanceModal = () => {
+    setDeleteMaintenanceModalOpen(true);
+  };
+  const closeDeleteMaintenanceModal = () => {
+    setDeleteMaintenanceModalOpen(false);
   };
 
   return (
@@ -447,9 +479,42 @@ const HomePage = () => {
       )}
       {isMaintenanceListModalOpen && (
         <Suspense fallback={<Spinner />}>
-          <MaintenanceList
+          <MaintenanceListModal
             isMaintenanceListModalOpen={isMaintenanceListModalOpen}
             closeMaintenanceListModal={closeMaintenanceListModal}
+            openCreateMaintenanceModal={openCreateMaintenanceModal}
+            openMaintenanceDetailsModal={openMaintenanceDetailsModal}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isCreateMaintenanceModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <CreateMaintenanceModal
+            isCreateMaintenanceModalOpen={isCreateMaintenanceModalOpen}
+            closeCreateMaintenanceModal={closeCreateMaintenanceModal}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isDeleteMaintenanceModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <DeleteMaintenanceModal
+            isDeleteMaintenanceModalOpen={isDeleteMaintenanceModalOpen}
+            closeDeleteMaintenanceModal={closeDeleteMaintenanceModal}
+            closeMaintenanceDetailsModal={closeMaintenanceDetailsModal}
+            selectedMaintenance={selectedMaintenance}
+            customer={customer}
+          />
+        </Suspense>
+      )}
+      {isMaintenanceDetailsModalOpen && (
+        <Suspense fallback={<Spinner />}>
+          <MaintenanceDetailsModal
+            isMaintenanceDetailsModalOpen={isMaintenanceDetailsModalOpen}
+            closeMaintenanceDetailsModal={closeMaintenanceDetailsModal}
+            openDeleteMaintenanceModal={openDeleteMaintenanceModal}
+            selectedMaintenance={selectedMaintenance}
             customer={customer}
           />
         </Suspense>

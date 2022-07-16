@@ -9,6 +9,16 @@ import {
 } from "../../utilities/dateUtils";
 
 import {
+  defaultBodyTableCell,
+  defaultTableButton,
+  getDefaultHeadTableCell,
+  getRootModalStyle,
+  greenBodyTableCell,
+  lightTheme,
+  redBodyTableCell,
+} from "../../theme/Theme";
+
+import {
   Backdrop,
   Button,
   Fade,
@@ -24,20 +34,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { lightTheme } from "../../theme/Theme";
-import { AddCircleOutline, Close } from "@mui/icons-material";
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "70%",
-  backgroundColor: lightTheme.palette.background.paper,
-  border: "2px solid #000",
-  boxShadow: 24,
-  padding: "16px",
-};
+import { AddCircleOutline, Close } from "@mui/icons-material";
 
 const MaintenanceList = ({
   isMaintenanceListModalOpen,
@@ -72,31 +70,13 @@ const MaintenanceList = ({
     const dateValue = getDateFromString(stringValue);
     if (getUnixFromDate(dateValue) < getUnixFromDate(new Date())) {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "red",
-          }}
-        >
+        <TableCell align="center" sx={redBodyTableCell}>
           {stringValue}
         </TableCell>
       );
     } else {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "green",
-          }}
-        >
+        <TableCell align="center" sx={greenBodyTableCell}>
           {stringValue}
         </TableCell>
       );
@@ -106,31 +86,13 @@ const MaintenanceList = ({
   const getCompletedTableCell = (stringValue) => {
     if (stringValue === "Not done yet") {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "red",
-          }}
-        >
+        <TableCell align="center" sx={redBodyTableCell}>
           <strong>{stringValue}</strong>
         </TableCell>
       );
     } else {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "green",
-          }}
-        >
+        <TableCell align="center" sx={greenBodyTableCell}>
           <strong>{stringValue}</strong>
         </TableCell>
       );
@@ -149,7 +111,7 @@ const MaintenanceList = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isMaintenanceListModalOpen}>
-          <div style={modalStyle}>
+          <div style={getRootModalStyle("70%")}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="primary">
@@ -164,101 +126,27 @@ const MaintenanceList = ({
               <Table stickyHeader size="small" aria-label="warranty-list-table">
                 <TableHead>
                   <TableRow>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: 150,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(150)}>
                       Contract Number
                     </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: 350,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="left" sx={getDefaultHeadTableCell(350)}>
                       Equipment Name
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: 150,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(150)}>
                       Start Date
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: 150,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(150)}>
                       Sale Price
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: 150,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(150)}>
                       Expiration Date
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: 150,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(150)}>
                       Maintenance Completed
                     </TableCell>
                     <TableCell
                       align="center"
-                      sx={{
-                        minWidth: "100px",
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                      }}
+                      sx={getDefaultHeadTableCell("100px")}
                     >
                       Details
                     </TableCell>
@@ -269,50 +157,18 @@ const MaintenanceList = ({
                     <TableRow
                       key={maint.id}
                       sx={{ cursor: "pointer" }}
-                      onClick={() => openMaintenanceDetailsModal()}
+                      onClick={() => openMaintenanceDetailsModal(maint)}
                     >
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="center" sx={defaultBodyTableCell}>
                         {maint.mNumber}
                       </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="left" sx={defaultBodyTableCell}>
                         {maint.equipmentName}
                       </TableCell>
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="center" sx={defaultBodyTableCell}>
                         {getFormattedDate(maint.saleDate)}
                       </TableCell>
-                      <TableCell
-                        align="center"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="center" sx={defaultBodyTableCell}>
                         {maint.salePrice}
                       </TableCell>
                       {getStyledTableCell(
@@ -339,24 +195,16 @@ const MaintenanceList = ({
                 variant="outlined"
                 color="primary"
                 startIcon={<AddCircleOutline />}
-                sx={{
-                  marginTop: "16px",
-                  marginLeft: "8px",
-                  background: lightTheme.palette.primary.contrastText,
-                }}
+                sx={defaultTableButton}
                 onClick={() => openCreateMaintenanceModal()}
               >
-                Add New Warranty
+                Add New Maintenance
               </Button>
               <Button
                 variant="outlined"
                 color="primary"
                 startIcon={<Close />}
-                sx={{
-                  marginTop: "16px",
-                  marginLeft: "8px",
-                  background: lightTheme.palette.primary.contrastText,
-                }}
+                sx={defaultTableButton}
                 onClick={() => closeMaintenanceListModal()}
               >
                 Close

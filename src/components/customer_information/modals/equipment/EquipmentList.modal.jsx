@@ -7,6 +7,16 @@ import {
 } from "../../../../utilities/dateUtils";
 
 import {
+  defaultBodyTableCell,
+  defaultTableButton,
+  getDefaultHeadTableCell,
+  getRootModalStyle,
+  greenBodyTableCell,
+  lightTheme,
+  redBodyTableCell,
+} from "../../../../theme/Theme";
+
+import {
   Backdrop,
   Button,
   Fade,
@@ -21,21 +31,8 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { AddCircle, Close } from "@mui/icons-material";
+import { AddCircleOutline, Close } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
-import { lightTheme } from "../../../../theme/Theme";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "70%",
-  backgroundColor: lightTheme.palette.background.paper,
-  border: "2px solid #000",
-  boxShadow: 24,
-  padding: "16px",
-};
 
 const EquipmentList = ({
   customer,
@@ -65,31 +62,13 @@ const EquipmentList = ({
     const dateValue = getDateFromString(stringValue);
     if (getUnixFromDate(dateValue) < getUnixFromDate(new Date())) {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "red",
-          }}
-        >
+        <TableCell align="center" sx={redBodyTableCell}>
           {stringValue}
         </TableCell>
       );
     } else {
       return (
-        <TableCell
-          align="center"
-          sx={{
-            fontSize: 18,
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-            textOverflow: "ellipsis",
-            color: "green",
-          }}
-        >
+        <TableCell align="center" sx={greenBodyTableCell}>
           {stringValue}
         </TableCell>
       );
@@ -108,7 +87,7 @@ const EquipmentList = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isEquipmentListModalOpen}>
-          <div style={style}>
+          <div style={getRootModalStyle("70%")}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
@@ -125,115 +104,30 @@ const EquipmentList = ({
               >
                 <TableHead>
                   <TableRow>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="left" sx={getDefaultHeadTableCell(170)}>
                       Equipment Name
                     </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="left" sx={getDefaultHeadTableCell(170)}>
                       Brand
                     </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="left" sx={getDefaultHeadTableCell(170)}>
                       Model
                     </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{
-                        minWidth: "170px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="left" sx={getDefaultHeadTableCell(170)}>
                       Serial
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(100)}>
                       Maintenance Expiration
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(100)}>
                       Parts Expiration
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
+                    <TableCell align="center" sx={getDefaultHeadTableCell(100)}>
                       Labor Expiration
                     </TableCell>
                     <TableCell
                       align="center"
-                      sx={{
-                        minWidth: "100px",
-                        background: lightTheme.palette.primary.light,
-                        color: lightTheme.palette.primary.contrastText,
-                        fontSize: 18,
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
+                      sx={getDefaultHeadTableCell(100)}
                     ></TableCell>
                   </TableRow>
                 </TableHead>
@@ -244,48 +138,16 @@ const EquipmentList = ({
                       onClick={() => openEditCustomerEquipmentModal(unit)}
                       sx={{ cursor: "pointer" }}
                     >
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="left" sx={defaultBodyTableCell}>
                         {unit.equipmentName}
                       </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="left" sx={defaultBodyTableCell}>
                         {unit.equipmentBrand}
                       </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="left" sx={defaultBodyTableCell}>
                         {unit.equipmentModel}
                       </TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          fontSize: 18,
-                          overflow: "hidden",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                        }}
-                      >
+                      <TableCell align="left" sx={defaultBodyTableCell}>
                         {unit.equipmentSerial}
                       </TableCell>
                       {getStyledTableCell(unit.equipmentContract)}
@@ -311,11 +173,8 @@ const EquipmentList = ({
                 onClick={() => openCreateCustomerEquipmentModal()}
                 variant="outlined"
                 color="primary"
-                sx={{
-                  marginTop: "16px",
-                  marginLeft: "8px",
-                }}
-                startIcon={<AddCircle />}
+                startIcon={<AddCircleOutline />}
+                sx={defaultTableButton}
               >
                 Add New Equipment
               </Button>
@@ -323,11 +182,8 @@ const EquipmentList = ({
                 onClick={() => closeEquipmentListModal()}
                 variant="outlined"
                 color="primary"
-                sx={{
-                  marginTop: "16px",
-                  marginLeft: "8px",
-                }}
                 startIcon={<Close />}
+                sx={defaultTableButton}
               >
                 Close
               </Button>

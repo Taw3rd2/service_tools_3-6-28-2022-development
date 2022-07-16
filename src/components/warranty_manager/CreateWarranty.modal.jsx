@@ -8,6 +8,13 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { getFormattedDate } from "../../utilities/dateUtils";
 
 import {
+  defaultBodyTableCell,
+  getDefaultHeadTableCell,
+  getRootModalStyle,
+  lightTheme,
+} from "../../theme/Theme";
+
+import {
   Backdrop,
   Button,
   Checkbox,
@@ -25,21 +32,8 @@ import {
   ThemeProvider,
   Typography,
 } from "@mui/material";
-import { lightTheme } from "../../theme/Theme";
 
 import { AddCircleOutline, Close } from "@mui/icons-material";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "45%",
-  backgroundColor: lightTheme.palette.background.paper,
-  border: "2px solid #000",
-  boxShadow: 24,
-  padding: "16px",
-};
 
 const CreateWarranty = ({
   isCreateWarrantyModalOpen,
@@ -140,11 +134,11 @@ const CreateWarranty = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isCreateWarrantyModalOpen}>
-          <div style={style}>
+          <div style={getRootModalStyle("45%")}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="primary">
-                  New Warranty's
+                  Add New Warranty's
                 </Typography>
               </Grid>
             </Grid>
@@ -180,84 +174,37 @@ const CreateWarranty = ({
                           <TableRow>
                             <TableCell
                               align="center"
-                              sx={{
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(5)}
                             >
                               #
                             </TableCell>
                             <TableCell
                               align="left"
-                              sx={{
-                                minWidth: 150,
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(150)}
                             >
                               Name
                             </TableCell>
                             <TableCell
                               align="left"
-                              sx={{
-                                minWidth: 150,
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(150)}
                             >
                               Brand
                             </TableCell>
                             <TableCell
                               align="left"
-                              sx={{
-                                minWidth: 150,
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(150)}
                             >
                               Model
                             </TableCell>
                             <TableCell
                               align="left"
-                              sx={{
-                                minWidth: 150,
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(150)}
                             >
                               Serial
                             </TableCell>
                             <TableCell
                               align="center"
-                              sx={{
-                                minWidth: 50,
-                                fontSize: 18,
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textOverflow: "ellipsis",
-                                background: lightTheme.palette.primary.light,
-                                color: lightTheme.palette.primary.contrastText,
-                              }}
+                              sx={getDefaultHeadTableCell(5)}
                             >
                               Add?
                             </TableCell>
@@ -268,65 +215,23 @@ const CreateWarranty = ({
                             <TableRow key={index}>
                               <TableCell
                                 align="center"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
+                                sx={defaultBodyTableCell}
                               >{`${index + 1}.`}</TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
+                              <TableCell align="left" sx={defaultBodyTableCell}>
                                 {item.equipmentName}
                               </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
+                              <TableCell align="left" sx={defaultBodyTableCell}>
                                 {item.equipmentBrand}
                               </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
+                              <TableCell align="left" sx={defaultBodyTableCell}>
                                 {item.equipmentModel}
                               </TableCell>
-                              <TableCell
-                                align="left"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
+                              <TableCell align="left" sx={defaultBodyTableCell}>
                                 {item.equipmentSerial}
                               </TableCell>
                               <TableCell
                                 align="center"
-                                sx={{
-                                  fontSize: 18,
-                                  overflow: "hidden",
-                                  whiteSpace: "nowrap",
-                                  textOverflow: "ellipsis",
-                                }}
+                                sx={defaultBodyTableCell}
                               >
                                 <Checkbox
                                   checked={selectedEquipment.index}

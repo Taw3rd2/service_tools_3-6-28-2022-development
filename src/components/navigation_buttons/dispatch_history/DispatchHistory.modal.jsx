@@ -7,6 +7,15 @@ import {
   where,
 } from "firebase/firestore";
 
+import { getFormattedDate } from "../../../utilities/dateUtils";
+
+import {
+  defaultBodyTableCell,
+  getDefaultHeadTableCell,
+  getRootModalStyle,
+  lightTheme,
+} from "../../../theme/Theme";
+
 import {
   Backdrop,
   Button,
@@ -24,20 +33,6 @@ import {
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
 import { ThemeProvider } from "@mui/material";
-import { lightTheme } from "../../../theme/Theme";
-import { getFormattedDate } from "../../../utilities/dateUtils";
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 1000,
-  backgroundColor: lightTheme.palette.background.paper,
-  border: "2px solid #000",
-  boxShadow: 24,
-  padding: "16px",
-};
 
 const DispatchHistory = ({
   isDispatchHistoryModalOpen,
@@ -77,7 +72,7 @@ const DispatchHistory = ({
         BackdropProps={{ timeout: 500 }}
       >
         <Fade in={isDispatchHistoryModalOpen}>
-          <div style={modalStyle}>
+          <div style={getRootModalStyle("60%")}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
@@ -97,68 +92,38 @@ const DispatchHistory = ({
                     <TableHead>
                       <TableRow>
                         <TableCell
-                          align="left"
-                          sx={{
-                            minWidth: "100px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          align="center"
+                          sx={getDefaultHeadTableCell(100)}
                         >
                           Date
                         </TableCell>
                         <TableCell
                           align="left"
-                          sx={{
-                            minWidth: "100px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          sx={getDefaultHeadTableCell(125)}
                         >
                           Issue
                         </TableCell>
                         <TableCell
-                          align="left"
-                          sx={{
-                            minWidth: "40px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          align="center"
+                          sx={getDefaultHeadTableCell(50)}
                         >
                           Job Number
                         </TableCell>
                         <TableCell
-                          align="left"
-                          sx={{
-                            minWidth: "110px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          align="center"
+                          sx={getDefaultHeadTableCell(100)}
                         >
                           Tech lead
                         </TableCell>
                         <TableCell
-                          align="left"
-                          sx={{
-                            minWidth: "110px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          align="center"
+                          sx={getDefaultHeadTableCell(100)}
                         >
                           Tech Assisting
                         </TableCell>
                         <TableCell
                           align="left"
-                          sx={{
-                            minWidth: "50px",
-                            background: lightTheme.palette.primary.light,
-                            color: lightTheme.palette.primary.contrastText,
-                            fontSize: 18,
-                          }}
+                          sx={getDefaultHeadTableCell(350)}
                         >
                           Notes
                         </TableCell>
@@ -173,20 +138,36 @@ const DispatchHistory = ({
                               key={item.id}
                               onClick={() => openSelectedDispatchModal()}
                             >
-                              <TableCell align="left">
+                              <TableCell
+                                align="center"
+                                sx={defaultBodyTableCell}
+                              >
                                 {getFormattedDate(item.dateScheduled)}
                               </TableCell>
-                              <TableCell align="left">{item.issue}</TableCell>
-                              <TableCell align="left">
+                              <TableCell align="left" sx={defaultBodyTableCell}>
+                                {item.issue}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={defaultBodyTableCell}
+                              >
                                 {item.jobNumber}
                               </TableCell>
-                              <TableCell align="left">
+                              <TableCell
+                                align="center"
+                                sx={defaultBodyTableCell}
+                              >
                                 {item.techLead}
                               </TableCell>
-                              <TableCell align="left">
+                              <TableCell
+                                align="center"
+                                sx={defaultBodyTableCell}
+                              >
                                 {item.techHelper}
                               </TableCell>
-                              <TableCell align="left">{item.notes}</TableCell>
+                              <TableCell align="left" sx={defaultBodyTableCell}>
+                                {item.notes}
+                              </TableCell>
                             </TableRow>
                           ))}
                     </TableBody>

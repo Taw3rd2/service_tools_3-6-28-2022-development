@@ -1,6 +1,8 @@
 import React from "react";
-import { updateDocument } from "../../firebase/firestore.utils";
-import { deleteField, doc, getFirestore } from "firebase/firestore";
+
+import { doc, getFirestore } from "firebase/firestore";
+
+import { getRootModalStyle, lightTheme } from "../../theme/Theme";
 
 import {
   Backdrop,
@@ -12,53 +14,62 @@ import {
   Typography,
 } from "@mui/material";
 import { Close, Delete } from "@mui/icons-material";
-import { getRootModalStyle, lightTheme } from "../../theme/Theme";
+import { deleteDocument, updateDocument } from "../../firebase/firestore.utils";
 
-const DeleteWarranty = ({
-  isDeleteWarrantyModalOpen,
-  closeDeleteWarrantyModal,
-  closeWarrantyModal,
-  warrantySelected,
+const DeleteMaintenance = ({
+  isDeleteMaintenanceModalOpen,
+  closeDeleteMaintenanceModal,
+  closeMaintenanceDetailsModal,
+  selectedMaintenance,
   customer,
 }) => {
   const db = getFirestore();
 
-  const onWarrantyDelete = () => {
-    console.log("customer id: ", customer.id);
-    console.log("equipmentName: ", warrantySelected.equipmentName);
+  const onMaintenanceDelete = () => {
     updateDocument(
       doc(
         db,
         "customers",
         customer.id,
         "Equipment",
-        warrantySelected.equipmentName
+        selectedMaintenance.equipmentName
       ),
-      { equipmentWarranty: "", laborWarranty: "", warranty: deleteField() }
+      { equipmentContract: "" }
     ).then(() => {
-      console.log("Removed String Representations, and Objects");
-      closeWarrantyModal();
-      closeDeleteWarrantyModal();
+      console.log("Android Contract Deleted");
+    });
+    deleteDocument(
+      doc(
+        db,
+        "customers",
+        customer.id,
+        "Maintenance",
+        selectedMaintenance.mNumber
+      )
+    ).then(() => {
+      console.log("Contract Deleted");
+      closeDeleteMaintenanceModal();
+      closeMaintenanceDetailsModal();
     });
   };
 
   return (
     <ThemeProvider theme={lightTheme}>
       <Modal
-        aria-labelledby="warranty-delete"
-        aria-describedby="modal to delete a warranty"
-        open={isDeleteWarrantyModalOpen}
-        onClose={closeDeleteWarrantyModal}
+        aria-labelledby="maintenance-delete"
+        aria-describedby="modal to delete maintenance"
+        open={isDeleteMaintenanceModalOpen}
+        onClose={closeDeleteMaintenanceModal}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{ timeout: 500 }}
       >
-        <Fade in={isDeleteWarrantyModalOpen}>
+        <Fade in={isDeleteMaintenanceModalOpen}>
           <div style={getRootModalStyle(350)}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Typography variant="h5" gutterBottom color="primary">
-                  {`Delete Warranty For ${warrantySelected.equipmentName}?`}
+                  {`Delete Maintenance For ${selectedMaintenance.equipmentName}?`}
                 </Typography>
 
                 <Typography variant="body1" gutterBottom>
@@ -79,7 +90,7 @@ const DeleteWarranty = ({
                 variant="outlined"
                 color="inherit"
                 startIcon={<Delete />}
-                onClick={() => onWarrantyDelete()}
+                onClick={() => onMaintenanceDelete()}
               >
                 Delete
               </Button>
@@ -89,7 +100,7 @@ const DeleteWarranty = ({
                 variant="outlined"
                 color="primary"
                 startIcon={<Close />}
-                onClick={() => closeDeleteWarrantyModal()}
+                onClick={() => closeDeleteMaintenanceModal()}
               >
                 Close
               </Button>
@@ -101,4 +112,4 @@ const DeleteWarranty = ({
   );
 };
 
-export default DeleteWarranty;
+export default DeleteMaintenance;

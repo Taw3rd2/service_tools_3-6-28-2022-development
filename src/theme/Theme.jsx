@@ -36,9 +36,57 @@ export const lightTheme = createTheme({
   // },
 });
 
+export const getRootModalStyle = (width) => {
+  return {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: width,
+    backgroundColor: lightTheme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: 24,
+    padding: "16px",
+  };
+};
+
 export const defaultBodyTableCell = {
   fontSize: 18,
   overflow: "hidden",
   whiteSpace: "nowrap",
   textOverflow: "ellipsis",
+};
+
+export const getDefaultHeadTableCell = (width) => {
+  return {
+    minWidth: width,
+    fontSize: 18,
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    background: lightTheme.palette.primary.light,
+    color: lightTheme.palette.primary.contrastText,
+  };
+};
+
+export const redBodyTableCell = {
+  fontSize: 18,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  color: "red",
+};
+
+export const greenBodyTableCell = {
+  fontSize: 18,
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+  color: "green",
+};
+
+export const defaultTableButton = {
+  marginTop: "16px",
+  marginLeft: "8px",
+  background: lightTheme.palette.primary.contrastText,
 };
