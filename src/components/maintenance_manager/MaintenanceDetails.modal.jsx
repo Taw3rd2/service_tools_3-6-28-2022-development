@@ -46,7 +46,9 @@ const MaintenanceDetails = ({
       : new Date()
   );
   const [completedDate, setCompletedDate] = useState(
-    selectedMaintenance.completedDate ? selectedMaintenance.completedDate : null
+    selectedMaintenance.completedDate === null
+      ? null
+      : selectedMaintenance.completedDate.toDate()
   );
 
   const onSubmitMaintenanceUpdate = (e) => {
